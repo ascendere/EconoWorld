@@ -1,0 +1,126 @@
+@media (min-width: 1024px) {
+  .hidden {
+    display: flex !important;
+  }
+}
+
+/* Agrega estos estilos a tu archivo de estilos CSS o SCSS */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  background-color: #074f7a;
+  margin: 10% auto;
+  padding: 20px;
+  width: 30%;
+  border-radius: 1rem;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+  z-index: 10000;
+  position: relative;
+}
+
+.modal-text {
+  text-align: center;
+  color: white;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  margin-bottom: 15px;  /* Ajusta según sea necesario */
+}
+
+.modal-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+/* Estilos específicos para el botón de Google */
+.google .modal-button {
+  border: 2px solid white; /* Borde negro */
+  border-radius: 1rem;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  color: white; /* Texto negro */
+  margin-top: 2rem;
+}
+
+/* Estilos específicos para el botón de UTPL */
+.utpl .modal-button {
+  background: #032B43; /* Fondo azul */
+  border: 2px solid white; /* Borde blanco */
+  border-radius: 1rem;
+  color: white; /* Texto blanco */
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.button-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo {
+  width: 10%; /* Ajusta el tamaño del logo según sea necesario */
+  margin-right: 1rem;
+}
+
+
+.admin-button {
+  position: relative;
+  padding-bottom: 5px; /* Ajusta la distancia de la rayita desde el texto */
+  text-decoration: none;
+  color: white;
+}
+
+.admin-button:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px; /* Altura de la rayita */
+  background-color: white; /* Color de la rayita */
+  transform: scaleX(0); /* Inicialmente, la rayita está invisible */
+  transition: transform 0.3s ease-in-out; /* Agrega una transición suave al efecto */
+}
+
+.admin-button:hover:after {
+  transform: scaleX(1); /* Al pasar el ratón sobre el botón, la rayita se expandirá */
+}
+
+.name {
+  margin-left: 1rem;
+  margin-bottom: 0.4rem;
+  color: #90A1A3;
+}
+.active-link {
+  border-bottom: 3px solid #facc15; // amarillo UTPL
+  padding-bottom: 4px;
+}
+
+

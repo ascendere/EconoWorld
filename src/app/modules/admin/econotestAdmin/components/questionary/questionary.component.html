@@ -1,0 +1,44 @@
+<!-- questionary.component.html -->
+
+<div class="volver-panel-admin">
+  <a routerLink="/admin">
+  </a>
+</div>
+
+<div class="questionary-container">
+  <a routerLink="/admin/tematicas">
+    <button mat-button class="button-container1">
+      Volver a temáticas
+    </button>
+  </a>
+
+  <div>
+    <button mat-raised-button class="add-button-container" (click)="openAddQuestionaryDialog()">
+      Agregar Cuestionario
+    </button>
+  </div>
+
+  <h2>Cuestionario Para {{ thematicName }}</h2>
+
+  <div *ngIf="questionary.length > 0" class="questionary-list">
+    <h3>Lista de Cuestionarios:</h3>
+    <ul>
+      <li *ngFor="let item of questionary" class="questionary-item">
+        <div class="questionary-title">
+          {{ item.title }}
+        </div>
+        <div class="button-container">
+          <button mat-icon-button class="view-button" (click)="viewQuestionsAndAnswers(item.id)">
+            <img src="../../../../assets/images/archivo.png" alt="Icono" class="icon-image">
+          </button>
+          <button mat-icon-button class="add-button" (click)="openAddQuestionDialog(item.id)">
+            <img src="../../../../assets/images/boton-agregar.png" alt="Icono" class="icon-image">
+          </button>
+          <button mat-icon-button class="delete-button" (click)="deleteQuestionary(thematicId, item.id)">
+            <img src="../../../../assets/images/eliminar.png" alt="Icono" class="icon-image">
+          </button>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>

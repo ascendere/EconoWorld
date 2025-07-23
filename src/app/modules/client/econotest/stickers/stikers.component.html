@@ -1,0 +1,103 @@
+<div class="album-container" *ngIf="user">
+  <!-- Filtros -->
+  <div class="filters">
+    <h3>Álbumes</h3>
+    <ul class="themes">
+      <li
+        *ngFor="let thematic of thematics"
+        [class.active]="selectedThematicId === thematic.id"
+      >
+        <button (click)="selectThematicId(thematic.id)">
+          {{ capitalizeFirstLetter(thematic.id) }}
+        </button>
+        <div style="font-size: 0.95em; margin-top: 2px; font-weight: bold;">
+          {{ thematicCromos[thematic.id].ganados || 0 }} / {{ thematicCromos[thematic.id].total || 0 }}
+        </div>
+      </li>
+    </ul>
+
+    <!-- Progreso -->
+    <div class="progress">
+      <p>Progreso</p>
+      <div class="progress-bar">
+        <div
+          class="progress-fill"
+          [style.width]="(getCollectedStickerCount() / totalStickers) * 100 + '%'"
+        ></div>
+      </div>
+      <span>{{ getCollectedStickerCount() }}/{{ totalStickers }}</span>
+    </div>
+  </div>
+
+  <!-- Libro de stickers -->
+  <div class="book-container" style="position: relative;">
+    <button
+      class="page-button prev"
+      style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); font-size: 2em; z-index: 2; background: white; border-radius: 50%; border: none; box-shadow: 0 2px 6px rgba(0,0,0,0.1); width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;"
+      (click)="prevPage()"
+      [disabled]="currentPage === 1"
+      *ngIf="getTotalPages() > 1"
+    >
+      ‹
+    </button>
+    <div class="book" [attr.data-page]="currentPage">
+      <div
+        class="page"
+        [class.turning]="isPageTurningNext"
+        [class.turning-back]="isPageTurningPrev"
+        style="display: flex; flex-direction: row; justify-content: space-between; align-items: center; height: 100%;"
+      >
+        <div class="stickers-leaf left-leaf" style="flex: 1; display: flex; justify-content: center; align-items: center; height: 100%;">
+          <div
+            class="sticker"
+            *ngIf="getCurrentPageStickers()[0]"
+            (click)="showSticker(getCurrentPageStickers()[0])"
+            style="max-width: 260px; width: 100%; height: auto;"
+          >
+            <img [src]="getCurrentPageStickers()[0].image.url" [alt]="getCurrentPageStickers()[0].description" style="width: 100%; height: auto;" />
+          </div>
+        </div>
+        <div class="stickers-leaf right-leaf" style="flex: 1; display: flex; justify-content: center; align-items: center; height: 100%;">
+          <div
+            class="sticker"
+            *ngIf="getCurrentPageStickers()[1]"
+            (click)="showSticker(getCurrentPageStickers()[1])"
+            style="max-width: 260px; width: 100%; height: auto;"
+          >
+            <img [src]="getCurrentPageStickers()[1].image.url" [alt]="getCurrentPageStickers()[1].description" style="width: 100%; height: auto;" />
+          </div>
+        </div>
+      </div>
+      <div class="pagination-controls" style="display: none;"></div>
+    </div>
+    <button
+      class="page-button next"
+      style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); font-size: 2em; z-index: 2; background: white; border-radius: 50%; border: none; box-shadow: 0 2px 6px rgba(0,0,0,0.1); width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;"
+      (click)="nextPage()"
+      [disabled]="currentPage === getTotalPages()"
+      *ngIf="getTotalPages() > 1"
+    >
+      ›
+    </button>
+  </div>
+
+  <!-- Modal del sticker -->
+  <div *ngIf="showSelectedSticker" class="sticker-modal">
+    <div class="sticker-modal-content">
+      <button class="close-button" (click)="hideSticker()">X</button>
+
+      <div class="sticker-card" [class.flipped]="isFlipped">
+        <div class="sticker-card-front">
+          <img [src]="selectedSticker.image.url" [alt]="selectedSticker.description" />
+        </div>
+        <div class="sticker-card-back">
+          <p>{{ selectedSticker.description }}</p>
+        </div>
+      </div>
+
+      <button class="rotate-button" (click)="flipCard()">
+        <img src="../../../../assets/images/girar.svg" alt="Girar" class="rotate-icon" />
+      </button>
+    </div>
+  </div>
+</div>

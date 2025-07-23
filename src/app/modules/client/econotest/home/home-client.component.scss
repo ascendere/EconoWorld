@@ -1,0 +1,20 @@
+.theme-card-container {
+  display: flex; /* Para que las tarjetas se coloquen una al lado de la otra */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  flex-wrap: wrap; /* Permite que las tarjetas se envuelvan a la siguiente línea si no caben en una sola línea */
+  justify-content: space-between; /* Para distribuir las tarjetas horizontalmente con un espacio entre ellas */
+}
+
+.theme-card {
+  width: 29%; /* Esto garantiza que haya suficiente espacio entre las tarjetas y que haya tres tarjetas por fila */
+  margin: 1rem; /* Espacio entre las filas */
+}
+
+.card-content {
+  transition: transform 0.3s ease-in-out; /* Agregada una transición para suavizar el efecto */
+}
+
+.theme-card:hover .card-content {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}

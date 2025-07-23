@@ -1,0 +1,28 @@
+<div class="list-test-container">
+  <div class="text-center mt-8 mb-8">
+    <a [routerLink]="['/tematica']" class="back-link">
+      <i class="fas fa-arrow-left arrow-icon"></i> Regresar
+    </a>
+    <h2 class="list-title">{{ thematicTitle }}</h2>
+  </div>
+
+  <section class="w-full px-12">
+    <ul class="flex w-full">
+      <li class="list-item bg-green-500" *ngFor="let questionary of questionaries">
+        <div class="list-item-content">
+          <h5 class="questionary-title">{{ questionary.title }}</h5>
+          <p class="questionary-description">{{ questionary.description }}</p>
+        </div>
+        <div class="button-container">
+          <button
+            [disabled]="questionary.isDisabled"
+            class="questionary-button {{ questionary.buttonColor }}"
+            (click)="!questionary.isDisabled && navigateToQuestionary(questionary.id)"
+          >
+            {{ questionary.buttonText }}
+          </button>
+        </div>
+      </li>
+    </ul>
+  </section>
+</div>

@@ -1,0 +1,37 @@
+<!-- thematic-dialog.component.html -->
+
+<div *ngIf="!saveSuccess && !loading">
+  <h2>Agregar Temática</h2>
+  <div> 
+    <mat-form-field>
+      <input matInput placeholder="Título" [(ngModel)]="thematicTitle">
+    </mat-form-field>
+  </div>
+
+  <div class="file-upload-container">
+  <div *ngIf="!imageUrl" class="upload-icon" for="fileInput">
+    <input type="file" id="fileInput" (change)="handleImageUpload($event)" accept="image/*" style="display: none;">
+    <label for="fileInput">
+      <img src="assets/images/subir-imagen.png" alt="Subir Imagen">
+    </label>
+  </div>
+
+  <div *ngIf="imageUrl" class="file-info">
+    <img [src]="imageUrl" alt="Imagen seleccionada" class="image-preview">
+    <span class="delete-icon" (click)="deleteImage()"><img src="../../../../assets/images/eliminar.png" alt="Icono" class="icon-image"></span>
+  </div>
+</div>
+
+  <div class="button-container">
+    <button mat-button class="save-button" (click)="saveThematic()" [disabled]="loading">Guardar</button>
+    <button mat-button class="cancel-button" (click)="closeForm()">Cancelar</button>
+  </div>
+</div>
+
+<!-- Sección de carga y éxito -->
+<div *ngIf="loading || saveSuccess">
+  <mat-spinner *ngIf="loading" diameter="30"></mat-spinner>
+  <div *ngIf="saveSuccess">
+    <p>¡Guardado con éxito!</p>
+  </div>
+</div>

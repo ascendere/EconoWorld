@@ -1,0 +1,64 @@
+// Define tu base de tamaño de fuente
+$base-font-size: 16px;
+
+// Define los estilos para el fondo con el color deseado
+$background-color: #032B43;
+
+// Estilos generales
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+// Estilos específicos para cada elemento
+.dialog-title {
+  font-size: 1.5rem; // 1.5rem equivale a 24px con la base de font-size de 16px
+  color: $background-color;
+  padding: 1rem;
+}
+
+.dialog-content {
+  padding: 1rem;
+}
+
+.form-field {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.input-title,
+.input-description {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+  margin-bottom: 1rem;
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+
+  button {
+    padding: 0.3rem 0.5rem;
+    font-size: 1rem;
+    background-color: $background-color;
+    border: 0.125rem solid transparent;
+    border-radius: 0.5rem;
+    color: white;
+    transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+    margin: 0 0.5rem;
+    cursor: pointer;
+
+    &:hover {
+      background-color: transparent;
+      border-color: $background-color;
+      color: $background-color;
+    }
+  }
+
+  .save-button {
+    margin-right: 0.5rem;
+  }
+}

@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="econobook.component.scss">
+</head>
+
+<body>
+  <section class="search-section">
+    <div class="search-box">
+      <input type="text" placeholder="Buscar..." />
+      <button class="search-btn">
+        <img src="assets/images/lupa.png" alt="Buscar" width="16" height="16" />
+      </button>
+    </div>
+    <div class="filters">
+      <span>Lo Último</span>
+      <span>Ediciones</span>
+      <span>Tendencias</span>
+    </div>
+  </section>
+
+  <!-- CATEGORIAS -->
+  <div class="categorias-bottom-line"></div>
+  <section class="categorias">
+    <h2>Categorías Principales Libro</h2>
+    <div class="categorias-lista">
+
+      <div class="categoria">
+        <div class="categoria-inner">
+          <span class="badge">01</span>
+          <img src="assets/images/inversione.png" alt="Libro Inversión">
+        </div>
+        <p>Financias Publicas (80)</p>
+      </div>
+      <div class="categoria">
+        <div class="categoria-inner">
+          <span class="badge">02</span>
+          <img src="assets/images/dinero.png" alt="Psicología del Dinero">
+        </div>
+        <p>Teoría Económica (20)</p>
+      </div>
+      <div class="categoria">
+        <div class="categoria-inner">
+          <span class="badge">03</span>
+          <img src="assets/images/cambia.png" alt="Nunca Cambia">
+        </div>
+        <p>Macroeconomía (100)</p>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="mejor-valorados">
+    <div class="contenedor-blanco">
+      <div class="mejor-valorados-header">
+        <h2>Libros Mejor Valorados</h2>
+        <button class="btn-vermas" [routerLink]="['/econobook1']">Ver Más</button>
+      </div>
+
+      <div class="libros">
+
+        <!-- LIBRO 1 -->
+        <div class="libro">
+          <img class="portada" src="assets/images/inversione.png" alt="El Santo Grial de la Inversión">
+          <div class="info">
+            <span class="categoria">Finanzas Públicas</span>
+            <h3>El Santo Grial de la Inversión</h3>
+            <div class="autor-estrellas">
+              <div class="autor">
+                <img class="avatar-libro" src="assets/images/persona.png" alt="Tony Robbins">
+                <span>Tony Robbins</span>
+              </div>
+              <div class="rating">★★★★★</div>
+            </div>
+          </div>
+          <div class="acciones">
+            <img src="https://cdn-icons-png.flaticon.com/512/833/833472.png" alt="Corazón">
+            <img src="https://cdn-icons-png.flaticon.com/512/992/992651.png" alt="Guardar">
+            <img src="https://cdn-icons-png.flaticon.com/512/709/709612.png" alt="Ver">
+          </div>
+        </div>
+
+        <!-- LIBRO 2 -->
+        <div class="libro">
+          <img class="portada" src="assets/images/hombrerico.png" alt="El Hombre Más Rico de Babilonia">
+          <div class="info">
+            <span class="categoria">Finanzas Públicas</span>
+            <h3>El Hombre Más Rico de Babilonia</h3>
+            <div class="autor-estrellas">
+              <div class="autor">
+                <img class="avatar-libro" src="assets/images/persona.png" alt="George S. Clason">
+                <span>George S. Clason</span>
+              </div>
+              <div class="rating">★★★★☆</div>
+            </div>
+          </div>
+          <div class="acciones">
+            <img src="https://cdn-icons-png.flaticon.com/512/833/833472.png" alt="Corazón">
+            <img src="https://cdn-icons-png.flaticon.com/512/992/992651.png" alt="Guardar">
+            <img src="https://cdn-icons-png.flaticon.com/512/709/709612.png" alt="Ver">
+          </div>
+        </div>
+
+        <!-- LIBRO 3 -->
+        <div class="libro">
+          <img class="portada" src="assets/images/pasodelante.png" alt="Un Paso por Delante de Wall Street">
+          <div class="info">
+            <span class="categoria">Finanzas Públicas</span>
+            <h3>Un Paso por Delante de Wall Street</h3>
+            <div class="autor-estrellas">
+              <div class="autor">
+                <img class="avatar-libro" src="assets/images/persona.png" alt="Peter Lynch">
+                <span>Peter Lynch</span>
+              </div>
+              <div class="rating">★★★★★</div>
+            </div>
+          </div>
+          <div class="acciones">
+            <img src="https://cdn-icons-png.flaticon.com/512/833/833472.png" alt="Corazón">
+            <img src="https://cdn-icons-png.flaticon.com/512/992/992651.png" alt="Guardar">
+            <img src="https://cdn-icons-png.flaticon.com/512/709/709612.png" alt="Ver">
+          </div>
+        </div>
+
+        <!-- LIBRO 4 -->
+        <div class="libro">
+          <img class="portada" src="assets/images/inviertepoco.png" alt="Invierte con Poco">
+          <div class="info">
+            <span class="categoria">Finanzas Públicas</span>
+            <h3>Invierte con Poco</h3>
+            <div class="autor-estrellas">
+              <div class="autor">
+                <img class="avatar-libro" src="assets/images/persona.png" alt="Natalia De Santiago">
+                <span>Natalia De Santiago</span>
+              </div>
+              <div class="rating">★★★☆☆</div>
+            </div>
+          </div>
+          <div class="acciones">
+            <img src="https://cdn-icons-png.flaticon.com/512/833/833472.png" alt="Corazón">
+            <img src="https://cdn-icons-png.flaticon.com/512/992/992651.png" alt="Guardar">
+            <img src="https://cdn-icons-png.flaticon.com/512/709/709612.png" alt="Ver">
+          </div>
+        </div>
+
+        <!-- LIBRO 5 -->
+        <div class="libro">
+          <img class="portada" src="assets/images/padrerico.png" alt="Padre Rico Padre Pobre">
+          <div class="info">
+            <span class="categoria">Finanzas Públicas</span>
+            <h3>Padre Rico Padre Pobre</h3>
+            <div class="autor-estrellas">
+              <div class="autor">
+                <img class="avatar-libro" src="assets/images/persona.png" alt="Robert T. Kiyosaki">
+                <span>Robert T. Kiyosaki</span>
+              </div>
+              <div class="rating">★★★★★</div>
+            </div>
+          </div>
+          <div class="acciones">
+            <img src="https://cdn-icons-png.flaticon.com/512/833/833472.png" alt="Corazón">
+            <img src="https://cdn-icons-png.flaticon.com/512/992/992651.png" alt="Guardar">
+            <img src="https://cdn-icons-png.flaticon.com/512/709/709612.png" alt="Ver">
+          </div>
+        </div>
+
+        <!-- LIBRO 6 -->
+        <div class="libro">
+          <img class="portada" src="assets/images/transformacion.png" alt="La Gran Transformación">
+          <div class="info">
+            <span class="categoria">Finanzas Públicas</span>
+            <h3>La Gran Transformación</h3>
+            <div class="autor-estrellas">
+              <div class="autor">
+                <img class="avatar-libro" src="assets/images/persona.png" alt="Karl Polanyi">
+                <span>Karl Polanyi</span>
+              </div>
+              <div class="rating">★★★★★</div>
+            </div>
+          </div>
+          <div class="acciones">
+            <img src="https://cdn-icons-png.flaticon.com/512/833/833472.png" alt="Corazón">
+            <img src="https://cdn-icons-png.flaticon.com/512/992/992651.png" alt="Guardar">
+            <img src="https://cdn-icons-png.flaticon.com/512/709/709612.png" alt="Ver">
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+  
+  <!-- AUTOR DESTACADO -->
+  <section class="autores">
+    <h2 class="titulo-autores">Autor Destacado</h2>
+    <p class="descripcion-autores">
+      Interdum et malesuada fames ac ante ipsum primis in faucibus.<br>
+      Hecho en nulla nulla. Duis posuere ex lacus
+    </p>
+
+    <div class="autores-lista">
+      <!-- Autor 1 -->
+      <div class="autor-card">
+        <div class="foto">
+          <img src="assets/images/persona.png" alt="Natalia De Santiago">
+          <div class="insignia"></div>
+        </div>
+        <div class="info">
+          <p class="nombre">Natalia De Santiago</p>
+          <p class="libros">12 Libros publicados</p>
+        </div>
+      </div>
+
+      <!-- Autor 2 -->
+      <div class="autor-card">
+        <div class="foto">
+          <img src="assets/images/persona.png" alt="Karl Polanyi">
+          <div class="insignia"></div>
+        </div>
+        <div class="info">
+          <p class="nombre">Karl Polanyi</p>
+          <p class="libros">14 Libros publicados</p>
+        </div>
+      </div>
+
+      <!-- Autor 3 -->
+      <div class="autor-card">
+        <div class="foto">
+          <img src="assets/images/persona.png" alt="George S. Clason">
+          <div class="insignia"></div>
+        </div>
+        <div class="info">
+          <p class="nombre">George S. Clason</p>
+          <p class="libros">2 Libros publicados</p>
+        </div>
+      </div>
+
+      <!-- Autor 4 -->
+      <div class="autor-card">
+        <div class="foto">
+          <img src="assets/images/persona.png" alt="Peter Lynch">
+          <div class="insignia"></div>
+        </div>
+        <div class="info">
+          <p class="nombre">Peter Lynch</p>
+          <p class="libros">12 Libros publicados</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="titulo-container">
+    <h1 class="titulo-estilo">EconoWorld</h1>
+  </div>
+  <!-- BANNER ECONOBOOK -->
+  <section class="banner-econonews-container">
+  
+    <!-- Contenedor con imagen y overlay -->
+    <section class="banner-econonews">
+      <img src="assets/images/biblioteca.png" alt="EconoBook Banner" />
+
+      <div class="overlay-econobook">
+        <div class="etiqueta-econobook">EconoBook</div>
+        <h2>Explora todo el conocimiento...</h2>
+        <div class="texto-lateral">
+          <p>En</p>
+          <p>Nuestra</p>
+          <p>Biblioteca</p>
+          <p>Virtual</p>
+        </div>
+        <div class="texto-lateral-derecho">
+          <p>Crea y</p>
+          <p>Comparte</p>
+          <p>libros, artículos</p>
+          <p>y más</p>
+        </div>
+        <button class="btn-intentalo">¡Inténtalo Ahora!</button>
+      </div>
+    </section>
+  </section>
+
+  
+  <section class="testimonios">
+    <h2>Testimonios</h2>
+    <div class="testimonials-wrapper">
+
+      <!-- Testimonio 1 -->
+      <div class="testimonial-card superpuesta">
+        <div class="avatar">
+          <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Usuario" />
+        </div>
+        <img src="assets/images/figma1.jpg" alt="Testimonio" class="testimonio-img" />
+        <div class="info-bar">
+          <span class="pill">Comentado por</span>
+          <span class="pill">Sebastián Contento</span>
+          <span class="pill">
+            <img src="assets/images/reloj.png" alt="Fecha" width="14" />
+            Mayo 25, 2025
+          </span>
+        </div>
+        <div class="contenido">
+          <div class="rating">★★★★★</div>
+          <p>Lorem ipsum dolor sit amet, eiusmod</p>
+          <div class="separator"></div>
+          <div class="interactions">
+            <span><img src="assets/images/chat.png" alt="Comentarios" width="18" /> 25</span>
+            <span><img src="assets/images/gusta.png" alt="Likes" width="18" /> 35</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Testimonio 2 -->
+      <div class="testimonial-card superpuesta">
+        <div class="avatar">
+          <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Usuario" />
+        </div>
+        <img src="assets/images/figma1.jpg" alt="Testimonio" class="testimonio-img" />
+        <div class="info-bar">
+          <span class="pill">Comentado por</span>
+          <span class="pill">Laura Martínez</span>
+          <span class="pill">
+            <img src="assets/images/reloj.png" alt="Fecha" width="14" />
+            Abril 12, 2025
+          </span>
+        </div>
+        <div class="contenido">
+          <div class="rating">★★★★★</div>
+          <p>Lorem ipsum dolor sit amet, eiusmod</p>
+          <div class="separator"></div>
+          <div class="interactions">
+            <span><img src="assets/images/chat.png" alt="Comentarios" width="18" /> 18</span>
+            <span><img src="assets/images/gusta.png" alt="Likes" width="18" /> 42</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Testimonio 3 -->
+      <div class="testimonial-card superpuesta">
+        <div class="avatar">
+          <img src="https://randomuser.me/api/portraits/men/60.jpg" alt="Usuario" />
+        </div>
+        <img src="assets/images/figma1.jpg" alt="Testimonio" class="testimonio-img" />
+        <div class="info-bar">
+          <span class="pill">Comentado por</span>
+          <span class="pill">Carlos Núñez</span>
+          <span class="pill">
+            <img src="assets/images/reloj.png" alt="Fecha" width="14" />
+            Marzo 8, 2025
+          </span>
+        </div>
+        <div class="contenido">
+          <div class="rating">★★★★★</div>
+          <p>Lorem ipsum dolor sit amet, eiusmod</p>
+          <div class="separator"></div>
+          <div class="interactions">
+            <span><img src="assets/images/chat.png" alt="Comentarios" width="18" /> 12</span>
+            <span><img src="assets/images/gusta.png" alt="Likes" width="18" /> 28</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+  
+  <!-- FLOATING ACTION BUTTON -->
+  <div class="fab">
+    <img src="assets/images/robotica.png" alt="Chat" width="24" height="24">
+  </div>
+  
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-contact-block">
+      <div class="social-icons">
+        <a href="#"><img src="assets/images/facebook.png" alt="Facebook"></a>
+        <a href="#"><img src="assets/images/gorjeo.png" alt="Twitter"></a>
+        <a href="#"><img src="assets/images/instagram.png" alt="Instagram"></a>
+      </div>
+      <div class="info-block">
+        <div class="info-item">
+          <img src="assets/images/poste.png" width="16" />
+          <span><strong>Ubicación:</strong> San Cayetano Alto, Loja - Ecuador</span>
+        </div>
+        <div class="divider"></div>
+        <div class="info-item">
+          <img src="assets/images/manzana.png" width="16" />
+          <span><strong>Email:</strong> Buzón de Consultas</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-top footer-centered">
+      <div class="column">
+        <h4>Vínculos De Interés</h4>
+        <ul>
+          <li><img src="assets/images/graduacion.png" width="16" /> Carrera de Economía</li>
+          <li><img src="assets/images/directorio.png" width="16" /> Guía Estudiantes</li>
+          <li><img src="assets/images/tierra.png" width="16" /> Internacional</li>
+          <li><img src="assets/images/periodico.png" width="16" /> Noticias</li>
+          <li><img src="assets/images/aceptara.png" width="16" /> Admisiones</li>
+          <li><img src="assets/images/calendario.png" width="16" /> Eventos</li>
+        </ul>
+      </div>
+      <div class="column">
+        <h4>Estudiantes</h4>
+        <ul>
+          <li><img src="assets/images/calendario.png" width="16" /> Calendario Académico</li>
+          <li><img src="assets/images/directorio.png" width="16" /> Guía para Estudiantes</li>
+          <li><img src="assets/images/virtual.png" width="16" /> Aula Virtual</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="logo">UTPL | EconoWorld</div>
+      <div class="scroll-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">↑</div>
+      <div>Copyright 2025. EconoWorld By LiiD</div>
+    </div>
+  </footer>
+</body>
+
+</html>

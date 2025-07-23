@@ -1,0 +1,23 @@
+<div class="theme-card-container">
+  <div *ngFor="let thematic of thematics; let i = index" class="theme-card">
+    <!-- Al hacer clic en una tarjeta, llama al método 'navigateToListTest' -->
+    <a (click)="navigateToListTest(thematic.id, thematic.name)">
+      <div
+        class="max-w-sm bg-white border border-gray-200 rounded-lg shadow mx-auto card-content"
+        [ngStyle]="{ 'background-color': getBackgroundColor(i) }"
+      >
+        <img
+          *ngIf="getImageUrl(thematic)"
+          class="rounded-t-lg h-48 w-full object-cover"
+          [src]="getImageUrl(thematic)"
+          [alt]="thematic.name"
+        />
+        <div class="p-5">
+          <h5 class="mb-2 text-2xl font-semibold tracking-tight text-center dark:text-black">
+            {{ thematic.name }}
+          </h5>
+        </div>
+      </div>
+    </a>
+  </div>
+</div>

@@ -1,0 +1,42 @@
+.admin-dashboard {
+  padding: 2rem;
+  h1 {
+    margin-bottom: 2rem;
+    font-size: 2rem;
+    text-align: center;
+  }
+  .admin-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    button {
+      padding: 1rem 2rem;
+      font-size: 1rem;
+      border-radius: 8px;
+      border: none;
+      background: #1976d2;
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.2s;
+      &:hover {
+        background: #1565c0;
+      }
+    }
+  }
+}
+
+.btn-azul {
+  background-color: #1976d2;
+  color: #fff;
+  border-radius: 8px;
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  margin-bottom: 1rem;
+  transition: background 0.2s;
+  &:hover {
+    background-color: #1565c0;
+  }
+} 

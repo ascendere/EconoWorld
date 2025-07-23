@@ -1,0 +1,31 @@
+<div>
+  <h2>Agregar Sticker</h2>
+  <div>
+    <mat-form-field class="form-field">
+      <input matInput placeholder="Título" [(ngModel)]="title" class="input-field">
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field class="form-field">
+      <textarea matInput placeholder="Descripción" [(ngModel)]="description" class="input-field"></textarea>
+    </mat-form-field>
+  </div>
+  <div class="file-upload-container">
+    <div *ngIf="!image" class="upload-icon" for="fileInput">
+      <input type="file" id="fileInput" (change)="handleImageUpload($event)" accept="image/*" style="display: none;">
+      <label for="fileInput">
+        <img src="assets/images/subir-imagen.png" alt="Subir Imagen">
+      </label>
+    </div>
+
+    <div *ngIf="image" class="file-info">
+      <img [src]="image" alt="Imagen seleccionada" class="image-preview">
+      <span class="delete-icon" (click)="deleteImage($event)"><img src="../../../../assets/images/eliminar.png" alt="Icono" class="icon-image"></span>
+    </div>
+  </div>
+
+  <div class="button-container">
+    <button mat-button (click)="saveSticker()" class="button save-button">Guardar</button>
+    <button mat-button (click)="closeDialog()" class="button cancel-button">Cancelar</button>
+  </div>
+</div>

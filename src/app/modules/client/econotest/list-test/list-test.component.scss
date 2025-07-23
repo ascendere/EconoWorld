@@ -1,0 +1,156 @@
+/* Contenedor principal */
+/* Contenedor de la lista */
+ul {
+  display: flex; /* Cambiar a diseño horizontal */
+  justify-content: center; /* Centrar horizontalmente las tarjetas */
+  gap: 2rem; /* Espacio entre tarjetas */
+  list-style: none; /* Eliminar viñetas */
+  padding: 0; /* Quitar espaciado interno */
+  margin: 0; /* Quitar margen */
+  flex-wrap: wrap; /* Permitir que las tarjetas se ajusten en varias filas si no caben */
+}
+
+
+.list-test-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Botón de regresar */
+.back-link {
+  position: absolute; /* Para colocarlo en la parte superior izquierda */
+  top: 8rem; /* Espaciado desde la parte superior */
+  left: 1rem; /* Espaciado desde la parte izquierda */
+  display: inline-flex;
+  align-items: center;
+  font-size: 1.1rem;
+  color: #ffffff; /* Letras blancas */
+  background-color: #032b43; /* Fondo azul oscuro */
+  padding: 0.5rem 1rem; /* Espaciado interno */
+  border-radius: 0.5rem; /* Bordes redondeados */
+  font-weight: bold;
+  text-decoration: none;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  z-index: 10; /* Asegura que esté por encima de otros elementos */
+
+  &:hover {
+    background-color: #3f88c5; /* Cambia el color al pasar el cursor */
+    transform: scale(1.05); /* Efecto de zoom suave */
+  }
+
+  .arrow-icon {
+    margin-right: 0.5rem; /* Espaciado entre el ícono y el texto */
+  }
+}
+
+
+
+.list-title {
+  font-size: 3rem;
+  font-weight: normal;
+  color: #032b43;
+  text-align: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin-top: 9rem; /* Asegura espacio para el botón */
+  margin-bottom: 2rem;
+}
+
+/* Contenedor de la lista */
+ul {
+  display: flex; /* Cambiar a fila */
+  justify-content: center;
+  gap: 2rem; /* Espacio entre tarjetas */
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Estilo de cada tarjeta (list-item) */
+.list-item {
+  background-color: #ffffff;
+  border-radius: 1rem;
+  box-shadow: 0 0.25rem 0.625rem rgba(0, 0, 0, 0.2);
+  width: 300px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  /* Nivel fácil - verde */
+  &.bg-green-500 {
+    border-top: 0.5rem solid rgba(9, 214, 9, 0.8);
+  }
+
+  /* Nivel medio - amarillo */
+  &.bg-yellow-500 {
+    border-top: 0.5rem solid #ffaa00;
+  }
+
+  /* Nivel difícil - rojo */
+  &.bg-red-500 {
+    border-top: 0.5rem solid #ff6b6b;
+  }
+}
+
+/* Contenido de cada tarjeta */
+.list-item-content {
+  padding: 0;
+}
+
+/* Título del cuestionario */
+.questionary-title {
+  font-size: 1.5rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: bold;
+  color: #333333;
+}
+
+/* Descripción del cuestionario */
+.questionary-description {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 1rem;
+  color: #666666;
+}
+
+/* Contenedor del botón */
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Botón de la tarjeta */
+.questionary-button {
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &.bg-green-500 {
+    background-color: rgba(9, 214, 9, 0.8);
+  }
+
+  &.bg-yellow-500 {
+    background-color: #ffaa00;
+  }
+
+  &.bg-red-500 {
+    background-color: #ff6b6b;
+  }
+
+  &:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }
+}

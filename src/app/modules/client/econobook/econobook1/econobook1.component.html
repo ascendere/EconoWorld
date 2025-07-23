@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="econobook1.component.scss">
+</head>
+
+<body>
+  <div class="back-section">
+    <button class="back-btn" (click)="regresar()">
+      <span>← Regresar</span>
+    </button>
+  </div>
+
+  <section class="search-section">
+    <div class="search-box">
+      <input type="text" placeholder="Buscar..." />
+      <button class="search-btn">
+        <img src="assets/images/lupa.png" alt="Buscar" width="16" height="16" />
+      </button>
+    </div>
+    <div class="filters">
+      <span>Lo Último</span>
+      <span>Ediciones</span>
+      <span>Tendencias</span>
+    </div>
+  </section>
+
+  <section class="mejor-valorados">
+    <div class="contenedor-blanco">
+      <div class="mejor-valorados-header">
+        <h2>Libros Mejor Valorados</h2>
+      </div>
+
+      <div class="libros">
+
+        <!-- LIBRO 1 -->
+        <div class="libro">
+          <img class="portada" src="assets/images/inversione.png" alt="El Santo Grial de la Inversión">
+          <div class="info">
+            <span class="categoria">Finanzas Públicas</span>
+            <h3>El Santo Grial de la Inversión</h3>
+            <div class="autor-estrellas">
+              <div class="autor">
+                <img class="avatar-libro" src="assets/images/persona.png" alt="Tony Robbins">
+                <span>Tony Robbins</span>
+              </div>
+              <div class="rating">★★★★★</div>
+            </div>
+          </div>
+          <div class="acciones">
+            <img src="assets/icons/corazon.png" alt="Corazón">
+            <img src="assets/icons/guardar.png" alt="Guardar">
+            <img src="assets/icons/ver.png" alt="Ver">
+          </div>
+        </div>
+
+        <!-- LIBRO 2 -->
+        <div class="libro">
+          <img class="portada" src="assets/images/hombrerico.png" alt="El Hombre Más Rico de Babilonia">
+          <div class="info">
+            <span class="categoria">Finanzas Públicas</span>
+            <h3>El Hombre Más Rico de Babilonia</h3>
+            <div class="autor-estrellas">
+              <div class="autor">
+                <img class="avatar-libro" src="assets/images/persona.png" alt="George S. Clason">
+                <span>George S. Clason</span>
+              </div>
+              <div class="rating">★★★★☆</div>
+            </div>
+          </div>
+          <div class="acciones">
+            <img src="assets/icons/corazon.png" alt="Corazón">
+            <img src="assets/icons/guardar.png" alt="Guardar">
+            <img src="assets/icons/ver.png" alt="Ver">
+          </div>
+        </div>
+
+        <!-- LIBRO 3 -->
+        <div class="libro">
+          <img class="portada" src="assets/images/inversione.png" alt="Un Paso por Delante de Wall Street">
+          <div class="info">
+            <span class="categoria">Finanzas Públicas</span>
+            <h3>Un Paso por Delante de Wall Street</h3>
+            <div class="autor-estrellas">
+              <div class="autor">
+                <img class="avatar-libro" src="assets/images/persona.png" alt="Peter Lynch">
+                <span>Peter Lynch</span>
+              </div>
+              <div class="rating">★★★★★</div>
+            </div>
+          </div>
+          <div class="acciones">
+            <img src="assets/icons/corazon.png" alt="Corazón">
+            <img src="assets/icons/guardar.png" alt="Guardar">
+            <img src="assets/icons/ver.png" alt="Ver">
+          </div>
+        </div>
+
+        <!-- LIBRO 4 -->
+        <div class="libro">
+          <img class="portada" src="assets/images/hombrerico.png" alt="Invierte con Poco">
+          <div class="info">
+            <span class="categoria">Finanzas Públicas</span>
+            <h3>Invierte con Poco</h3>
+            <div class="autor-estrellas">
+              <div class="autor">
+                <img class="avatar-libro" src="assets/images/persona.png" alt="Natalia De Santiago">
+                <span>Natalia De Santiago</span>
+              </div>
+              <div class="rating">★★★☆☆</div>
+            </div>
+          </div>
+          <div class="acciones">
+            <img src="assets/icons/corazon.png" alt="Corazón">
+            <img src="assets/icons/guardar.png" alt="Guardar">
+            <img src="assets/icons/ver.png" alt="Ver">
+          </div>
+        </div>
+
+        <!-- LIBRO 5 -->
+        <div class="libro">
+          <img class="portada" src="assets/images/inversione.png" alt="Padre Rico Padre Pobre">
+          <div class="info">
+            <span class="categoria">Finanzas Públicas</span>
+            <h3>Padre Rico Padre Pobre</h3>
+            <div class="autor-estrellas">
+              <div class="autor">
+                <img class="avatar-libro" src="assets/images/persona.png" alt="Robert T. Kiyosaki">
+                <span>Robert T. Kiyosaki</span>
+              </div>
+              <div class="rating">★★★★★</div>
+            </div>
+          </div>
+          <div class="acciones">
+            <img src="assets/icons/corazon.png" alt="Corazón">
+            <img src="assets/icons/guardar.png" alt="Guardar">
+            <img src="assets/icons/ver.png" alt="Ver">
+          </div>
+        </div>
+
+        <!-- LIBRO 6 -->
+        <div class="libro">
+          <img class="portada" src="assets/images/hombrerico.png" alt="La Gran Transformación">
+          <div class="info">
+            <span class="categoria">Finanzas Públicas</span>
+            <h3>La Gran Transformación</h3>
+            <div class="autor-estrellas">
+              <div class="autor">
+                <img class="avatar-libro" src="assets/images/persona.png" alt="Karl Polanyi">
+                <span>Karl Polanyi</span>
+              </div>
+              <div class="rating">★★★★★</div>
+            </div>
+          </div>
+          <div class="acciones">
+            <img src="assets/icons/corazon.png" alt="Corazón">
+            <img src="assets/icons/guardar.png" alt="Guardar">
+            <img src="assets/icons/ver.png" alt="Ver">
+          </div>
+        </div>
+
+        <!-- LIBRO 7 -->
+        <div class="libro">
+          <img class="portada" src="assets/images/inversione.png" alt="La Psicología del Dinero">
+          <div class="info">
+            <span class="categoria">Economía Conductual</span>
+            <h3>La Psicología del Dinero</h3>
+            <div class="autor-estrellas">
+              <div class="autor">
+                <img class="avatar-libro" src="assets/images/persona.png" alt="Morgan Housel">
+                <span>Morgan Housel</span>
+              </div>
+              <div class="rating">★★★★☆</div>
+            </div>
+          </div>
+          <div class="acciones">
+            <img src="assets/icons/corazon.png" alt="Corazón">
+            <img src="assets/icons/guardar.png" alt="Guardar">
+            <img src="assets/icons/ver.png" alt="Ver">
+          </div>
+        </div>
+
+        <!-- LIBRO 8 -->
+        <div class="libro">
+          <img class="portada" src="assets/images/hombrerico.png" alt="Nunca Cambies">
+          <div class="info">
+            <span class="categoria">Macroeconomía</span>
+            <h3>Nunca Cambies</h3>
+            <div class="autor-estrellas">
+              <div class="autor">
+                <img class="avatar-libro" src="assets/images/persona.png" alt="Eduardo Martínez">
+                <span>Eduardo Martínez</span>
+              </div>
+              <div class="rating">★★★☆☆</div>
+            </div>
+          </div>
+          <div class="acciones">
+            <img src="assets/icons/corazon.png" alt="Corazón">
+            <img src="assets/icons/guardar.png" alt="Guardar">
+            <img src="assets/icons/ver.png" alt="Ver">
+          </div>
+        </div>
+
+        <!-- LIBRO 9 -->
+        <div class="libro">
+          <img class="portada" src="assets/images/inversione.png" alt="Principios de Economía">
+          <div class="info">
+            <span class="categoria">Teoría Económica</span>
+            <h3>Principios de Economía</h3>
+            <div class="autor-estrellas">
+              <div class="autor">
+                <img class="avatar-libro" src="assets/images/persona.png" alt="Gregory Mankiw">
+                <span>Gregory Mankiw</span>
+              </div>
+              <div class="rating">★★★★★</div>
+            </div>
+          </div>
+          <div class="acciones">
+            <img src="assets/icons/corazon.png" alt="Corazón">
+            <img src="assets/icons/guardar.png" alt="Guardar">
+            <img src="assets/icons/ver.png" alt="Ver">
+          </div>
+        </div>
+
+        <!-- LIBRO 10 -->
+        <div class="libro">
+          <img class="portada" src="assets/images/hombrerico.png" alt="Microeconomía Moderna">
+          <div class="info">
+            <span class="categoria">Microeconomía</span>
+            <h3>Microeconomía Moderna</h3>
+            <div class="autor-estrellas">
+              <div class="autor">
+                <img class="avatar-libro" src="assets/images/persona.png" alt="Hal Varian">
+                <span>Hal Varian</span>
+              </div>
+              <div class="rating">★★★★☆</div>
+            </div>
+          </div>
+          <div class="acciones">
+            <img src="assets/icons/corazon.png" alt="Corazón">
+            <img src="assets/icons/guardar.png" alt="Guardar">
+            <img src="assets/icons/ver.png" alt="Ver">
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="titulo-container">
+    <h1 class="titulo-estilo">EconoWorld</h1>
+  </div>
+  <section class="nivel-libro">
+    <div class="contenedor-blanco">
+      <div class="mejor-valorados-header">
+        <h2>Nivel de Libro</h2>
+      </div>
+      <div class="libros">
+        <!-- LIBRO 1 -->
+        <div class="libro">
+          <img class="portada" src="assets/images/inversione.png" alt="El Santo Grial de la Inversión">
+          <div class="info">
+            <span class="categoria">Grado</span>
+            <h3>El Santo Grial de la Inversión</h3>
+            <div class="autor-estrellas">
+              <div class="autor">
+                <img class="avatar-libro" src="assets/images/persona.png" alt="Tony Robbins">
+                <span>Tony Robbins</span>
+              </div>
+              <div class="rating">★★★★★</div>
+            </div>
+          </div>
+          <div class="acciones">
+            <img src="https://cdn-icons-png.flaticon.com/512/833/833472.png" alt="Corazón">
+            <img src="https://cdn-icons-png.flaticon.com/512/992/992651.png" alt="Guardar">
+            <img src="https://cdn-icons-png.flaticon.com/512/709/709612.png" alt="Ver">
+          </div>
+        </div>
+
+        <!-- LIBRO 2 -->
+        <div class="libro">
+          <img class="portada" src="assets/images/hombrerico.png" alt="El Hombre Más Rico de Babilonia">
+          <div class="info">
+            <span class="categoria">Posgrado</span>
+            <h3>El Hombre Más Rico de Babilonia</h3>
+            <div class="autor-estrellas">
+              <div class="autor">
+                <img class="avatar-libro" src="assets/images/persona.png" alt="George S. Clason">
+                <span>George S. Clason</span>
+              </div>
+              <div class="rating">★★★★☆</div>
+            </div>
+          </div>
+          <div class="acciones">
+            <img src="https://cdn-icons-png.flaticon.com/512/833/833472.png" alt="Corazón">
+            <img src="https://cdn-icons-png.flaticon.com/512/992/992651.png" alt="Guardar">
+            <img src="https://cdn-icons-png.flaticon.com/512/709/709612.png" alt="Ver">
+          </div>
+        </div>
+
+        <!-- LIBRO 3 -->
+        <div class="libro">
+          <img class="portada" src="assets/images/inversione.png" alt="El Santo Grial de la Inversión">
+          <div class="info">
+            <span class="categoria">Maestría</span>
+            <h3>El Santo Grial de la Inversión</h3>
+            <div class="autor-estrellas">
+              <div class="autor">
+                <img class="avatar-libro" src="assets/images/persona.png" alt="Tony Robbins">
+                <span>Tony Robbins</span>
+              </div>
+              <div class="rating">★★★★★</div>
+            </div>
+          </div>
+          <div class="acciones">
+            <img src="https://cdn-icons-png.flaticon.com/512/833/833472.png" alt="Corazón">
+            <img src="https://cdn-icons-png.flaticon.com/512/992/992651.png" alt="Guardar">
+            <img src="https://cdn-icons-png.flaticon.com/512/709/709612.png" alt="Ver">
+          </div>
+        </div>
+
+        <!-- LIBRO 4 -->
+        <div class="libro">
+          <img class="portada" src="assets/images/hombrerico.png" alt="El Hombre Más Rico de Babilonia">
+          <div class="info">
+            <span class="categoria">Grado</span>
+            <h3>El Hombre Más Rico de Babilonia</h3>
+            <div class="autor-estrellas">
+              <div class="autor">
+                <img class="avatar-libro" src="assets/images/persona.png" alt="George S. Clason">
+                <span>George S. Clason</span>
+              </div>
+              <div class="rating">★★★★☆</div>
+            </div>
+          </div>
+          <div class="acciones">
+            <img src="https://cdn-icons-png.flaticon.com/512/833/833472.png" alt="Corazón">
+            <img src="https://cdn-icons-png.flaticon.com/512/992/992651.png" alt="Guardar">
+            <img src="https://cdn-icons-png.flaticon.com/512/709/709612.png" alt="Ver">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-contact-block">
+      <div class="social-icons">
+        <a href="#"><img src="assets/images/facebook.png" alt="Facebook"></a>
+        <a href="#"><img src="assets/images/gorjeo.png" alt="Twitter"></a>
+        <a href="#"><img src="assets/images/instagram.png" alt="Instagram"></a>
+      </div>
+      <div class="info-block">
+        <div class="info-item">
+          <img src="assets/images/poste.png" width="16" />
+          <span><strong>Ubicación:</strong> San Cayetano Alto, Loja - Ecuador</span>
+        </div>
+        <div class="divider"></div>
+        <div class="info-item">
+          <img src="assets/images/manzana.png" width="16" />
+          <span><strong>Email:</strong> Buzón de Consultas</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-top footer-centered">
+      <div class="column">
+        <h4>Vínculos De Interés</h4>
+        <ul>
+          <li><img src="assets/images/graduacion.png" width="16" /> Carrera de Economía</li>
+          <li><img src="assets/images/directorio.png" width="16" /> Guía Estudiantes</li>
+          <li><img src="assets/images/tierra.png" width="16" /> Internacional</li>
+          <li><img src="assets/images/periodico.png" width="16" /> Noticias</li>
+          <li><img src="assets/images/aceptara.png" width="16" /> Admisiones</li>
+          <li><img src="assets/images/calendario.png" width="16" /> Eventos</li>
+        </ul>
+      </div>
+      <div class="column">
+        <h4>Estudiantes</h4>
+        <ul>
+          <li><img src="assets/images/calendario.png" width="16" /> Calendario Académico</li>
+          <li><img src="assets/images/directorio.png" width="16" /> Guía para Estudiantes</li>
+          <li><img src="assets/images/virtual.png" width="16" /> Aula Virtual</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="logo">UTPL | EconoWorld</div>
+      <div class="scroll-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">↑</div>
+      <div>Copyright 2025. EconoWorld By LiiD</div>
+    </div>
+  </footer>
+</body>
+
+</html>

@@ -1,0 +1,27 @@
+<!-- thematics.component.html -->
+<div class="thematics-container">
+  <!-- Botón para regresar al inicio -->
+  <div class="volver-inicio">
+    <a routerLink="/">
+      <button mat-button>Regresar al inicio</button>
+    </a>
+  </div>
+  <button mat-button class="add-thematic-button" (click)="openAddThematicDialog()">Crear temática</button>
+
+  <!-- Aquí puedes mostrar la información de cada temática -->
+  <div *ngFor="let thematic of thematics" class="thematic">
+    <div *ngIf="thematic">
+      <!-- Verificamos si thematic no es undefined -->
+      <div class="thematic-content m">
+        <div class="thematic-name">{{ thematic.name }}</div>
+        <div class="buttons">
+          <a [routerLink]="['/admin/questionary', thematic.id]"><img src="../../../../assets/images/education-quiz.png" alt="Icono" class="icon-image"></a>
+          <a [routerLink]="['/admin/stickers', thematic.id]"><img src="../../../../assets/images/albumes.png" alt="Icono" class="icon-image"></a>
+          <button mat-icon-button (click)="openEditThematicDialog(thematic)"><img src="../../../../assets/images/editar-texto.png" alt="Icono" class="icon-image"></button>
+          <button mat-icon-button (click)="deleteThematic(thematic)"><img src="../../../../assets/images/eliminar.png" alt="Icono" class="icon-image"></button>
+        </div>
+      </div>
+      <img *ngIf="thematic.image?.mapa?.url" [src]="thematic.image.mapa.url" alt="Tematica Image">
+    </div>
+  </div>
+</div>

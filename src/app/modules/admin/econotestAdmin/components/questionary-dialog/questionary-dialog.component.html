@@ -1,0 +1,30 @@
+<h2 mat-dialog-title class="dialog-title">Crear Cuestionario</h2>
+
+<div mat-dialog-content class="dialog-content">
+  <!-- Input para el título -->
+  <mat-form-field class="form-field">
+    <mat-label>Título</mat-label>
+    <input matInput placeholder="Título" [(ngModel)]="title" name="title" />
+  </mat-form-field>
+
+  <!-- Textarea para la descripción -->
+  <mat-form-field class="form-field">
+    <mat-label>Descripción</mat-label>
+    <textarea matInput placeholder="Descripción" [(ngModel)]="description" name="description"></textarea>
+  </mat-form-field>
+
+  <!-- Selector para el nivel -->
+  <mat-form-field class="form-field">
+    <mat-label>Nivel</mat-label>
+    <mat-select [(ngModel)]="level" name="level">
+      <mat-option value="easy">Fácil</mat-option>
+      <mat-option value="medium">Medio</mat-option>
+      <mat-option value="hard">Difícil</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
+<div mat-dialog-actions class="dialog-actions">
+  <button mat-button color="primary" (click)="saveQuestionary()">Guardar</button>
+  <button mat-button color="warn" (click)="cancel()">Cancelar</button>
+</div>

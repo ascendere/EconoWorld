@@ -1,0 +1,95 @@
+/* stickers.component.scss */
+
+.buttons-container {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem 1rem; /* Ajusta el margen según sea necesario */
+}
+
+.button-left,
+.button-right {
+  width: 10.9375rem;
+  height: 3rem;
+  border-radius: 1.5rem;
+  background: #032B43;
+  position: absolute;
+  top: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button-left a,
+.button-right a,
+.button-left button,
+.button-right button {
+  color: white;
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+.button-left {
+  position: absolute;
+  left: 0;
+}
+
+.button-right {
+  position: absolute;
+  right: 0;
+}
+
+.title {
+  text-align: center;
+  margin-top: 5rem;
+}
+
+.stickers-container {
+  margin-top: 5rem; /* Ajusta el margen superior según sea necesario */
+  overflow-y: auto; /* Permite el desplazamiento horizontal si las tarjetas exceden el ancho del contenedor */
+  display: flex; /* Alinea los stickers verticalmente */
+  flex-wrap: wrap; /* Permite que los stickers se envuelvan automáticamente si no hay suficiente espacio vertical */
+  justify-content: center; /* Centra los stickers horizontalmente dentro del contenedor */
+  flex-direction: row; /* Alinea los stickers en columnas en lugar de filas */
+}
+
+
+.card-container {
+  display: flex; /* Alinea las tarjetas horizontalmente */
+  flex-wrap: nowrap; /* Evita que las tarjetas se envuelvan a la siguiente línea */
+}
+
+.card {
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  margin: 1rem;
+  width: 15rem; /* Ajusta el ancho de las tarjetas */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card-content {
+  padding: 1rem;
+  text-align: center; /* Centra el contenido */
+}
+
+.card-content img {
+  width: 100%;
+  height: 10rem; /* Establece el alto deseado para las imágenes */
+  object-fit: cover; /* Ajusta el tamaño de la imagen manteniendo su relación de aspecto */
+}
+
+.card-content .sticker-title {
+  margin-top: 1rem; /* Espacio entre la imagen y el título */
+  font-size: 1.25rem; /* Tamaño del título */
+}
+
+.card-content .sticker-description {
+  margin-top: 0.5rem; /* Espacio entre el título y la descripción */
+}
+
+// .no-stickers-message img{
+//   align-items: center;
+//   opacity:  0.1;
+//   display: block; /* Asegura que la imagen sea un bloque */
+//   margin: 0 auto; /* Centra la imagen horizontalmente */
+// }

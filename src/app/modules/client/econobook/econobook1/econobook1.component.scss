@@ -1,0 +1,777 @@
+
+/* ======================== VARIABLES ======================== */
+:root {
+  --primary-blue: #003f72;
+  --secondary-yellow: #eaab00;
+  --light-gray: #e0ded8;
+  --deep-red: #a71930;
+  --soft-gray: #7d7d7d;
+  --white: #ffffff;
+  --dark: #1b1b1b;
+  --search-blue: #40a9ff;
+}
+
+/* ========== BUSCADOR CON FILTROS Y LUPA ========== */
+.search-section {
+  background-color: #40a9ff; /* azul claro institucional */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ffffff;
+  border-radius: 2rem;
+  overflow: hidden;
+  background-color: transparent;
+}
+
+.search-box input {
+  padding: 0.5rem 1rem;
+  background-color: transparent;
+  color: #ffffff;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  width: 200px;
+}
+
+.search-btn {
+  border-left: 1px solid #ffffff;
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-btn img {
+  width: 16px;
+  height: 16px;
+}
+
+/* ========== FILTROS DE NOTICIAS ========== */
+.filters {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: #ffffff;
+}
+
+.filters span {
+  position: relative;
+  padding: 0 0.5rem;
+}
+
+.filters span:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  right: -1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1px;
+  height: 1.2rem;
+  background-color: #ffffff;
+}
+.search-box input::placeholder {
+  color: #ffffff !important; /* blanco puro */
+  opacity: 1;
+}
+
+/* ========== RESPONSIVO ========== */
+@media (max-width: 768px) {
+  .search-section {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .search-box {
+    width: 100%;
+  }
+
+  .search-box input {
+    width: 100%;
+  }
+
+  .filters {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+}
+
+/* ======================== Sección Mejor Valorados ======================== */
+.mejor-valorados {
+  padding: 4rem 2rem;
+  background-color: #003f72; /* Fondo azul principal */
+}
+
+.contenedor-blanco {
+  position: relative;
+  background-color: #ffffff; /* Fondo blanco para el contenedor de los libros */
+  border-radius: 1rem;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.mejor-valorados-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.mejor-valorados-header h2 {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #000000; /* Texto blanco en el encabezado */
+}
+
+.libros {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Dos libros por fila */
+  gap: 1.5rem;
+}
+
+.libro {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: white; /* Fondo blanco para cada libro */
+  padding: 1rem 1.5rem;
+  border: 1px solid #ddd;
+  border-radius: 1rem;
+  position: relative;
+  gap: 1rem;
+  transition: box-shadow 0.3s;
+
+  &:hover {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.libro .portada {
+  width: 70px;
+  height: auto;
+  border-radius: 0.5rem;
+  flex-shrink: 0;
+}
+
+.libro .info {
+  flex: 1;
+  margin-left: 1rem;
+}
+
+.libro .categoria {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #003f72; /* Azul */
+  display: block;
+  margin-bottom: 0.2rem;
+  background-color: transparent;
+}
+
+.libro h3 {
+  font-size: 1rem;
+  font-weight: bold;
+  margin: 0 0 0.4rem;
+  color: #111;
+}
+
+.libro .autor-estrellas {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.libro .autor {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.85rem;
+  color: #0077cc;
+}
+
+.libro .autor .avatar-libro {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #EAAB00;
+}
+
+.libro .rating {
+  color: #f5b301;
+  font-size: 1rem;
+  display: flex;
+  gap: 0.2rem;
+}
+
+.libro .acciones {
+  position: absolute;
+  top: 1rem;
+  right: 1.2rem;
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+}
+
+.libro .acciones img {
+  width: 22px;
+  height: 22px;
+  background-color: white;
+  border-radius: 50%;
+  padding: 4px;
+  box-shadow: 0 0 0 1px #ddd;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: #f0f0f0;
+    transform: scale(1.1);
+  }
+}
+
+/* ======================== Responsive Design ======================== */
+@media (max-width: 1024px) {
+  .libros {
+    grid-template-columns: repeat(2, 1fr); /* Mantener dos libros por fila */
+  }
+}
+
+@media (max-width: 768px) {
+  .libros {
+    grid-template-columns: 1fr; /* Un solo libro por fila en pantallas pequeñas */
+  }
+
+  .libro {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* ===================== Responsive Design ===================== */
+@media (max-width: 1024px) {
+  .libros {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .libros {
+    grid-template-columns: 1fr;
+  }
+
+  .libro {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+
+/* ======================== Título Estilo ======================== */
+.titulo-container {
+  position: relative;
+  padding: 4rem 2rem;
+  background-color: #003f72; /* Fondo azul */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 0.9vh; /* Para ocupar toda la altura de la pantalla */
+}
+
+.titulo-estilo {
+  position: relative;
+  font-size: 8rem;
+  font-weight: bold;
+  color: white;
+  font-family: 'Poppins', sans-serif; /* Tipografía moderna */
+  display: inline-block;
+  z-index: 1; /* Asegura que el texto esté por encima del fondo */
+}
+
+.titulo-estilo::before {
+  content: "EconoWorld"; /* El texto que deseas mostrar como fondo */
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 8rem;
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.08); /* Color tenue para el fondo */
+  transform: rotate(-10deg); /* Rotación para un estilo más dinámico */
+  z-index: -1; /* Lo pone detrás del texto principal */
+  text-align: center; /* Alinea el texto en el centro */
+  width: 100%;
+}
+
+/* ======================== Responsive Design ======================== */
+@media (max-width: 1024px) {
+  .titulo-estilo {
+    font-size: 6rem; /* Tamaño más pequeño para pantallas medianas */
+  }
+}
+
+@media (max-width: 768px) {
+  .titulo-estilo {
+    font-size: 4rem; /* Tamaño más pequeño para pantallas pequeñas */
+  }
+}
+
+/* ======================== Sección Nivel de Libro ======================== */
+.nivel-libro {
+  padding: 4rem 2rem;
+  background-color: #003f72;
+  position: relative;
+}
+
+.nivel-libro .background-text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 8rem;
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.08);
+  z-index: 0;
+  padding: 2rem;
+  pointer-events: none;
+  width: 100%;
+  transform: rotate(-10deg); /* Rotación para un estilo más dinámico */
+  text-align: center; /* Alinea el texto en el centro */
+  font-family: 'Poppins', sans-serif; /* Tipografía moderna */
+}
+
+.nivel-libro .contenedor-blanco {
+  position: relative;
+  background-color: white;
+  border-radius: 1rem;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  z-index: 1;
+  text-align: center;
+}
+
+.nivel-libro .mejor-valorados-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.nivel-libro .mejor-valorados-header h2 {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #05080a;
+  text-transform: uppercase; /* Para darle un estilo más moderno */
+  letter-spacing: 4px; /* Espaciado entre letras para mayor impacto */
+  font-family: 'Roboto', sans-serif; /* Fuente más limpia y moderna */
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Sombra para un efecto visual más dinámico */
+}
+
+.nivel-libro .libros {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.nivel-libro .libro {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: white;
+  padding: 1rem 1.5rem;
+  border: 1px solid #ddd;
+  border-radius: 1rem;
+  position: relative;
+  gap: 1rem;
+  transition: box-shadow 0.3s;
+}
+
+.nivel-libro .libro:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+}
+
+.nivel-libro .libro .portada {
+  width: 70px;
+  height: auto;
+  border-radius: 0.5rem;
+  flex-shrink: 0;
+}
+
+.nivel-libro .libro .info {
+  flex: 1;
+  margin-left: 1rem;
+}
+
+.nivel-libro .libro .categoria {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #003f72;
+  display: block;
+  margin-bottom: 0.2rem;
+  background-color: transparent;
+}
+
+.nivel-libro .libro h3 {
+  font-size: 1rem;
+  font-weight: bold;
+  margin: 0 0 0.4rem;
+  color: #111;
+}
+
+.nivel-libro .libro .autor-estrellas {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.nivel-libro .libro .autor {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.85rem;
+  color: #0077cc;
+}
+
+.nivel-libro .libro .autor .avatar-libro {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #EAAB00;
+}
+
+.nivel-libro .libro .rating {
+  color: #f5b301;
+  font-size: 1rem;
+  display: flex;
+  gap: 0.2rem;
+}
+
+.nivel-libro .libro .acciones {
+  position: absolute;
+  top: 1rem;
+  right: 1.2rem;
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+}
+
+.nivel-libro .libro .acciones img {
+  width: 22px;
+  height: 22px;
+  background-color: white;
+  border-radius: 50%;
+  padding: 4px;
+  box-shadow: 0 0 0 1px #ddd;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.nivel-libro .libro .acciones img:hover {
+  background-color: #f0f0f0;
+  transform: scale(1.1);
+}
+
+/* ======================== Responsive Design ======================== */
+@media (max-width: 1024px) {
+  .nivel-libro .libros {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .nivel-libro .libros {
+    grid-template-columns: 1fr;
+  }
+
+  .nivel-libro .libro {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ====================== Footer ======================
+
+footer {
+  background: #003f72;
+  padding: 3rem 2rem 1rem;
+  color: white;
+  border-top-left-radius: 0rem;
+  border-top-right-radius: 0rem;
+  box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.footer-contact-block {
+  background-color: #003f72;
+  padding: 1.5rem 2rem;
+  border-radius: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.footer-contact-block .social-icons {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.footer-contact-block .social-icons img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+}
+
+.footer-contact-block .social-icons img:hover {
+  transform: scale(1.1);
+}
+
+.footer-contact-block .info-block {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.footer-contact-block .info-item {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  color: white;
+  font-size: 0.95rem;
+}
+
+.footer-contact-block .info-item img {
+  width: 20px;
+}
+
+.footer-contact-block .divider {
+  width: 1px;
+  height: 50px;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.footer-top {
+  display: flex;
+  justify-content: center;
+  gap: 4rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  align-items: flex-start;
+  text-align: left;
+}
+
+.footer-top .contact {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.footer-top .contact div {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1rem;
+}
+
+.footer-social {
+  display: flex;
+  gap: 1rem;
+}
+
+.footer-social a img {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+}
+
+.footer-social a img:hover {
+  transform: scale(1.1);
+}
+
+.footer-top .column {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 300px;
+}
+
+.footer-top .column h4 {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  color:  #7d7d7d;
+  display: inline-block;
+  padding-bottom: 0.4rem;
+  position: relative;
+
+  &::after {
+    content: "";
+    display: block;
+    height: 3px;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(to right, #ffffff 20px, #ffce00 20px);
+  }
+}
+
+
+
+.footer-top .column ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-top .column ul li {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+}
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  padding-top: 1rem;
+  font-size: 0.9rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.footer-bottom .logo {
+  font-weight: bold;
+  font-size: 1.3rem;
+}
+
+.footer-bottom .scroll-top {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #ffce00;
+  color: #003c7b;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.footer-bottom .scroll-top:hover {
+  transform: translateY(-3px);
+  background: #ffd633;
+}
+
+.btn-back {
+  background: #40a9ff;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 0.7rem 2.2rem;
+  font-size: 1.2rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 2rem 0 2rem 2rem;
+  box-shadow: 0 2px 8px rgba(64, 169, 255, 0.15);
+  transition: background 0.2s;
+}
+.btn-back:hover {
+  background: #1890ff;
+}
+
+/* ======================== BACK SECTION ======================== */
+.back-section {
+    background-color: #003f72;
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+}
+
+.back-btn {
+    background-color: #40a9ff;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.back-btn:hover {
+    background-color: #1890ff;
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .footer-top {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .footer-top .column ul li {
+    justify-content: center;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .footer-contact-block {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .footer-contact-block .info-block {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .footer-contact-block .divider {
+    display: none;
+  }
+}

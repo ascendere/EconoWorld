@@ -1,0 +1,97 @@
+/* thematics.component.scss */
+/* thematics.component.scss */
+.thematics-container {
+    max-width: 82rem; /* Ancho máximo para el contenedor en rem */
+    margin: 0 auto; /* Centrar el contenedor */
+    padding: 0 1rem; /* Añadir un poco de espacio a los lados en rem */
+    
+    .add-thematic-button {
+      width: 10.9375rem; /* 175px en rem */
+      height: 3rem; /* 48px en rem */
+      border-radius: 1.5rem; /* 12px en rem */
+      gap: 0.25rem; /* 4px en rem */
+      background: #3F88C5;
+      font-size: 1rem; /* Tamaño de fuente para Medium */
+      color: #FFFFFF; /* Color del texto */
+      margin: 1.5rem 0;
+
+      &.mat-button.mat-primary {
+        background-color: #3F88C5; /* Estilo Primary */
+      }
+    }
+  
+    .thematic {
+      width: 100%;
+      border-radius: 0.5rem; /* Radio de borde en rem */
+      background: #FFFFFF;
+      margin-bottom: 1.25rem; /* Espacio entre los rectángulos en rem */
+      overflow: hidden; /* Para ocultar la imagen si se sale del contenedor */
+      box-shadow: 0.1875rem 0.1875rem 0.625rem 0rem rgba(0, 0, 0, 0.25); /* Sombra según tus especificaciones */
+  
+      .thematic-content {
+        padding: 0.75rem 1.5rem; /* Padding según tus especificaciones en rem */
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+  
+        .thematic-name {
+          font-weight: bold;
+        }
+  
+        .buttons {
+          display: flex;
+          align-items: center;
+  
+          .icon-image {
+            width: 1.5rem; /* Tamaño deseado para la imagen en rem */
+            height: 1.5rem; /* Tamaño deseado para la imagen en rem */
+            margin-left: 0.950rem; /* Espacio entre los iconos en rem */
+            filter: invert(68%) sepia(10%) saturate(2039%) hue-rotate(191deg) brightness(93%) contrast(87%); /* Cambia el color del ícono */
+          }
+        }
+      }
+  
+      img {
+        display: block;
+        max-width: 100%;
+        height: auto;
+      }
+    }
+  
+    /* Estilos para dispositivos móviles */
+    @media screen and (max-width: 48rem) {
+      padding: 0 0.5rem; /* Reducir el espacio a los lados en dispositivos móviles en rem */
+  
+      .thematic {
+        .thematic-content {
+          flex-direction: column; /* Cambiar la dirección de los elementos en dispositivos móviles */
+          align-items: flex-start; /* Alinear los elementos al principio en dispositivos móviles */
+          
+          .buttons {
+            margin-top: 0.625rem; /* Espacio entre el nombre y los botones en dispositivos móviles en rem */
+  
+            .material-icons {
+              margin-left: 0; /* Quitar el margen izquierdo de los iconos en dispositivos móviles */
+              margin-right: 0.625rem; /* Agregar margen derecho a los iconos en dispositivos móviles en rem */
+            }
+          }
+        }
+      }
+    }
+  }
+
+.btn-azul {
+  background-color: #1976d2;
+  color: #fff;
+  border-radius: 8px;
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  margin-bottom: 1rem;
+  transition: background 0.2s;
+  &:hover {
+    background-color: #1565c0;
+  }
+}
+  

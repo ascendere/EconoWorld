@@ -1,0 +1,46 @@
+<!-- admin/stickers/stickers.component.html -->
+
+<div>
+  <!-- Botón para volver al panel principal del admin -->
+  <div class="volver-panel-admin">
+    <a routerLink="/admin">
+    </a>
+  </div>
+
+  <div class="buttons-container">
+    <div class="button-left">
+      <a routerLink="/admin/tematicas">
+        <button mat-button>Volver a Temáticas</button>
+      </a>
+    </div>
+
+    <!-- Botón para agregar sticker -->
+    <div class="button-right">
+      <button mat-button (click)="openAddStickerDialog()">Agregar Sticker</button>
+    </div>
+  </div>
+
+  <h2 class="title">Álbum de Stickers - {{ thematicName }}</h2>
+
+  <!-- Contenedor de las tarjetas de stickers -->
+   <!-- Contenedor de las tarjetas de stickers -->
+   <div class="stickers-container">
+    <!-- Lista de stickers -->
+    <ng-container *ngIf="stickers.length > 0; else noStickers">
+      <div class="card" *ngFor="let sticker of stickers">
+        <div class="card-content">
+          <img [src]="sticker.image.url" alt="{{ sticker.title }}">
+          <h3 class="sticker-title">{{ sticker.title }}</h3>
+          <p class="sticker-description">{{ sticker.description }}</p>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+
+  <!-- Mensaje para casos sin stickers -->
+  <ng-template #noStickers>
+    <div class="no-stickers-message">
+      <img src="../../../../assets/images/no-fotos.png" alt="No hay stickers disponibles">
+    </div>
+  </ng-template>
+</div>

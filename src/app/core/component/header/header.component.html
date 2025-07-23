@@ -1,0 +1,76 @@
+<!-- HEADER GENERAL -->
+<nav class="flex items-center justify-between flex-wrap p-6" style="background-color: #003f72;">
+  <!-- Logo dinámico -->
+  <div class="flex-shrink-0 text-white flex items-center space-x-2">
+    <span class="font-bold text-2xl">UTPL</span>
+    <span class="border-l-2 border-white h-6"></span>
+    <span class="font-sans font-semibold text-xl tracking-tight">{{ tituloActual }}</span>
+  </div>
+
+  <!-- ENLACES para LANDING -->
+  <div *ngIf="currentRoute === '/'" class="flex items-center space-x-6">
+    <a routerLink="/" class="text-white hover:underline font-medium admin-button">Inicio</a>
+    <a routerLink="/nosotros" class="text-white hover:underline font-medium admin-button">Sobre Nosotros</a>
+    <a routerLink="/servicios" class="text-white hover:underline font-medium admin-button">Servicios</a>
+    <button (click)="openLoginModal('/econotest')"
+      class="ml-4 px-5 py-2 rounded-xl border-2 border-yellow-400 text-white font-medium hover:bg-yellow-500 hover:text-blue-900 shadow-md transition">
+      Empecemos
+    </button>
+  </div>
+
+  <!-- CONTENIDO PARA OTRAS RUTAS -->
+  <div *ngIf="currentRoute !== '/'" class="flex items-center space-x-6">
+
+<!-- ECONOTEST Y TEMATICA -->
+<ng-container *ngIf="isAuthenticated && (currentRoute.startsWith('/econotest') || currentRoute.startsWith('/tematica'))">
+  <a *ngIf="mostrarAlbum" (click)="navigateToStickers()" class="text-white ml-4 admin-button">Álbum</a>
+  <a [routerLink]="'/tematica'" class="text-white ml-4 admin-button">Portada</a>
+</ng-container>
+
+<!-- Solo mostrar nombre de usuario en EconoTest/Tematica -->
+<div *ngIf="mostrarNombre" class="text-white mr-4 name">{{ userName }}</div>
+
+<!-- LOGIN y LOGOUT siguen igual -->
+<ng-container *ngIf="isAuthenticated && !(userRole === 'admin' && currentRoute.startsWith('/admin'))">
+  <button (click)="signOut()"
+    class="text-sm p-4 cursor-pointer rounded-lg text-white bg-button-blue hover:border-transparent hover:text-brand-blue hover:bg-white ml-4">
+    <i class="fas fa-sign-out-alt mr-2"></i> Cerrar sesión
+  </button>
+</ng-container>
+  </div>
+</nav>
+<!-- MODAL LOGIN -->
+<div id="loginModal" #loginModal class="modal">
+  <div class="modal-content m">
+    <!-- ❌ BOTÓN DE CIERRE -->
+    <span class="close" (click)="closeLoginModal()">&times;</span>
+
+    <span class="font-sans font-semibold text-xl tracking-tight">
+      <span>UTPL | {{ tituloActual }}</span>
+    </span>
+
+    <div class="google">
+      <button class="modal-button" (click)="signIn('google')">
+        <div class="button-content">
+          <img
+            src="https://firebasestorage.googleapis.com/v0/b/economia-cromos.appspot.com/o/banner%2FLOGOGOOGLE.png?alt=media&token=87a7cce3-6ac9-4229-af0d-91c77794ded3"
+            alt="Google Logo" class="logo">
+          <span>Continuar con Google</span>
+        </div>
+      </button>
+    </div>
+
+    <div class="utpl">
+      <button class="modal-button" (click)="signIn('ms')">
+        <div class="button-content">
+          <img
+            src="https://firebasestorage.googleapis.com/v0/b/economia-cromos.appspot.com/o/banner%2FLOGOUTPL.png?alt=media&token=6b5a80e7-5fbd-4580-96cb-44469fce4475"
+            alt="UTPL Logo" class="logo">
+          <span>Continuar con UTPL</span>
+        </div>
+      </button>
+    </div>
+
+    <p class="modal-text">¡Empieza ya!</p>
+  </div>
+</div>

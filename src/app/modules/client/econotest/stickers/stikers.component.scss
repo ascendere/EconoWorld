@@ -1,0 +1,487 @@
+/* Contenedor principal */
+.album-container {
+  display: flex;
+  gap: 2.5rem;
+  height: 100vh;
+  width: 100%;
+  padding: 2rem;
+  background: linear-gradient(135deg, white);
+  box-sizing: border-box;
+}
+
+/* Panel lateral de filtros */
+.filters {
+  flex: 0.25;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  max-width: 220px;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  background: #3f88c5;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Botón de regresar */
+.btn-back {
+  background-color: #1a4b8c;
+  color: white;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 2rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: fit-content;
+}
+
+.btn-back:hover {
+  background-color: #15407a;
+}
+
+/* Título Álbumes */
+h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0.5rem 0;
+}
+
+/* Lista de temas */
+.themes {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.themes li {
+  width: 100%;
+}
+
+.themes button {
+  width: 100%;
+  padding: 0.6rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-align: center;
+  border: none;
+  border-radius: 0.8rem;
+  background-color: #f0f0f0;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  /* NUEVO: evitar desbordamiento de texto */
+  word-wrap: break-word;
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+
+.themes button.active {
+  background-color: #ff4b4b;
+  color: white;
+}
+
+.themes button:hover:not(.active) {
+  background-color: #e5e5e5;
+}
+
+/* Sección de progreso */
+.progress {
+  margin-top: auto;
+  padding: 0.5rem 0;
+}
+
+.progress p {
+  font-size: 0.9rem;
+  color: #333;
+  margin: 0 0 0.5rem 0;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 0.4rem;
+  background-color: #f0f0f0;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: #ff4b4b;
+  border-radius: 1rem;
+  transition: width 0.3s ease;
+}
+
+/* Contador de progreso */
+.progress span {
+  display: block;
+  font-size: 0.85rem;
+  color: #666;
+  margin-top: 0.3rem;
+  text-align: right;
+}
+
+/* Contenedor del libro */
+.book-container {
+  flex: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  position: relative;
+  perspective: 1000px;
+}
+
+/* Libro */
+.book {
+  width: 100%;
+  height: 90%;
+  background-image: url('../../../../../assets/images/libro-abierto-tapa-marron.png');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+/* Página del libro */
+.page {
+  width: 80%;
+  height: 75%;
+  margin: 0 auto;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  overflow-y: auto;
+  position: relative;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  transition: transform 0.6s ease-in-out;
+}
+
+/* Efectos de giro */
+.page.turning {
+  transform: rotateY(-180deg);
+}
+
+.page.turning-back {
+  transform: rotateY(0);
+}
+
+/* Numeración de páginas */
+.book::after {
+  content: attr(data-page);
+  position: absolute;
+  bottom: 10%;
+  right: 15%;
+  font-size: 1.2rem;
+  color: #666;
+}
+
+/* Grid de cromos */
+.stickers-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  justify-items: center;
+  align-items: flex-start;
+  padding: 0.5rem;
+}
+
+/* Cromos individuales */
+.sticker {
+  width: 100%;
+  max-width: 140px;
+  aspect-ratio: 3/4;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  position: relative;
+}
+
+.sticker:hover {
+  transform: scale(1.05);
+}
+
+.sticker img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Modal */
+.sticker-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.sticker-modal-content {
+  position: relative;
+  width: 300px;
+  height: fit-content;
+  perspective: 1000px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0;
+}
+
+.close-button {
+  position: absolute;
+  top: -2rem;
+  right: -3rem;
+  background: white;
+  border: none;
+  color: #333;
+  font-size: 1.5rem;
+  font-weight: bold;
+  border-radius: 50%;
+  cursor: pointer;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+}
+
+.close-button:hover {
+  background: #ff4b4b;
+  color: white;
+}
+
+.rotate-button {
+  margin-top: 1.5rem;
+  background-color: white;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border-radius: 2rem;
+  cursor: pointer;
+  border: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  transition: background-color 0.3s ease;
+}
+
+.rotate-button:hover {
+  background-color: #15407a;
+}
+
+.rotate-icon {
+  width: 1.2rem;
+  height: 1.2rem;
+  color: white;
+}
+
+.sticker-card {
+  width: 100%;
+  aspect-ratio: 3/4;
+  transform-style: preserve-3d;
+  transition: transform 0.6s;
+  position: relative;
+  cursor: pointer;
+}
+
+.sticker-card.flipped {
+  transform: rotateY(180deg);
+}
+
+.sticker-card-front,
+.sticker-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  background-color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.sticker-card-front {
+  color: white;
+  font-size: 1.2rem;
+  background-color: transparent;
+}
+
+.sticker-card-front img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 10px;
+}
+
+.sticker-card-back {
+  transform: rotateY(180deg);
+  padding: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  overflow-y: auto;
+}
+
+.stickers-vertical {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  min-height: 400px;
+}
+.stickers-vertical .sticker {
+  margin-bottom: 2rem;
+  max-width: 220px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.stickers-vertical .sticker:last-child {
+  margin-bottom: 0;
+}
+
+.page-button.absolute-left {
+  position: absolute;
+  left: 2vw;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  background: #00263a;
+  border-radius: 50%;
+  border: none;
+  padding: 0.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+.page-button.absolute-right {
+  position: absolute;
+  right: 2vw;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  background: #00263a;
+  border-radius: 50%;
+  border: none;
+  padding: 0.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.page-number-vertical {
+  position: absolute;
+  right: 8vw;
+  bottom: 2vw;
+  font-size: 1.2rem;
+  color: #00263a;
+  background: rgba(255,255,255,0.7);
+  padding: 0.3rem 0.8rem;
+  border-radius: 1rem;
+}
+
+.stickers-double-page {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  min-height: 400px;
+  overflow-y: hidden;
+}
+.stickers-side {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1 1 0;
+  gap: -100rem;
+  min-width: 160px;
+  margin-top: 0;
+  height: 100%;
+  justify-content: flex-start;
+  padding-top: -100rem;
+  padding-bottom:  0rem;
+}
+
+/* Ocultar scrollbar en la zona del libro */
+.stickers-double-page::-webkit-scrollbar {
+  display: none;
+}
+.stickers-double-page {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.stickers-side.left {
+  margin-right: 2vw;
+}
+.stickers-side.right {
+  margin-left: 2vw;
+}
+.stickers-side .sticker {
+  max-width: 160px;
+  width: 90%;
+  display: flex;
+  justify-content: center;
+}
+.stickers-side .sticker img {
+  width: 100%;
+  height: auto;
+  max-height: 180px;
+  object-fit: contain;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+}
+
+@media (max-width: 900px) {
+  .stickers-double-page {
+    flex-direction: column;
+    align-items: center;
+    min-height: 220px;
+  }
+  .stickers-side {
+    flex-direction: row;
+    min-width: unset;
+    gap: 0.4rem;
+    margin-top: 0;
+  }
+  .stickers-side .sticker {
+    max-width: 120px;
+  }
+  .stickers-side .sticker img {
+    max-height: 120px;
+  }
+}
+
+@media (max-width: 600px) {
+  .stickers-double-page {
+    min-height: 120px;
+  }
+  .stickers-side {
+    gap: 0.15rem;
+    margin-top: 0;
+  }
+  .stickers-side .sticker {
+    max-width: 90vw;
+  }
+  .stickers-side .sticker img {
+    max-height: 90vw;
+  }
+}

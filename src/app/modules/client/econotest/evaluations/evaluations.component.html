@@ -1,0 +1,90 @@
+<div class="container mx-auto">
+  <div class="card-content">
+    <h1 class="question-title text-center">TEST</h1>
+
+    <div class="relative pt-1">
+      <div class="flex mb-2 items-center justify-between">
+        <div>
+          <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-blue-600 bg-blue-200">
+            Progreso
+          </span>
+        </div>
+        <div class="text-right">
+          <span class="text-xs font-semibold inline-block text-blue-600">
+            {{ currentQuestionIndex + 1 }}/{{ totalQuestions }}
+          </span>
+        </div>
+      </div>
+      <div class="overflow-hidden h-2 mb-4 text-xs flex rounded bg-blue-200">
+        <div
+          [style.width]="((currentQuestionIndex + 1) / totalQuestions) * 100 + '%'"
+          class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-blue-500">
+        </div>
+      </div>
+    </div>
+
+    <div class="flex justify-between items-center">
+      <div class="timer-container text-center mb-4">
+        <div class="clock">
+          <span class="time" [ngClass]="{ 'red': timeLeftPerQuestion[currentQuestionIndex] <= 20 }">
+            {{ formattedTime }}
+          </span>
+        </div>
+        <p *ngIf="isTimeUp" class="time-up-message">¡El tiempo se acabó!</p>
+      </div>
+
+      <div class="correct-counter text-right">
+        <p class="font-bold text-green-600">
+          Correctas: {{ getCurrentCorrectAnswers() }} / {{ totalQuestions }}
+        </p>
+      </div>
+    </div>
+
+    <div *ngIf="questions.length > 0 && !quizFinished" class="text-center">
+      <div class="mb-4">
+        <h2 class="text-2xl">{{ questions[currentQuestionIndex]?.title }}</h2>
+        <form>
+          <ul class="options">
+            <li *ngFor="let option of questions[currentQuestionIndex]?.answers; let i = index" class="option">
+              <label class="inline-flex items-center mt-3">
+                <input
+                  type="radio"
+                  class="form-radio h-5 w-5 text-gray-600"
+                  [(ngModel)]="selectedOption[currentQuestionIndex]"
+                  [value]="option"
+                  name="option{{ currentQuestionIndex }}"
+                  [disabled]="answered[currentQuestionIndex]"
+                />
+                <span class="ml-2 text-gray-700">{{ option.title }}</span>
+              </label>
+            </li>
+          </ul>
+        </form>
+      </div>
+    </div>
+
+    <div *ngIf="quizFinished" class="mt-8 text-center">
+      <h2 class="text-2xl font-bold text-green-700 mb-4">¡Test finalizado!</h2>
+      <p class="text-lg text-green-600">Correctas: {{ correctAnswers }}</p>
+      <p class="text-lg text-red-600">Incorrectas: {{ incorrectAnswers }}</p>
+      <p class="text-lg text-gray-700">Tiempo total: {{ totalTimeSpent }} segundos</p>
+      <p class="text-lg text-purple-700 font-bold">Cromos ganados: {{ earnedStickers }}</p>
+    </div>
+  </div>
+
+  <div class="buttons-container">
+    <button
+      *ngIf="!quizFinished && currentQuestionIndex > 0"
+      class="button button-previous-next font-bold py-2 px-4 rounded"
+      (click)="previousQuestion()">
+      Anterior
+    </button>
+
+    <button
+      *ngIf="!quizFinished"
+      class="button font-bold py-2 px-4 rounded {{ currentQuestionIndex === totalQuestions - 1 ? 'button-finish' : 'button-previous-next' }}"
+      (click)="nextQuestion()">
+      {{ currentQuestionIndex === totalQuestions - 1 ? 'Finalizar' : 'Siguiente' }}
+    </button>
+  </div>
+</div>

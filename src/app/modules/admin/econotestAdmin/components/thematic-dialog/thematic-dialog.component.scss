@@ -1,0 +1,73 @@
+// thematic-dialog.component.scss
+
+h2 {
+  margin-bottom: 1.25rem; /* 20px en rem */
+}
+
+mat-form-field {
+  width: 100%;
+  margin-bottom: 1.25rem; /* 20px en rem */
+}
+
+.file-upload-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.25rem; /* 20px en rem */
+
+  input[type="file"] {
+    display: none;
+  }
+
+  .upload-icon {
+    cursor: pointer;
+    margin-right: 0.625rem; /* 10px en rem */
+  }
+
+  .delete-icon {
+    cursor: pointer;
+    margin-left: 0.625rem; /* 10px en rem */
+  }
+
+  .file-info {
+    margin-left: 0.625rem; /* 10px en rem */
+  }
+
+  .icon-image {
+    width: 1.5rem; /* Tamaño deseado para la imagen en rem */
+    height: 1.5rem; /* Tamaño deseado para la imagen en rem */
+    margin-left: 0.950rem; /* Espacio entre los iconos en rem */
+    filter: invert(68%) sepia(10%) saturate(2039%) hue-rotate(191deg) brightness(93%) contrast(87%); /* Cambia el color del ícono */
+  }
+}
+
+.image-preview {
+  margin-top: 1.25rem; /* 20px en rem */
+  max-width: 100%;
+}
+
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+
+  .cancel-button,
+  .save-button {
+    padding: 0.2rem 0.5rem; // Ajusta el relleno de los botones
+    font-size: 1rem; // Ajusta el tamaño de fuente de los botones
+    background-color: #032B43; // Color de fondo inicial
+    border: 0.125rem solid transparent; // Borde inicial transparente
+    border-radius: 0.5rem;
+    color: white; // Color del texto
+    transition: background-color 0.3s, border-color 0.3s, color 0.3s; // Transición para el cambio de color
+    margin: 0 0.5rem; // Margen entre los botones
+    cursor: pointer; // Cambia el cursor al pasar sobre los botones
+  }
+
+  .cancel-button:hover,
+  .save-button:hover {
+    background-color: transparent; // Cambia el color de fondo al pasar el mouse
+    border-color: #032B43; // Cambia el color del borde al pasar el mouse
+    color: #032B43; // Cambia el color del texto al pasar el mouse
+  }
+}
+
+

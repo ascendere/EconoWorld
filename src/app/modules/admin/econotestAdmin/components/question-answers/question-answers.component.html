@@ -1,0 +1,47 @@
+<div class="container">
+    <!-- Botón para volver al panel principal del admin -->
+    <div class="volver-panel-admin">
+        <a routerLink="/admin">
+        </a>
+    </div>
+
+    <a (click)="goToThematics()">
+        <button mat-icon-button class="back-button">
+            Volver a temáticas
+        </button>
+    </a>
+
+    <h2 class="title">Preguntas y Respuestas</h2>
+
+    <!-- Contenedor principal -->
+    <div class="carousel-container">
+        <!-- Botón para desplazar a la izquierda -->
+        <button class="scroll-button left" (click)="scrollLeft()">
+            <img src="../../../../assets/images/left-arrow.png" alt="Izquierda">
+        </button>
+
+        <!-- Contenedor de tarjetas con scroll horizontal -->
+        <div class="scrollable-horizontal">
+            <div class="card" *ngFor="let questionAndAnswer of questionsAndAnswers; let i = index">
+                <div class="question">
+                    <h3>{{ questionAndAnswer.title }}</h3>
+                    <div class="delete-icon" (click)="deleteQuestion(i)">
+                        <img src="../../../../assets/images/eliminar.png" alt="Eliminar">
+                    </div>
+                </div>
+                <ul>
+                    <li *ngFor="let answer of questionAndAnswer.answers" class="answer">
+                        <span>{{ answer.title }}</span>
+                        <img *ngIf="answer.isCorrect" src="../../../../assets/images/controlar.png" alt="Correcto">
+                        <img *ngIf="!answer.isCorrect" src="../../../../assets/images/cerca.png" alt="Incorrecto">
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Botón para desplazar a la derecha -->
+        <button class="scroll-button right" (click)="scrollRight()">
+            <img src="../../../../assets/images/right-arrow.png" alt="Derecha">
+        </button>
+    </div>
+</div>

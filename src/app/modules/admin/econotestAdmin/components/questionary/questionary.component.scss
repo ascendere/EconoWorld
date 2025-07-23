@@ -1,0 +1,113 @@
+.questionary-container {
+    max-width: 82rem;
+    margin: 0 auto;
+    padding: 5rem 1rem 0; /* Añadimos espacio en la parte superior para dejar espacio para el título */
+    position: relative;
+
+    .button-container1,
+    .add-button-container {
+        width: 10.9375rem;
+        height: 3rem;
+        border-radius: 1.5rem;
+        background: #032B43;
+        font-size: 1rem;
+        color: #FFFFFF;
+        position: absolute;
+        top: 2rem; /* Posicionamos los botones en la parte superior */
+    }
+
+    .button-container1 {
+        left: 1rem; /* Posicionamos el botón de "Volver a Temáticas" a la izquierda */
+    }
+
+    .add-button-container {
+        right: 1rem; /* Posicionamos el botón de "Agregar Cuestionario" a la derecha */
+    }
+
+    h2 {
+        text-align: center; /* Centramos el título */
+        margin-top: 2rem; /* Ajustamos el margen superior para que esté debajo de los botones */
+    }
+
+    .questionary-list {
+        list-style: none;
+        padding: 0;
+        margin-top: 2rem; /* Ajustamos el margen superior para evitar que el listado se superponga con los botones y el título */
+    }
+
+    .questionary-item {
+        width: 100%;
+        border-radius: 0.5rem;
+        background: #FFFFFF;
+        margin-bottom: 1.25rem;
+        overflow: hidden;
+        box-shadow: 0.1875rem 0.1875rem 0.625rem 0rem rgba(0, 0, 0, 0.25);
+        padding: 0.75rem 1.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .questionary-title {
+            font-weight: bold;
+        }
+
+        .button-container {
+            display: flex;
+            align-items: center;
+
+            .view-button, .add-button, .delete-button{
+                color: #FFFFFF;
+                padding: 0.5rem;
+                border: none;
+                cursor: pointer;
+                margin-left: 1rem;
+
+                img {
+                    width: 1.5rem;
+                    height: 1.5rem;
+                    margin-left: 0.5rem;
+                }
+
+                .icon-image {
+                    width: 1.5rem;
+                    height: 1.5rem;
+                    margin-left: 0.950rem;
+                    filter: invert(68%) sepia(10%) saturate(2039%) hue-rotate(191deg) brightness(93%) contrast(87%);
+                }
+            }
+        }
+    }
+
+    @media screen and (max-width: 48rem) {
+        padding: 5rem 0.5rem 0; /* Reducimos el espacio en los lados para dispositivos móviles */
+
+        .button-container1,
+        .add-button-container {
+            position: static; /* Quitamos la posición absoluta */
+            width: auto; /* Ajustamos el ancho automáticamente */
+            height: auto; /* Ajustamos el alto automáticamente */
+            border-radius: inherit; /* Heredamos el radio de borde del contenedor */
+            margin: 0.625rem auto; /* Ajustamos el margen automáticamente */
+            text-align: center; /* Centramos el texto */
+        }
+
+        h2 {
+            margin-top: 2rem; /* Ajustamos el margen superior para que esté debajo de los botones */
+        }
+
+        .questionary-list {
+            margin-top: 2rem; /* Ajustamos el margen superior para evitar que el listado se superponga con los botones y el título */
+        }
+
+        .questionary-item {
+            flex-direction: column; /* Cambiamos la dirección de los elementos */
+            align-items: flex-start; /* Alineamos los elementos al inicio */
+
+            .button-container {
+                margin-top: 0.625rem; /* Ajustamos el margen superior */
+                justify-content: center; /* Centramos los botones */
+                flex-direction: row; /* Volvemos a la dirección de fila */
+            }
+        }
+    }
+}

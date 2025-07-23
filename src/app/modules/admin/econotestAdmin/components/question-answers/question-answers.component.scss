@@ -1,0 +1,119 @@
+.container {
+    text-align: center;
+    margin-top: 2rem;
+    position: relative;
+    max-width: 100%;
+}
+
+.back-button {
+    width: 11rem;
+    height: 3rem;
+    border-radius: 1.5rem;
+    background: #032B43;
+    font-size: 1rem;
+    color: #FFFFFF;
+    position: absolute;
+    left: 1rem;
+}
+
+.title {
+    padding-top: 5rem;
+    margin-bottom: 1.5rem;
+    align-items: center;
+}
+
+/* Contenedor principal del carrusel */
+.carousel-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin: 1rem auto;
+    max-width: 90%; /* Limita el ancho del carrusel */
+}
+
+/* Contenedor desplazable horizontalmente */
+.scrollable-horizontal {
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth; /* Desplazamiento suave */
+    padding: 1rem 0;
+    max-width: 100%;
+}
+
+.scrollable-horizontal::-webkit-scrollbar {
+    display: none; /* Oculta la barra de desplazamiento */
+}
+
+/* Tarjetas */
+.card {
+    border: 0.2rem solid #032B43;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 20rem;
+    margin: 0 1rem; /* Espacio entre las tarjetas */
+    padding: 1rem;
+    position: relative;
+    flex-shrink: 0; /* Evita que las tarjetas se reduzcan */
+}
+
+.question {
+    border: 0.2rem solid #FFBA08;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    color: #032B43;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.answer {
+    border-bottom: 0.1rem solid #ccc;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.answer img {
+    width: 1.25rem;
+    height: auto;
+    object-fit: cover;
+    margin-left: 1rem;
+}
+
+/* Icono de eliminación */
+.delete-icon {
+    position: absolute;
+    bottom: 0.5rem;
+    right: 0.5rem;
+    cursor: pointer;
+    width: 1.5rem;
+    height: auto;
+}
+
+/* Botones de navegación */
+.scroll-button {
+    background: #032B43;
+    border: none;
+    border-radius: 50%;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    position: absolute;
+    z-index: 10;
+}
+
+.scroll-button img {
+    width: 1.5rem;
+    height: auto;
+}
+
+.scroll-button.left {
+    left: -2rem; /* Ajusta la posición del botón izquierdo */
+}
+
+.scroll-button.right {
+    right: -2rem; /* Ajusta la posición del botón derecho */
+}

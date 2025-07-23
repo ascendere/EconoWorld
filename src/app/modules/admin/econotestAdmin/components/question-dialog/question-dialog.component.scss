@@ -1,0 +1,106 @@
+$base-font-size: 16px; // Define tu base de tamaño de fuente, por ejemplo, 16px
+
+// Define los estilos para el fondo con el color deseado
+$background-color: #032B43;
+
+// Estilos generales
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+
+// Estilos específicos para cada elemento
+.dialog-title {
+  font-size: 1.5rem; // 1.5rem equivale a 24px con la base de font-size de 16px
+  color: $background-color;
+  padding: 1rem;
+}
+
+.dialog-content {
+  padding: 1rem;
+}
+
+.form-field {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.input-field {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem; // 4px en rem
+}
+
+.answer-container {
+  margin-bottom: 1rem;
+}
+
+.answer-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; // Alinea los elementos horizontalmente
+}
+
+.response-cell {
+    display: flex;
+    align-items: center;
+    margin-top: 1rem; // Agrega espacio entre las celdas
+  }
+
+.checkbox-label {
+  margin-left: 0.5rem;
+}
+
+.checkbox {
+    margin-top: 0.5rem;
+    width: 1.5rem; // Aumenta el tamaño del cuadro de selección
+    height: 1.5rem; // Aumenta el tamaño del cuadro de selección
+  }
+
+.add-button,
+.delete-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+  margin-left: 1rem; // Espacio entre el botón de eliminar y la celda de respuesta
+
+  img {
+    max-width: 100%; // Establece el tamaño máximo al ancho del contenedor
+    height: auto; // Mantiene la proporción original
+    width: 2.3rem; // Ajusta el tamaño de la imagen
+    height: 1.5rem; // Ajusta el tamaño de la imagen
+  }
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.button-container {
+    display: flex;
+    justify-content: center; // Alinea los botones horizontalmente
+  }
+  
+  .save-button,
+  .close-button {
+    padding: 0.5rem 1rem; // Ajusta el relleno de los botones
+    font-size: 1rem; // Ajusta el tamaño de fuente de los botones
+    background-color: #032B43; // Color de fondo inicial
+    border: 0.125rem solid transparent; // Borde inicial transparente
+    border-radius: 0.5rem;
+    color: white; // Color del texto
+    transition: background-color 0.3s, border-color 0.3s, color 0.3s; // Transición para el cambio de color
+    margin: 0 0.5rem;
+
+    &:hover {
+      background-color: transparent; // Cambia el color de fondo al pasar el mouse
+      border-color: #032B43; // Cambia el color del borde al pasar el mouse
+      color: #032B43; 
+    }
+  }
+  
+  

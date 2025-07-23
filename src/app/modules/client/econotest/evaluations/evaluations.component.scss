@@ -1,0 +1,108 @@
+.container {
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-content {
+  max-width: 40rem;
+  width: 90%;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 0.4rem 0.6rem rgba(0, 0, 0, 0.1);
+  border: 0.2rem solid #032B43;
+  text-align: left;
+  margin-bottom: 2rem;
+  margin-top: 4rem;
+}
+
+.card-content .question-title {
+  text-align: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin-bottom: 1rem;
+}
+
+.options {
+  list-style: none;
+  padding: 0;
+}
+
+.option {
+  margin-bottom: 1rem;
+}
+
+.buttons-container {
+  display: flex;
+  justify-content: center;
+}
+
+.button {
+  margin: 0.5rem;
+}
+
+.button-previous-next {
+  border: 2px solid #032B43;
+  background: #032B43;
+  color: white;
+}
+
+.button-previous-next:hover {
+  background: #032B43;
+}
+
+.button-finish {
+  background-color: #032B43;
+  color: #FFFFFF;
+  border: 2px solid #FFFFFF;
+}
+
+.button-finish:hover {
+  background-color: #FFFFFF;
+  border: 2px solid #032B43;
+  color: #032B43;
+}
+
+.timer-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.clock {
+  width: 100px;
+  height: 100px;
+  border: 6px solid #007bff;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f8f9fa;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
+}
+
+.time {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #000;
+}
+
+.time.red {
+  color: #dc3545;
+}
+
+.time-up-message {
+  font-size: 1rem;
+  margin-top: 10px;
+  color: #dc3545;
+  font-weight: bold;
+}
+
+.correct-counter {
+  font-size: 1.25rem;
+  margin: 1rem;
+}

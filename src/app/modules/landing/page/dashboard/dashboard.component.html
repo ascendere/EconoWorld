@@ -1,0 +1,264 @@
+<div *ngIf="userRole === 'admin'; else landingContent">
+  <!-- Loader o pantalla en blanco para admin -->
+</div>
+<ng-template #landingContent>
+  <!-- TODO el contenido original de la landing va aquí -->
+  <!DOCTYPE html>
+  <html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EconoWorld</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="dashboard.component.scss">
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+  </style>
+</head>
+
+<body>
+  <header class="container">
+    <div class="hero-bg"></div>
+    <div class="hero-fade"></div>
+
+    <div class="tagline">La economía explicada fácil</div>
+    <div class="title">ECONOWORLD</div>
+    <div class="subtitle">LA FORMA FACIL DE ENTENDER TU DINERO</div>
+
+    <!-- Aquí cambia el href para que apunte al id de la sección -->
+    <a href="#servicios" class="btn">Ver Servicios</a>
+
+    <div class="hero-deco"></div>
+  </header>
+
+  <div class="section-wrapper">
+
+<div class="section-wrapper">
+  <section class="section">
+    <div class="video-figure">
+      <img src="assets/images/iamgens.png" alt="Video Preview" />
+    </div>
+
+    <div class="info-panel">
+      <h2>¿Por qué elegir EconoWorld?</h2>
+
+      <div class="info-item">
+        <div class="info-item-icon">
+          <img src="assets/images/calidad.png" alt="Calidad" width="32" height="32" />
+        </div>
+        <div class="info-item-content">
+          <h3>Resultado de Calidad</h3>
+          <p>Ofrecemos contenidos claros y efectivos para que comprendas la economía de forma precisa y confiable.</p>
+        </div>
+      </div>
+
+      <div class="info-item">
+        <div class="info-item-icon">
+          <img src="assets/images/red.png" alt="Equipo de Expertos" width="32" height="32" />
+        </div>
+        <div class="info-item-content">
+          <h3>Equipo de Expertos</h3>
+          <p>Contamos con un grupo de profesionales dedicados a hacer que el aprendizaje sea accesible, dinámico y actualizado.</p>
+        </div>
+      </div>
+
+      <div class="info-item">
+        <div class="info-item-icon">
+          <img src="assets/images/acepta.png" alt="Éxito" width="32" height="32" />
+        </div>
+        <div class="info-item-content">
+          <h3>Alto Índice de Éxito</h3>
+          <p>Nuestro enfoque interactivo y práctico garantiza una experiencia educativa exitosa y enriquecedora.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+  </div>
+
+
+  <section id="servicios" class="services-panel">
+    <div class="header">
+      <div class="tag-button">Servicios</div>
+      <button class="explore-btn"><span>Explorar Más</span> →</button>
+    </div>
+
+    <div class="services-card-container">
+      <div class="services-intro">Economía en juego: aprende, practica y destaca</div>
+
+      <div class="service-items">
+
+        <div class="service-box" (click)="redirigirSegunRol('econotest')">
+          <img src="assets/images/aprobado.png" alt="EconoTest">
+          <h3>EconoTest</h3>
+          <div class="service-description">Pruebas interactivas para evaluar tu comprensión económica.</div>
+        </div>
+
+        <div class="service-box" (click)="redirigirSegunRol('econoplay')">
+          <img src="assets/images/mando-retro.png" alt="EconoPlay">
+          <h3>EconoPlay</h3>
+          <div class="service-description">Juegos para aprender economía de forma divertida.</div>
+        </div>
+
+        <div class="service-box" (click)="redirigirSegunRol('econonews')">
+          <img src="assets/images/noticias.png" alt="EconoNews">
+          <h3>EconoNews</h3>
+          <div class="service-description">Accede a noticias económicas actuales y relevantes.</div>
+        </div>
+
+        <div class="service-box" (click)="redirigirSegunRol('econobook')">
+          <img src="assets/images/librob.png" alt="EconoBook">
+          <h3>EconoBook</h3>
+          <div class="service-description">Biblioteca digital de libros y recursos económicos.</div>
+        </div>
+
+        <div class="service-box" (click)="redirigirSegunRol('econodata')">
+          <img src="assets/images/datos.png" alt="EconoData">
+          <h3>EconoData</h3>
+          <div class="service-description">Datos y estadísticas económicas para análisis.</div>
+        </div>
+
+        <div class="service-box" (click)="redirigirSegunRol('econobot')">
+          <img src="assets/images/robotica.png" alt="EconoBot">
+          <h3>EconoBot</h3>
+          <div class="service-description">Asistente virtual para responder tus dudas económicas.</div>
+        </div>
+
+        <div class="service-box" (click)="redirigirSegunRol('econovideos')">
+          <img src="assets/images/video.png" alt="econovideos">
+          <h3>EconoVidios</h3>
+          <div class="service-description">Comparte tu experiencia y conocimiento económico.</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <section class="ecosystem">
+    <h2>El Ecosistema de tus Soluciones</h2>
+    <div class="ecosystem-grid">
+      <div class="card"><img src="assets/images/figma3.png" alt="Imagen Figma 3" /></div>
+      <div class="card"><img src="assets/images/figma5.png" alt="Imagen Figma 5" /></div>
+      <div class="card"><img src="assets/images/figma6.png" alt="Imagen Figma 6" /></div>
+      <div class="card"><img src="assets/images/figma9.png" alt="Imagen Figma 9" /></div>
+      <div class="card"><img src="assets/images/figma7.png" alt="Imagen Figma 7" /></div>
+      <div class="card"><img src="assets/images/figma8.png" alt="Imagen Figma 8" /></div>
+    </div>
+  </section>
+
+  <section class="testimonios">
+    <div class="testimonios-wrapper">
+      <div class="tag-button">Testimonios</div>
+      <div class="stats-bar">
+        <div>
+          <strong>Estadísticas EconoWorld</strong>
+          <div>
+            <img src="https://randomuser.me/api/portraits/women/65.jpg" />
+            <img src="https://randomuser.me/api/portraits/men/32.jpg" />
+            <img src="https://randomuser.me/api/portraits/women/68.jpg" />
+          </div>
+        </div>
+        <div>
+          <strong>Reviews</strong>
+          <div>Más de 100 Reseñas</div>
+        </div>
+        <div>
+          <img src="https://randomuser.me/api/portraits/men/5.jpg" />
+          <div class="stars">★★★★★</div>
+          <div>1k+ reseñas</div>
+        </div>
+      </div>
+      <h2 class="testimonios-title">Lo Que Dicen De Nosotros</h2>
+      <div class="quote">
+        “Es un hecho establecido desde hace mucho tiempo que un lector se distraerá con el contenido legible de una
+        página cuando mire el diseño, el punto de usar Lorem Ipsum.”
+      </div>
+      <div class="cards-container">
+        <!-- Andrea Armijos -->
+        <div class="card">
+          <div class="card-inner">
+            <div class="stars">★★★★★</div>
+            <h3>Andrea Armijos</h3>
+            <p class="role">Docente de la carrera de Economía</p>
+            <p class="texto">
+              Es un hecho establecido desde hace mucho tiempo que un lector se distraerá con el contenido legible de una
+              página cuando mire el diseño, el punto de usar Lorem Ipsum.
+            </p>
+          </div>
+          <img class="avatar" src="https://randomuser.me/api/portraits/women/44.jpg" />
+        </div>
+        <!-- Sebastián Contento -->
+        <div class="card">
+          <div class="card-inner">
+            <div class="stars">★★★★★</div>
+            <h3>Sebastián Contento</h3>
+            <p class="role">Estudiante de Economía</p>
+            <p class="texto">
+              Es un hecho establecido desde hace mucho tiempo que un lector se distraerá con el contenido legible de una
+              página cuando mire el diseño, el punto de usar Lorem Ipsum.
+            </p>
+          </div>
+          <img class="avatar" src="https://randomuser.me/api/portraits/men/45.jpg" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+  <footer>
+    <div class="footer-contact-block">
+      <div class="social-icons">
+        <a href="#"><img src="assets/images/facebook.png" alt="Facebook"></a>
+        <a href="#"><img src="assets/images/gorjeo.png" alt="Twitter"></a>
+        <a href="#"><img src="assets/images/instagram.png" alt="Instagram"></a>
+      </div>
+      <div class="info-block">
+        <div class="info-item">
+          <img src="assets/images/poste.png" width="16" />
+          <span><strong>Ubicación:</strong> San Cayetano Alto, Loja - Ecuador</span>
+        </div>
+        <div class="divider"></div>
+        <div class="info-item">
+          <img src="assets/images/manzana.png" width="16" />
+          <span><strong>Email:</strong> Buzón de Consultas</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-top footer-centered">
+      <div class="column">
+        <h4>Vínculos De Interés</h4>
+        <ul>
+          <li><img src="assets/images/graduacion.png" width="16" /> Carrera de Economía</li>
+          <li><img src="assets/images/directorio.png" width="16" /> Guía Estudiantes</li>
+          <li><img src="assets/images/tierra.png" width="16" /> Internacional</li>
+          <li><img src="assets/images/periodico.png" width="16" /> Noticias</li>
+          <li><img src="assets/images/aceptara.png" width="16" /> Admisiones</li>
+          <li><img src="assets/images/calendario.png" width="16" /> Eventos</li>
+        </ul>
+      </div>
+      <div class="column">
+        <h4>Estudiantes</h4>
+        <ul>
+          <li><img src="assets/images/calendario.png" width="16" /> Calendario Académico</li>
+          <li><img src="assets/images/directorio.png" width="16" /> Guía para Estudiantes</li>
+          <li><img src="assets/images/virtual.png" width="16" /> Aula Virtual</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="logo">UTPL | EconoWorld</div>
+      <div class="scroll-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">↑</div>
+      <div>Copyright 2025. EconoWorld By LiiD</div>
+    </div>
+  </footer>
+</body>
+
+</html>
+</ng-template>

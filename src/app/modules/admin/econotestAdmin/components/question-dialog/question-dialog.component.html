@@ -1,0 +1,33 @@
+<h2 mat-dialog-title class="dialog-title">Agregar Pregunta</h2>
+
+<div mat-dialog-content [formGroup]="questionForm" class="dialog-content">
+  <!-- Título de la pregunta -->
+  <mat-form-field class="form-field">
+    <input matInput placeholder="Título de la Pregunta" formControlName="questionTitle" class="input-field">
+  </mat-form-field>
+
+  <!-- Lista de respuestas -->
+  <form [formGroup]="questionForm">
+    <div *ngFor="let answer of answers; let i = index" class="answer-container" formArrayName="answers">
+  <div [formGroupName]="i" class="answer-group">
+    <div class="response-cell">
+      <input type="text" formControlName="text" placeholder="Respuesta" required class="input-field">
+      <label class="checkbox-label">
+        <input type="checkbox" formControlName="correct" class="checkbox">
+      </label>
+      <button type="button" (click)="addAnswer()" class="add-button" >
+        <img src="../../../../assets/images/boton-agregar.png" alt="Agregar Respuesta">
+      </button>
+      <button type="button" (click)="removeAnswer(i)" class="button delete-button">
+        <img src="../../../../assets/images/eliminar.png" alt="Eliminar">
+      </button>
+    </div>
+  </div>
+</div>
+
+    <div class="button-container">
+      <button type="button" (click)="saveQuestion()" class="button save-button">Guardar Pregunta</button>
+      <button type="button" (click)="closeDialog()" class="button close-button">Cerrar</button>
+    </div>
+  </form>
+</div>

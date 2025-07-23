@@ -1,0 +1,85 @@
+h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.mat-form-field {
+  width: 100%;
+  margin-bottom: 1.25rem;
+}
+
+.file-upload-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.25rem;
+
+  input[type="file"] {
+    display: none;
+  }
+
+  .upload-icon {
+    cursor: pointer;
+    margin-right: 0.625rem;
+  }
+
+  .delete-icon {
+    cursor: pointer;
+    margin-left: 0.625rem;
+  }
+
+  .file-info {
+    margin-left: 0.625rem;
+  }
+
+  .icon-image {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-left: 0.950rem;
+  }
+}
+
+.image-preview {
+  margin-top: 1.25rem;
+  max-width: 100%;
+}
+
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+
+  button {
+    margin-left: 0.5rem;
+  }
+
+  .cancel-button,
+  .save-button {
+    padding: 0.2rem 0.5rem; // Ajusta el relleno de los botones
+    font-size: 1rem; // Ajusta el tamaño de fuente de los botones
+    background-color: #032B43; // Color de fondo inicial
+    border: 0.125rem solid transparent; // Borde inicial transparente
+    border-radius: 0.5rem;
+    color: white; // Color del texto
+    transition: background-color 0.3s, border-color 0.3s, color 0.3s; // Transición para el cambio de color
+    margin: 0 0.5rem; // Margen entre los botones
+    cursor: pointer; // Cambia el cursor al pasar sobre los botones
+  }
+
+  .cancel-button:hover,
+  .save-button:hover {
+    background-color: transparent; // Cambia el color de fondo al pasar el mouse
+    border-color: #032B43; // Cambia el color del borde al pasar el mouse
+    color: #032B43; // Cambia el color del texto al pasar el mouse
+  }
+}
+
+.form-field {
+  margin-bottom: 1rem;
+}
+
+.input-field {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+  margin-bottom: 0.5rem;
+}
