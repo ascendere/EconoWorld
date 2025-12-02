@@ -1,0 +1,79 @@
+<div class="news-list-container">
+
+  <!-- Header con título y botón Crear -->
+  <div class="header">
+    <h1>Noticias Publicadas</h1>
+    <button class="btn-crear" (click)="crear()">+ Crear noticia</button>
+  </div>
+
+  <!-- Botón para volver al dashboard -->
+  <button class="btn-volver" (click)="regresar()">Volver al Panel</button>
+
+  <!-- Input de búsqueda -->
+  <div class="search-container">
+    <input type="text" [(ngModel)]="searchTerm" placeholder="Buscar noticias..." (input)="searchNews()" />
+  </div>
+
+  <!-- Mostrar loading mientras se cargan datos -->
+  <div *ngIf="isLoading" class="loading">Cargando noticias...</div>
+
+  <!-- Mostrar mensaje de error si ocurre algo -->
+  <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+
+  <!-- Tabla de noticias -->
+  <div class="table-container">
+    <table *ngIf="!isLoading && filteredNews.length > 0" class="tabla">
+      <thead>
+        <tr>
+          <th>Título</th>
+          <th>Categoría</th>
+          <th>Enlace</th>
+          <th>Palabras Clave</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let n of filteredNews">
+          <!-- Título -->
+          <td>{{ n.title }}</td>
+
+          <!-- Categoría -->
+          <td class="capitalize">{{ n.category }}</td>
+
+          <!-- Enlace -->
+          <td>
+            <ng-container *ngIf="n.resources && n.resources.length > 0; else noLink">
+              <a [href]="n.resources[0].url" target="_blank">Abrir enlace</a>
+            </ng-container>
+
+            <ng-template #noLink>Sin enlace</ng-template>
+          </td>
+
+          <!-- Palabras Clave -->
+          <td>
+            <ng-container *ngIf="n.keywords && n.keywords.length > 0; else noKeywords">
+              <span *ngFor="let keyword of n.keywords; let isLast = last">
+                {{ keyword }}<span *ngIf="!isLast">, </span>
+              </span>
+            </ng-container>
+            <ng-template #noKeywords>Sin palabras clave</ng-template>
+          </td>
+
+          <!-- Acciones -->
+          <td class="acciones">
+            <div class="action-buttons">
+              <button class="btn-action btn-edit" (click)="editar(n)">Editar</button>
+              <button class="btn-action btn-delete" (click)="eliminar(n)">Eliminar</button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Mensaje si no hay noticias -->
+  <div *ngIf="!isLoading && filteredNews.length === 0" class="empty">
+    No hay noticias creadas.
+  </div>
+
+</div>

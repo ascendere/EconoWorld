@@ -1,282 +1,91 @@
-<!DOCTYPE html>
-<html lang="es">
+<section class="search-section">
+  <div class="search-box">
+    <input type="text" placeholder="Buscar...">
+    <button class="search-btn">
+      <img src="assets/images/lupa.png" alt="Buscar" width="16" />
+    </button>
+  </div>
+  <div class="filters">
+    <span>Lo Último</span>
+    <span>Ediciones</span>
+    <span>Tendencias</span>
+  </div>
+</section>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="econovideos.component.scss">
-</head>
-
-<body>
-  
-
-    <!-- SEARCH SECTION -->
-    <section class="search-section">
-        <div class="search-box">
-            <input type="text" placeholder="Buscar...">
-            <button class="search-btn">
-                <img src="assets/images/lupa.png" alt="Buscar" width="16" />
-            </button>
-        </div>
-        <div class="filters">
-            <span>Lo Último</span>
-            <span>Ediciones</span>
-            <span>Tendencias</span>
-        </div>
-    </section>
-
-    <!-- HERO SECTION -->
-    <section class="hero-section">
-        <div class="hero-content">
-            <div class="hero-text">
-                <h1>Profesor de Economía<br>Analiza, comprende y<br>transforma el mundo</h1>
-                <div class="hero-buttons">
-                    <button class="btn-primary">EconoVideos</button>
-                    <button class="btn-secondary" routerLink="/econovideos1">Ver Más</button>
-                </div>
-            </div>
-            <div class="hero-image">
-                <img src="assets/images/personavideos.png" alt="Profesor de Economía" class="professor-img" />
-                <div class="speech-bubble">
-                    <span>7 mil</span>
-                </div>
-                <div class="profile-info">
-                    <img src="assets/images/personavideos.png" alt="Perfil" class="profile-img" />
-                    <span class="profile-text">A. Gomez le ha gustado</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- SOCIAL MEDIA SECTION -->
-    <section class="social-section">
-        <div class="social-cards">
-            <div class="social-card">
-                <img src="https://cdn-icons-png.flaticon.com/51224/124010.png" alt="Facebook" />
-                <h3>Facebook</h3>
-                <button class="follow-btn">Seguir</button>
-            </div>
-            <div class="social-card">
-                <img src="https://cdn-icons-png.flaticon.com/51274/174855.png" alt="Instagram" />
-                <h3>Instagram</h3>
-                <button class="follow-btn">Seguir</button>
-            </div>
-            <div class="social-card">
-                <img src="https://cdn-icons-png.flaticon.com/512/39383938056.png" alt="Tik Tok" />
-                <h3>Tik Tok</h3>
-                <button class="follow-btn">Seguir</button>
-            </div>
-            <div class="social-card">
-                <img src="https://cdn-icons-png.flaticon.com/512/36703670147.png" alt="YouTube" />
-                <h3>Youtube</h3>
-                <button class="follow-btn">Seguir</button>
-            </div>
-        </div>
-    </section>
-
-    <!-- ÚLTIMOS VIDEOS SECTION -->
-    <section class="videos-section">
-        <div class="section-header">
-            <button class="nav-arrow left-arrow">‹</button>
-            <h2>Últimos Videos</h2>
-            <button class="nav-arrow right-arrow">›</button>
-        </div>
-        <div class="videos-grid">
-            <div class="video-card" *ngFor="let i of [1,2,3,4]">
-                <div class="video-thumbnail">
-                    <img src="assets/images/econovidios.png" alt="Video thumbnail" />
-                    <div class="play-button">
-                        <img src="https://www.freepnglogos.com/uploads/youtube-logo-hd-8.png" alt="YouTube" />
-                    </div>
-                    <span class="video-label">Carrete de YouTube</span>
-                </div>
-                <div class="video-info">
-                    <h3>¿Por qué suben los precios?...</h3>
-                    <span class="views">16 mil visitas</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- VARIOS SECTION -->
-    <section class="varios-section">
-        <div class="header">
-            <h2>Varios</h2>
-            <button class="ver-mas" routerLink="/econovideos1">Ver Más</button>
-        </div>
-
-        <div class="video-grid">
-            <div class="video-card" *ngFor="let video of videos">
-                <img [src]="video.imagen" alt="Video">
-                <div class="play-icon">▶</div>
-                <div class="overlay">
-                    <h3>¿Por qué suben los precios?</h3>
-                    <div class="info">
-                        <span>16 mil visitas</span>
-                        <span>hace 3 días</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-  <!-- TITLE SECTION -->
-    <div class="titulo-container">
-        <h1 class="titulo-estilo">EconoWorld</h1>
+<section class="hero-section">
+  <div class="hero-content">
+    <div class="hero-text">
+      <h1>Profesor de Economía<br>Analiza, comprende y<br>transforma el mundo</h1>
+      <div class="hero-buttons">
+        <button class="btn-primary">EconoVideos</button>
+        <button class="btn-secondary" routerLink="/econovideos1">Ver Más</button>
+      </div>
     </div>
-    <!-- BANNER ECONOVIDEOS -->
-    <section class="banner-econovideos-container">
-        <section class="banner-econovideos">
-            <img src="assets/images/econovidios.png" alt="EconoVideos Preview" />
 
-            <div class="overlay">
-                <div class="etiqueta">EconoVideos</div>
-                <h2>
-                    Comparte tu<br>
-                    Conocimiento<br>
-                    Económico
-                </h2>
-                <p>Tu aporte puede marcar la diferencia!</p>
-                <button>Inténtalo Ahora!</button>
-            </div>
-        </section>
-    </section>
+    <div class="hero-image">
+      <img src="assets/images/personavideos.png" alt="Profesor de Economía" class="professor-img" />
 
-    <!-- TESTIMONIOS SECTION -->
-    <section class="testimonios">
-        <h2>Testimonios</h2>
-        <div class="testimonials-wrapper">
+      <div class="speech-bubble">
+        <span>7 mil</span>
+      </div>
 
-            <!-- Testimonio 1 -->
-            <div class="testimonial-card superpuesta">
-                <div class="avatar">
-                    <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Usuario" />
-                </div>
-                <img src="assets/images/figma1.jpg" alt="Testimonio" class="testimonio-img" />
-                <div class="info-bar">
-                    <span class="pill">Comentado por</span>
-                    <span class="pill">Sebastián Contento</span>
-                    <span class="pill">
-                        <img src="assets/images/reloj.png" alt="Fecha" width="14" />
-                        Mayo 25, 2025
-                    </span>
-                </div>
-                <div class="contenido">
-                    <div class="rating">★★★★★</div>
-                    <p>Lorem ipsum dolor sit amet, eiusmod</p>
-                    <div class="separator"></div>
-                    <div class="interactions">
-                        <span><img src="assets/images/chat.png" alt="Comentarios" width="18" /> 25</span>
-                        <span><img src="assets/images/gusta.png" alt="Likes" width="18" /> 35</span>
-                    </div>
-                </div>
-            </div>
+      <div class="profile-info">
+        <img src="assets/images/personavideos.png" alt="Perfil" class="profile-img" />
+        <span class="profile-text">A. Gomez le ha gustado</span>
+      </div>
+    </div>
+  </div>
+</section>
 
-            <!-- Testimonio 2 -->
-            <div class="testimonial-card superpuesta">
-                <div class="avatar">
-                    <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Usuario" />
-                </div>
-                <img src="assets/images/figma1.jpg" alt="Testimonio" class="testimonio-img" />
-                <div class="info-bar">
-                    <span class="pill">Comentado por</span>
-                    <span class="pill">Laura Martínez</span>
-                    <span class="pill">
-                        <img src="assets/images/reloj.png" alt="Fecha" width="14" />
-                        Abril 12, 2025
-                    </span>
-                </div>
-                <div class="contenido">
-                    <div class="rating">★★★★★</div>
-                    <p>Lorem ipsum dolor sit amet, eiusmod</p>
-                    <div class="separator"></div>
-                    <div class="interactions">
-                        <span><img src="assets/images/chat.png" alt="Comentarios" width="18" /> 18</span>
-                        <span><img src="assets/images/gusta.png" alt="Likes" width="18" /> 42</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Testimonio 3 -->
-            <div class="testimonial-card superpuesta">
-                <div class="avatar">
-                    <img src="https://randomuser.me/api/portraits/men/60.jpg" alt="Usuario" />
-                </div>
-                <img src="assets/images/figma1.jpg" alt="Testimonio" class="testimonio-img" />
-                <div class="info-bar">
-                    <span class="pill">Comentado por</span>
-                    <span class="pill">Carlos Núñez</span>
-                    <span class="pill">
-                        <img src="assets/images/reloj.png" alt="Fecha" width="14" />
-                        Marzo 8, 2025
-                    </span>
-                </div>
-                <div class="contenido">
-                    <div class="rating">★★★★★</div>
-                    <p>Lorem ipsum dolor sit amet, eiusmod</p>
-                    <div class="separator"></div>
-                    <div class="interactions">
-                        <span><img src="assets/images/chat.png" alt="Comentarios" width="18" /> 12</span>
-                        <span><img src="assets/images/gusta.png" alt="Likes" width="18" /> 28</span>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </section>
-    <!-- FOOTER -->
-    <footer>
-        <div class="footer-contact-block">
-            <div class="social-icons">
-                <a href="#"><img src="assets/images/facebook.png" alt="Facebook"></a>
-                <a href="#"><img src="assets/images/gorjeo.png" alt="Twitter"></a>
-                <a href="#"><img src="assets/images/instagram.png" alt="Instagram"></a>
-            </div>
-            <div class="info-block">
-                <div class="info-item">
-                    <img src="assets/images/poste.png" width="16" />
-                    <span><strong>Ubicación:</strong> San Cayetano Alto, Loja - Ecuador</span>
-                </div>
-                <div class="divider"></div>
-                <div class="info-item">
-                    <img src="assets/images/manzana.png" width="16" />
-                    <span><strong>Email:</strong> Buzón de Consultas</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="footer-top footer-centered">
-            <div class="column">
-                <h4>Vínculos De Interés</h4>
-                <ul>
-                    <li><img src="assets/images/graduacion.png" width="16" /> Carrera de Economía</li>
-                    <li><img src="assets/images/directorio.png" width="16" /> Guía Estudiantes</li>
-                    <li><img src="assets/images/tierra.png" width="16" /> Internacional</li>
-                    <li><img src="assets/images/periodico.png" width="16" /> Noticias</li>
-                    <li><img src="assets/images/aceptara.png" width="16" /> Admisiones</li>
-                    <li><img src="assets/images/calendario.png" width="16" /> Eventos</li>
-                </ul>
-            </div>
-            <div class="column">
-                <h4>Estudiantes</h4>
-                <ul>
-                    <li><img src="assets/images/calendario.png" width="16" /> Calendario Académico</li>
-                    <li><img src="assets/images/directorio.png" width="16" /> Guía para Estudiantes</li>
-                    <li><img src="assets/images/virtual.png" width="16" /> Aula Virtual</li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="footer-bottom">
-            <div class="logo">UTPL | EconoWorld</div>
-            <div class="scroll-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">↑</div>
-            <div>Copyright 2025. EconoWorld By LiiD</div>
-        </div>
-    </footer>
-  <!-- FLOATING ACTION BUTTON -->
-  <div class="fab">
-    <img src="assets/images/robotica.png" alt="Chat" width="24" height="24">
+<section class="videos-section" *ngIf="!cargando && videos.length > 0">
+  <div class="section-header">
+    <h2>Últimos Videos</h2>
   </div>
 
-</body>
+  <div class="videos-grid">
+    <div class="video-card" *ngFor="let video of videos.slice(0, 4)" (click)="abrirVideo(video)">
 
-</html>
+      <div class="video-thumbnail">
+        <img [src]="video.thumbnailUrl || 'assets/images/econovidios.png'" alt="Miniatura del video" />
+
+        <div class="play-button">
+          <img src="https://www.freepnglogos.com/uploads/youtube-logo-hd-8.png" alt="Play" />
+        </div>
+
+        <span class="video-label">EconoVideos</span>
+      </div>
+
+      <div class="video-info">
+        <h3>{{ video.title }}</h3>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="mensaje" *ngIf="!cargando && videos.length === 0">
+  <p>No hay videos publicados por el momento.</p>
+</div>
+
+<div class="mensaje" *ngIf="cargando">
+  <p>Cargando videos...</p>
+</div>
+
+<section class="banner-econovideos-container">
+  <section class="banner-econovideos">
+    <img src="assets/images/econovidios.png" alt="EconoVideos Preview" />
+
+    <div class="overlay">
+      <div class="etiqueta">EconoVideos</div>
+
+      <h2>
+        Comparte tu<br>
+        Conocimiento<br>
+        Económico
+      </h2>
+
+      <p>Tu aporte puede marcar la diferencia!</p>
+
+      <button routerLink="/econovideos1">Inténtalo Ahora!</button>
+    </div>
+  </section>
+</section>

@@ -1,17 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
-import { EconobookService, Libro } from 'src/app/services/econobook.service';
-import { Observable } from 'rxjs';
+import { EconobookService, Book } from 'src/app/services/econobook.service';
 
 @Component({
-    selector: 'app-econobook',
-    templateUrl: './econobook.component.html',
-    styleUrls: ['./econobook.component.scss']
+  selector: 'app-econobook',
+  templateUrl: './econobook.component.html',
+  styleUrls: ['./econobook.component.scss']
 })
 export class EconoBookComponent implements OnInit {
-  libros: Libro[] = [];
-  librosDestacados: Libro[] = [];
+  libros: Book[] = [];
+  librosDestacados: Book[] = [];
   loading = true;
   error = false;
 
@@ -31,7 +30,7 @@ export class EconoBookComponent implements OnInit {
 
     // Cargar libros publicados
     this.econobookService.getPublishedBooks().subscribe({
-      next: (libros: Libro[]) => {
+      next: (libros: Book[]) => {
         this.libros = libros;
         this.loading = false;
         console.log('Libros cargados:', libros);
@@ -45,7 +44,7 @@ export class EconoBookComponent implements OnInit {
 
     // Cargar libros destacados
     this.econobookService.getFeaturedBooks().subscribe({
-      next: (libros: Libro[]) => {
+      next: (libros: Book[]) => {
         this.librosDestacados = libros;
         console.log('Libros destacados cargados:', libros);
       },
@@ -62,19 +61,10 @@ export class EconoBookComponent implements OnInit {
     return estrellasLlenas + estrellasVacias;
   }
 
-  // Método para obtener imagen por defecto si no hay portada
-  obtenerImagenPortada(libro: Libro): string {
-    if (libro.portadaUrl && libro.portadaUrl.trim() !== '') {
-      return libro.portadaUrl;
-    }
-    // Imagen por defecto basada en el título o autor
-    return 'assets/images/libro.png';
-  }
-
   // Método para obtener URL del archivo
-  obtenerArchivoUrl(libro: Libro): string {
-    if (libro.archivoUrl && libro.archivoUrl.trim() !== '') {
-      return libro.archivoUrl;
+  obtenerArchivoUrl(libro: Book): string {
+    if (libro.pdfUrl && libro.pdfUrl.trim() !== '') {
+      return libro.pdfUrl;
     }
     return '#';
   }

@@ -1,0 +1,96 @@
+<div class="admin-container">
+
+  <!-- Botón regresar -->
+  <button type="button" class="btn-dashboard" (click)="goTable()">
+    Regresar
+  </button>
+
+  <!-- Botón dashboard -->
+  <button type="button" class="btn-admin" (click)="goDashboard()">
+    Dashboard
+  </button>
+
+  <h1>{{ isEditMode ? 'Editar Juego' : 'Crear Juego' }}</h1>
+
+  <form [formGroup]="form" class="admin-form" (ngSubmit)="saveGame()">
+
+    <!-- Nombre del juego -->
+    <div class="form-group">
+      <label>Nombre del Juego *</label>
+      <input type="text" formControlName="name" placeholder="Ej: Trivia Macroeconómica" />
+
+      <small class="error" *ngIf="form.get('name')?.touched && form.get('name')?.hasError('required')">
+        El nombre es obligatorio.
+      </small>
+    </div>
+
+    <br>
+
+    <!-- Categoría -->
+    <div class="form-group">
+      <label>Categoría *</label>
+      <select formControlName="category">
+        <option value="">Seleccione...</option>
+        <option value="habilidades">Habilidades</option>
+        <option value="macroeconomia">Macroeconomía</option>
+        <option value="microeconomia">Microeconomía</option>
+        <option value="finanzas">Finanzas</option>
+        <option value="economia">Economía General</option>
+      </select>
+
+      <small class="error" *ngIf="form.get('category')?.touched && form.get('category')?.hasError('required')">
+        La categoría es obligatoria.
+      </small>
+    </div>
+
+    <br>
+
+    <!-- Fecha automática -->
+    <div class="form-group">
+      <label>Fecha de creación</label>
+      <input type="text" formControlName="createdAt" />
+    </div>
+
+    <br>
+
+    <!-- Enlace Externo -->
+    <div class="form-group">
+      <label>Enlace de acceso *</label>
+
+      <!-- Contenedor en fila -->
+      <div class="url-row">
+        <input type="text" formControlName="accessUrl"
+          placeholder="https://view.genially.com/... o https://canva.com/..." />
+
+        <a class="btn-visitar" *ngIf="form.get('accessUrl')?.value" [href]="form.get('accessUrl')?.value"
+          target="_blank" rel="noopener noreferrer">
+          Visitar
+        </a>
+      </div>
+
+      <small class="error" *ngIf="form.get('accessUrl')?.touched && form.get('accessUrl')?.hasError('required')">
+        El enlace es obligatorio.
+      </small>
+    </div>
+
+    <br>
+
+    <!-- Instrucciones -->
+    <div class="form-group">
+      <label>Instrucciones *</label>
+      <textarea formControlName="instructions" rows="6"
+        placeholder="Describe cómo se juega, reglas, objetivos..."></textarea>
+
+      <small class="error" *ngIf="form.get('instructions')?.touched && form.get('instructions')?.hasError('required')">
+        Las instrucciones son obligatorias.
+      </small>
+    </div>
+
+    <!-- Botones -->
+    <div class="form-buttons">
+      <button type="button" class="btn-cancelar" (click)="cancel()">Cancelar</button>
+      <button type="submit" class="btn-publicar">{{ isEditMode ? 'Actualizar' : 'Publicar' }}</button>
+    </div>
+
+  </form>
+</div>

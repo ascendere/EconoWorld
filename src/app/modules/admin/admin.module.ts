@@ -15,19 +15,22 @@ import { MatInputModule } from '@angular/material/input';
 // Módulos internos
 import { AdminRoutingModule } from './admin-routing.module';
 import { EconotestModule } from './econotestAdmin/econotest.admin'; // ✅ Módulo funcional
-import { EconobookAdminComponent } from './econobookAdmin/econobok.component.admin'; // Asegúrate de importar el componente
+import { EconobookAdminComponent } from './econobookAdmin/forms/econobok.component.admin'; // Asegúrate de importar el componente
+import { VideosListComponent } from './econovidiosAdmin/list/videos-list.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
-import { EcononewsAdminComponent } from './econonewsAdmin/econonews-admin.component';
-import { EconopleyAdminComponent } from './econopleyAdmin/econopley-admin.component';
-import { EconovidiosAdminComponent } from './econovidiosAdmin/econovidios-admin.component';
+import { EcononewsAdminComponent } from './econonewsAdmin/forms/econonews-admin.component';
+import { EconoplayAdminComponent } from './econopleyAdmin/form/econopley-admin.component';
+import { EconovidiosAdminComponent } from './econovidiosAdmin/form/econovidios-admin.component';
+
 
 @NgModule({
   declarations: [
-        EconobookAdminComponent, // Asegúrate de agregarlo aquí
+        EconobookAdminComponent,
         AdminDashboardComponent,
         EcononewsAdminComponent,
-        EconopleyAdminComponent,
+        EconoplayAdminComponent,
         EconovidiosAdminComponent,
+        VideosListComponent
   ],
   imports: [
     CommonModule,
@@ -41,7 +44,8 @@ import { EconovidiosAdminComponent } from './econovidiosAdmin/econovidios-admin.
     MatSelectModule,
     MatInputModule,
     AdminRoutingModule,
-    EconotestModule // ✅ Submódulo bien importado
+    EconotestModule,
+ // ✅ Submódulo bien importado
   ],
   schemas: [NO_ERRORS_SCHEMA]
 })

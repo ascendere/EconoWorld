@@ -1,0 +1,84 @@
+<div class="games-list-container">
+
+  <!-- Header con título y botón Crear -->
+  <div class="header">
+    <h1>Juegos Publicados</h1>
+    <button class="btn-crear" (click)="crear()">+ Crear juego</button>
+  </div>
+
+  <!-- Botón para volver al dashboard -->
+  <button class="btn-volver" (click)="regresar()">Volver al Panel</button>
+
+  <!-- Input de búsqueda -->
+  <div class="search-container">
+    <input
+      type="text"
+      [(ngModel)]="searchTerm"
+      placeholder="Buscar juegos..."
+      (input)="searchGames()"
+    />
+  </div>
+
+  <!-- Mostrar loading mientras se cargan datos -->
+  <div *ngIf="isLoading" class="loading">Cargando juegos...</div>
+
+  <!-- Mostrar mensaje de error si ocurre algo -->
+  <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+
+  <!-- Tabla de juegos -->
+  <div class="table-container">
+    <table *ngIf="!isLoading && filteredGames.length > 0" class="tabla">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Categoría</th>
+          <th>Enlace</th>
+          <th>Instrucciones</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let g of filteredGames">
+          
+          <!-- Nombre -->
+          <td>{{ g.name }}</td>
+
+          <!-- Categoría -->
+          <td class="capitalize">{{ g.category }}</td>
+
+          <!-- Enlace Externo -->
+          <td>
+            <ng-container *ngIf="g.accessUrl; else noLink">
+              <a [href]="g.accessUrl" target="_blank">Abrir juego</a>
+            </ng-container>
+            <ng-template #noLink>Sin enlace</ng-template>
+          </td>
+
+          <!-- Instrucciones (solo preview) -->
+          <td>
+            <span *ngIf="g.instructions; else noInstructions">
+              {{ g.instructions.substring(0, 40) }}...
+            </span>
+            <ng-template #noInstructions>Sin instrucciones</ng-template>
+          </td>
+
+          <!-- Acciones -->
+          <td class="acciones">
+            <div class="action-buttons">
+              <button class="btn-action btn-edit" (click)="editar(g)">Editar</button>
+              <button class="btn-action btn-delete" (click)="eliminar(g)">Eliminar</button>
+            </div>
+          </td>
+
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Mensaje si no hay juegos -->
+  <div *ngIf="!isLoading && filteredGames.length === 0" class="empty">
+    No hay juegos creados.
+  </div>
+
+</div>

@@ -1,0 +1,120 @@
+<div class="admin-wrapper">
+
+  <div class="card">
+
+    <!-- Botón regresar -->
+    <button type="button" class="btn-dashboard" (click)="goTable()">
+      Regresar
+    </button>
+
+    <!-- Botón regresar al admin dashboard -->
+    <button type="button" class="btn-admin" (click)="goDashboard()">
+      Dashboard
+    </button>
+
+    <!-- Título dinámico según el modo -->
+    <h2 class="title">
+      {{ isEditMode ? 'Editar Libro' : 'Crear Libro' }}
+    </h2>
+
+    <!-- vitar submit con Enter accidental -->
+    <form [formGroup]="bookForm" (ngSubmit)="save()" (keydown.enter)="$event.preventDefault()" novalidate>
+
+      <!-- TÍTULO -->
+      <label class="label">Título del Libro *</label>
+      <input type="text" class="input" formControlName="title" placeholder="Título del Libro...">
+      <div *ngIf="bookForm.controls['title'].invalid && bookForm.controls['title'].touched" class="error">
+        El título es obligatorio.
+      </div>
+
+      <!-- AUTORES -->
+      <label class="label">Autores *</label>
+
+      <div class="row-auth">
+        <input class="input" [(ngModel)]="authorInput" [ngModelOptions]="{standalone: true}" placeholder="Nuevo autor"
+          (keydown.enter)="$event.preventDefault(); addAuthor()">
+        <button type="button" class="btn-small" (click)="addAuthor()">
+          Agregar
+        </button>
+      </div>
+
+      <div *ngIf="authors.length === 0" class="error">
+        Debe agregar al menos un autor.
+      </div>
+
+      <div class="authors-list" *ngIf="authors.length > 0">
+        <div *ngFor="let author of authors; let i = index; trackBy: trackByIndex" class="author-item">
+          <input class="author-edit" [(ngModel)]="authors[i]" [ngModelOptions]="{standalone: true}">
+          <button type="button" class="delete-btn" (click)="removeAuthor(i)">
+            ×
+          </button>
+        </div>
+      </div>
+
+      <!-- EDITORIAL -->
+      <label class="label">Editorial</label>
+      <input type="text" class="input" formControlName="publisher" placeholder="Editorial...">
+
+      <!-- AÑO -->
+      <label class="label">Año de publicación</label>
+      <input type="number" class="input" formControlName="year" placeholder="Año...">
+      <div *ngIf="bookForm.controls['year'].invalid && bookForm.controls['year'].touched" class="error">
+        Ingrese un año válido (4 dígitos).
+      </div>
+
+      <!-- DESCRIPCIÓN -->
+      <label class="label">Descripción *</label>
+
+      <div class="textarea-box">
+        <textarea formControlName="description" class="textarea" placeholder="Escribe la descripción del libro..."
+          (input)="autoGrow($event)"></textarea>
+      </div>
+
+      <div *ngIf="bookForm.controls['description'].invalid && bookForm.controls['description'].touched" class="error">
+        La descripción es obligatoria.
+      </div>
+
+      <!-- PDF -->
+      <label class="label">
+        Archivo PDF {{ isEditMode ? '(cambiar PDF - opcional)' : '*' }}
+      </label>
+      <div class="upload-box">
+        <input type="file" accept="application/pdf" (change)="onPdfSelected($event)" #pdfInput>
+        <button *ngIf="pdfFile" type="button" class="remove-file-btn" (click)="removePDF(); pdfInput.value = ''">
+          Quitar PDF
+        </button>
+      </div>
+
+      <!-- Validación solo en modo creación -->
+      <div *ngIf="!isEditMode && !pdfFile" class="error">
+        El PDF es obligatorio.
+      </div>
+
+      <!-- Info de PDF existente en modo edición -->
+      <div *ngIf="isEditMode && existingPdfUrl && !pdfFile" class="info-box">
+        PDF actual cargado - <a [href]="existingPdfUrl" target="_blank" class="link">Ver PDF</a>
+      </div>
+
+      <!-- Mostrar tamaño y abrir PDF nuevo -->
+      <div *ngIf="pdfFile" class="pdf-info-box">
+        <span class="pdf-text">PDF seleccionado ({{ pdfSizeMB }} MB)</span>
+        <button type="button" class="btn-open" (click)="openPDF()">
+          Abrir PDF
+        </button>
+      </div>
+
+      <!-- BOTONES FINALES -->
+      <div class="btn-row">
+        <!-- ✨ Cambiar a cancel() y prevenir Enter -->
+        <button type="button" class="btn-secondary" (click)="cancel()" (keydown.enter)="$event.preventDefault()">
+          Cancelar
+        </button>
+        <!-- ✨ Prevenir Enter, solo ejecutar con click -->
+        <button type="button" class="btn-primary" (click)="save()" (keydown.enter)="$event.preventDefault()">
+          Publicar
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>

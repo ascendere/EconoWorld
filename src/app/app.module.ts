@@ -14,6 +14,8 @@ import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthService } from './services/auth.service';
 import { HttpClientModule } from '@angular/common/http';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent],
@@ -26,8 +28,10 @@ import { HttpClientModule } from '@angular/common/http';
     AngularFirestoreModule,
     AngularFireStorageModule,
     FormsModule,
+    ReactiveFormsModule,   // ← FALTABA ESTO
     BrowserAnimationsModule,
     HttpClientModule,
+    CKEditorModule,
   ],
   providers: [
     AuthService, // Provide AuthService at the AppModule level

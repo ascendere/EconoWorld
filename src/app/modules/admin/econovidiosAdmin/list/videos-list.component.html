@@ -1,0 +1,83 @@
+<div class="news-list-container">
+
+  <!-- Header con título y botón Crear -->
+  <div class="header">
+    <h1>Gestión de Videos</h1>
+    <button class="btn-crear" (click)="crear()">+ Nuevo Video</button>
+  </div>
+
+  <!-- Botón para volver al dashboard -->
+  <button class="btn-volver" (click)="regresar()">Volver al Panel</button>
+
+  <!-- Input de búsqueda -->
+  <div class="search-container">
+    <input type="text" [(ngModel)]="searchTerm" placeholder="Buscar videos..." (input)="searchVideos()" />
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="isLoading" class="loading">Cargando videos...</div>
+
+  <!-- Error -->
+  <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+
+  <!-- Tabla -->
+  <div class="table-container">
+    <table *ngIf="!isLoading && filteredVideos.length > 0" class="tabla">
+      <thead>
+        <tr>
+          <th>Título</th>
+          <th>Autor</th>
+          <th>Categoría</th>
+          <th>Descripción</th>
+          <th>Video</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let v of filteredVideos">
+
+          <!-- Título -->
+          <td>{{ v.title }}</td>
+
+          <!-- Autor -->
+          <td>{{ v.author }}</td>
+
+          <!-- Categoría -->
+          <td class="capitalize">{{ v.category }}</td>
+
+          <!-- Descripcion -->
+          <td>
+            <span class="badge">{{ v.description }}</span>
+          </td>
+
+          <!-- Enlace del video -->
+          <td>
+            <ng-container *ngIf="v.videoUrl && v.videoUrl.length > 0; else noLink">
+              <a [href]="v.videoUrl[0].url" target="_blank">
+                Ver Video
+              </a>
+            </ng-container>
+
+            <ng-template #noLink>Sin enlace</ng-template>
+          </td>
+
+          <!-- Acciones -->
+          <td>
+            <div class="action-buttons">
+              <button class="btn-action btn-edit" (click)="editar(v)">Editar</button>
+              <button class="btn-action btn-delete" (click)="eliminar(v)">Eliminar</button>
+            </div>
+          </td>
+
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Sin datos -->
+  <div *ngIf="!isLoading && filteredVideos.length === 0" class="empty">
+    No hay videos creados.
+  </div>
+
+</div>

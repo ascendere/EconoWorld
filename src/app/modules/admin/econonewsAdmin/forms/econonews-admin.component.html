@@ -1,0 +1,103 @@
+<div class="admin-container">
+
+  <!-- Botón regresar -->
+  <button type="button" class="btn-dashboard" (click)="goTable()">
+    Regresar
+  </button>
+
+  <!-- Botón regresar al admin dashboard -->
+  <button type="button" class="btn-admin" (click)="goDashboard()">
+    Dashboard
+  </button>
+
+  <h1>Crear Noticia</h1>
+
+  <form [formGroup]="form" class="admin-form" (ngSubmit)="saveNews()">
+
+    <!-- Título -->
+    <div class="form-group">
+      <label>Título *</label>
+      <input type="text" formControlName="title" placeholder="Ej: El FMI anuncia acuerdos..." />
+
+      <small class="error" *ngIf="form.get('title')?.touched && form.get('title')?.hasError('required')">
+        El título es obligatorio.
+      </small>
+    </div>
+
+    <!-- Categoría -->
+    <div class="form-group">
+      <label>Categoría *</label>
+      <select formControlName="category">
+        <option value="">Seleccione...</option>
+        <option value="nacional">Nacional</option>
+        <option value="internacional">Internacional</option>
+      </select>
+
+      <small class="error" *ngIf="form.get('category')?.touched && form.get('category')?.hasError('required')">
+        La categoría es obligatoria.
+      </small>
+    </div>
+
+    <!-- Cuerpo -->
+    <div class="form-group">
+      <label>Cuerpo *</label>
+      <textarea formControlName="content" rows="8" placeholder="Escribe aquí la noticia..."></textarea>
+
+      <small class="error" *ngIf="form.get('content')?.touched && form.get('content')?.hasError('required')">
+        El cuerpo de la noticia es obligatorio.
+      </small>
+    </div>
+
+    <!-- Palabras clave -->
+    <div class="form-group">
+      <label>Palabras clave</label>
+
+      <div class="keywords-container">
+
+        <span class="chip" *ngFor="let kw of form.get('keywords')?.value">
+          {{ kw }}
+          <button type="button" class="chip-remove" (click)="removeKeyword(kw)">×</button>
+        </span>
+
+        <input type="text" placeholder="Escribe y presiona espacio..." (keydown)="addKeywordFromInput($event)" />
+      </div>
+
+    </div>
+
+    <!-- Recursos adicionales -->
+    <div class="form-group">
+      <label>Recursos adicionales</label>
+
+      <div formArrayName="resources">
+        <div class="resource-row" *ngFor="let r of resources.controls; let i = index" [formGroupName]="i">
+
+          <input type="text" formControlName="name" placeholder="Nombre del recurso" />
+
+          <input type="text" formControlName="url" placeholder="URL" />
+
+          <a class="btn-visitar" [href]="r.get('url')?.value" target="_blank" rel="noopener noreferrer"
+            *ngIf="r.get('url')?.value">
+            Visitar
+          </a>
+
+          <button type="button" class="btn-eliminar" (click)="removeResource(i)">
+            Eliminar
+          </button>
+
+        </div>
+      </div>
+
+      <button type="button" class="btn-add" (click)="addResource()">
+        + Añadir enlace
+      </button>
+    </div>
+
+
+    <!-- Botones -->
+    <div class="form-buttons">
+      <button type="button" class="btn-cancelar" (click)="cancelar()">Cancelar</button>
+      <button type="submit" class="btn-publicar">Publicar</button>
+    </div>
+
+  </form>
+</div>

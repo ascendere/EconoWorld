@@ -1,0 +1,96 @@
+<div class="book-list-container">
+  <!-- Header -->
+  <div class="header">
+    <h1>Listado de Libros</h1>
+    <button class="btn-primary" (click)="createBook()">
+      <i class="icon-plus"></i> + Agregar Libro
+    </button>
+  </div>
+
+  <!-- Botón regresar -->
+    <button type="button" class="btn-dashboard" (click)="goDashboard()">
+      Volver al Panel
+    </button>
+
+  <!-- Search Bar -->
+  <div class="search-container">
+    <input 
+      type="text" 
+      class="search-input"
+      [(ngModel)]="searchTerm"
+      (input)="searchBooks()"
+      placeholder="Buscar libro..."
+    />
+  </div>
+
+  <!-- Error Message -->
+  <div *ngIf="errorMessage" class="alert alert-error">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Loading Spinner -->
+  <div *ngIf="isLoading" class="loading-spinner">
+    <div class="spinner"></div>
+    <p>Cargando libros...</p>
+  </div>
+
+  <!-- Table -->
+  <div *ngIf="!isLoading" class="table-container">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Título</th>
+          <th>Autor</th>
+          <th>Descripción</th>
+          <th>Documento</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let book of filteredBooks">
+          <td>{{ book.title }}</td>
+          <td>{{ book.authors }}</td>
+          <td>
+            <span class="badge">{{ book.description }}</span>
+          </td>
+          <td>
+            <a 
+              *ngIf="book.pdfUrl"
+              [href]="book.pdfUrl" 
+              target="_blank"
+              class="link-youtube"
+            >
+              Ver Documento
+            </a>
+            <span *ngIf="!book.pdfUrl" class="text-muted">
+              N/A
+            </span>
+          </td>
+          <td>
+            <div class="action-buttons">
+              <button 
+                class="btn-action btn-edit"
+                (click)="editBook(book)"
+                title="Editar"
+              >
+                Editar
+              </button>
+              <button 
+                class="btn-action btn-delete"
+                (click)="deleteBook(book)"
+                title="Eliminar"
+              >
+                Eliminar
+              </button>
+            </div>
+          </td>
+        </tr>
+        <tr *ngIf="filteredBooks.length === 0">
+          <td colspan="6" class="no-data">
+            No se encontraron libros
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

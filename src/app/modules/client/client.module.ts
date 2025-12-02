@@ -7,8 +7,9 @@ import { ListTestComponent } from './econotest/list-test/list-test.component';
 import { EvaluationsComponent } from './econotest/evaluations/evaluations.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StikersComponent } from './econotest/stickers/stikers.component';
-
 import { RouterModule } from '@angular/router';
+
+import { EconovideosComponent } from './econovideos/econovideos.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { RouterModule } from '@angular/router';
     ListTestComponent,
     EvaluationsComponent,
     StikersComponent,
+    EconovideosComponent 
   ],
   imports: [
     CommonModule,

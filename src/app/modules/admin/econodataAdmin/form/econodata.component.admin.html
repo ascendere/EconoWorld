@@ -1,0 +1,88 @@
+<div class="admin-wrapper">
+
+    <div class="card">
+
+        <!-- Botón regresar -->
+        <button type="button" class="btn-dashboard" (click)="goTable()">
+            Regresar
+        </button>
+
+        <!-- Botón dashboard -->
+        <button type="button" class="btn-admin" (click)="goDashboard()">
+            Dashboard
+        </button>
+
+        <h2 class="title">
+            {{ isEditMode ? 'Editar Registro de Datos' : 'Crear Registro de Datos' }}
+        </h2>
+
+        <form [formGroup]="dataForm" (ngSubmit)="save()">
+
+            <!-- TÍTULO -->
+            <label class="label">Título *</label>
+            <input type="text" class="input" formControlName="title" placeholder="Título del archivo...">
+            <div *ngIf="dataForm.controls['title'].invalid && dataForm.controls['title'].touched" class="error">
+                El título es obligatorio.
+            </div>
+
+            <!-- ENLACE -->
+            <label class="label">Enlace *</label>
+
+            <div class="flex-row">
+                <input type="text" class="input" formControlName="enlace" placeholder="https://..." />
+                <button type="button" class="btn-open" (click)="visitar()">Visitar</button>
+            </div>
+
+            <div *ngIf="dataForm.controls['enlace'].invalid && dataForm.controls['enlace'].touched" class="error">
+                El enlace es obligatorio.
+            </div>
+
+            <!-- CATEGORÍA -->
+            <label class="label">Categoría *</label>
+            <select class="input" formControlName="category">
+                <option value="" disabled selected>Seleccionar categoría...</option>
+                <option *ngFor="let c of categories" [value]="c">{{ c }}</option>
+            </select>
+
+            <div *ngIf="dataForm.controls['category'].invalid && dataForm.controls['category'].touched" class="error">
+                La categoría es obligatoria.
+            </div>
+
+            <!-- FECHAS -->
+            <label class="label">Creado</label>
+            <input type="text" class="input" formControlName="createdAt" readonly>
+
+            <!-- ARCHIVO -->
+            <label class="label">Archivo PDF *</label>
+
+            <div class="upload-box">
+                <input type="file" (change)="onFileSelected($event)" #fileInput>
+
+                <button *ngIf="file" type="button" class="remove-file-btn" (click)="removeFile(); fileInput.value = ''">
+                    Quitar archivo
+                </button>
+            </div>
+
+            <div *ngIf="!isEditMode && !file" class="error">
+                El archivo es obligatorio.
+            </div>
+
+            <div *ngIf="isEditMode && existingFileUrl && !file" class="info-box">
+                Archivo actual cargado —
+                <a [href]="existingFileUrl" target="_blank" class="link">Ver archivo</a>
+            </div>
+
+            <div *ngIf="file" class="pdf-info-box">
+                Archivo seleccionado: {{ file.name }} ({{ fileSizeMB }} MB)
+                <button type="button" class="btn-open" (click)="openFile()">Abrir</button>
+            </div>
+
+            <!-- BOTONES -->
+            <div class="btn-row">
+                <button type="button" class="btn-secondary" (click)="cancel()">Cancelar</button>
+                <button type="submit" class="btn-primary">Guardar</button>
+            </div>
+
+        </form>
+    </div>
+</div>

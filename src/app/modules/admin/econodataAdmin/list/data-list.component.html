@@ -1,0 +1,86 @@
+<div class="data-list-container">
+  <!-- Header -->
+  <div class="header">
+    <h1>Listado de Recursos EconoData</h1>
+    <button class="btn-primary" (click)="createData()">
+      <i class="icon-plus"></i> + Agregar Recurso
+    </button>
+  </div>
+
+  <!-- Botón regresar -->
+  <button type="button" class="btn-dashboard" (click)="goDashboard()">
+    Volver al Panel
+  </button>
+
+  <!-- Search Bar -->
+  <div class="search-container">
+    <input type="text" class="search-input" [(ngModel)]="searchTerm" (input)="searchData()"
+      placeholder="Buscar recurso..." />
+  </div>
+
+  <!-- Error Message -->
+  <div *ngIf="errorMessage" class="alert alert-error">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Loading Spinner -->
+  <div *ngIf="isLoading" class="loading-spinner">
+    <div class="spinner"></div>
+    <p>Cargando recursos...</p>
+  </div>
+
+  <!-- Table -->
+  <div *ngIf="!isLoading" class="table-container">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Título</th>
+          <th>Categoría</th>
+          <th>Enlace</th>
+          <th>Documento</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of filteredData">
+          <td>{{ item.title }}</td>
+          <td>{{ item.category }}</td>
+
+          <!-- ENLACE (video / genially / canva) -->
+          <td>
+            <a *ngIf="item.accessUrl" [href]="item.accessUrl" target="_blank" class="link-youtube">
+              Visitar
+            </a>
+            <span *ngIf="!item.accessUrl" class="text-muted">N/A</span>
+          </td>
+
+          <!-- DOCUMENTO (archivo subido en storage) -->
+          <td>
+            <a *ngIf="item.fileUrl" [href]="item.fileUrl" target="_blank" class="link-youtube">
+              Ver Documento
+            </a>
+            <span *ngIf="!item.fileUrl" class="text-muted">N/A</span>
+          </td>
+
+
+          <td>
+            <div class="action-buttons">
+              <button class="btn-action btn-edit" (click)="editData(item)" title="Editar">
+                Editar
+              </button>
+              <button class="btn-action btn-delete" (click)="deleteData(item)" title="Eliminar">
+                Eliminar
+              </button>
+            </div>
+          </td>
+        </tr>
+
+        <tr *ngIf="filteredData.length === 0">
+          <td colspan="6" class="no-data">
+            No se encontraron recursos
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -6,6 +6,9 @@ import { EvaluationsComponent } from './econotest/evaluations/evaluations.compon
 import { StikersComponent } from './econotest/stickers/stikers.component';
 import { AuthGuard } from 'src/app/services/guards/auth.guard';
 
+// 👇 Importa el componente público de EconoVideos
+import { EconovideosComponent } from './econovideos/econovideos.component';
+
 const routes: Routes = [
   {
     path: '',
@@ -28,6 +31,8 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   { path: 'cromos', component: StikersComponent, canActivate: [AuthGuard] },
+
+  { path: 'econovideos', component: EconovideosComponent }
 ];
 
 @NgModule({

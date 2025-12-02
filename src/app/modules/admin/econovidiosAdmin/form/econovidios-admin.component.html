@@ -1,0 +1,120 @@
+<div class="admin-container">
+
+  <!-- Botón regresar -->
+  <button type="button" class="btn-dashboard" (click)="goTable()">
+    Regresar
+  </button>
+
+  <!-- Botón Dashboard -->
+  <button type="button" class="btn-admin" (click)="goDashboard()">
+    Dashboard
+  </button>
+
+  <h1>{{ isEditMode ? 'Editar Video' : 'Crear Video' }}</h1>
+
+  <!-- FORMULARIO REACTIVE -->
+  <form [formGroup]="form" (ngSubmit)="save()" (keydown.enter)="$event.preventDefault()" novalidate>
+
+    <!-- Título -->
+    <div class="form-section">
+      <label>Título del Video *</label>
+      <input type="text" formControlName="title" placeholder="Título del Video..." />
+    </div>
+
+    <br>
+
+    <!-- Categoría -->
+    <div class="form-section">
+      <label>Categoría *</label>
+      <select formControlName="category">
+        <option value="">Ninguna</option>
+        <option value="Macroeconomía">Macroeconomía</option>
+        <option value="Microeconomía">Microeconomía</option>
+        <option value="Finanzas">Finanzas</option>
+        <option value="Política Económica">Política Económica</option>
+        <option value="Comercio Exterior">Comercio Exterior</option>
+        <option value="Desarrollo Económico">Desarrollo Económico</option>
+        <option value="Econometría">Econometría</option>
+        <option value="Economía Internacional">Economía Internacional</option>
+      </select>
+    </div>
+
+    <br>
+
+    <!-- AUTORES -->
+    <label class="label">Autores *</label>
+
+    <div class="row-auth">
+      <input class="input" [(ngModel)]="authorInput" [ngModelOptions]="{ standalone: true }" placeholder="Nuevo autor"
+        (keydown.enter)="$event.preventDefault(); addAuthor()">
+      <button type="button" class="btn-small" (click)="addAuthor()">
+        Agregar
+      </button>
+    </div>
+
+    <!-- ERROR sin autores -->
+    <div *ngIf="authors.length === 0" class="error">
+      Debe agregar al menos un autor.
+    </div>
+
+    <!-- LISTA AUTORES -->
+    <div class="authors-list" *ngIf="authors.length > 0">
+      <div *ngFor="let author of authors; let i = index; trackBy: trackByIndex" class="author-item">
+
+        <input class="author-edit" [(ngModel)]="authors[i]" [ngModelOptions]="{standalone: true}">
+
+        <button type="button" class="delete-btn" (click)="removeAuthor(i)">
+          ×
+        </button>
+
+      </div>
+    </div>
+
+    <br>
+
+    <!-- Descripción -->
+    <div class="form-section">
+      <label>Descripción del Video *</label>
+      <textarea rows="6" formControlName="description" placeholder="Escribe la descripción del contenido..."></textarea>
+    </div>
+
+    <!-- URLs de Video -->
+    <label class="label">Enlaces del Video (YouTube) *</label>
+
+    <div class="row-auth">
+      <input class="input" [(ngModel)]="videoInput" [ngModelOptions]="{ standalone: true }"
+        placeholder="https://youtube.com/..." (keydown.enter)="$event.preventDefault(); addVideoUrl()">
+      <button type="button" class="btn-small" (click)="addVideoUrl()">
+        Agregar
+      </button>
+    </div>
+
+    <!-- LISTA URLs -->
+    <div class="authors-list" *ngIf="videos.length > 0">
+      <div *ngFor="let url of videos; let i = index; trackBy: trackByIndex" class="author-item">
+
+        <input class="author-edit" [(ngModel)]="videos[i]" [ngModelOptions]="{standalone: true}">
+
+        <button type="button" class="visit-btn" (click)="openVideo(videos[i])">
+          🔗
+        </button>
+
+        <button type="button" class="delete-btn" (click)="removeVideoUrl(i)">
+          ×
+        </button>
+
+      </div>
+    </div>
+
+    <div *ngIf="videos.length === 0" class="error">
+      Debe agregar al menos un enlace de video.
+    </div>
+
+    <!-- Botones -->
+    <div class="form-buttons">
+      <button type="button" class="cancelar" (click)="cancel()">Cancelar</button>
+      <button type="submit" class="publicar">{{ isEditMode ? 'Actualizar' : 'Publicar' }}</button>
+    </div>
+
+  </form>
+</div>
