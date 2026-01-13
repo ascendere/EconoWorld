@@ -27,7 +27,6 @@ export class EconobookAdminService {
 
   async addBook(book: Book, coverFile: File | null, pdfFile: File): Promise<void> {
     try {
-      // 1. Generar ID único para el libro
       const bookId = this.firestore.createId();
 
       let coverUrl = '';
@@ -40,13 +39,11 @@ export class EconobookAdminService {
         );
       }
 
-      // 3. Subir el PDF
       const pdfUrl = await this.uploadFile(
         pdfFile,
         `books/${bookId}/pdf_${Date.now()}_${pdfFile.name}`
       );
 
-      // 4. Crear el documento en Firestore
       const bookData: Book = {
         ...book,
         id: bookId,

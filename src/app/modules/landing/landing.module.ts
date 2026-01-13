@@ -9,28 +9,31 @@ import { DashboardComponent } from './page/dashboard/dashboard.component';
 import { EconoPlayComponent } from '../client/econopley/econopley.component';
 import { Econopley1Component } from '../client/econopley/econopley1/econopley1.component';
 import { EconoBookComponent } from '../client/econobook/econobook.component';
-import { Econobook1Component } from '../client/econobook/econobook1/econobook1.component';
+import { EconobookViewerComponent  } from '../client/econobook/econobook1/econobook1.component';
 import { EconoNewsComponent } from '../client/econonew/econonew.component';
 import { EconoDataComponent } from '../client/econodata/econodata.component';
 import { EconoBotComponent } from '../client/econobot/econobot.component';
 import { Econovideos1Component } from '../client/econovideos/econovideos1/econovideos1.component';
 import { Econonews1Component } from '../client/econonew/econonew1/econonews1.component';
+import { SafePipe } from 'src/app/pipes/safe.pipe';
+import { FormsModule } from '@angular/forms'; 
+
 @NgModule({
   declarations: [
     DashboardComponent,
     EconoPlayComponent,
     Econopley1Component,
     EconoBookComponent,
-    Econobook1Component,
-    EconoNewsComponent,
+    EconobookViewerComponent,
     EconoDataComponent,
     EconoBotComponent,
     Econovideos1Component,
-    Econonews1Component
+    SafePipe
   ],
   imports: [
     CommonModule,
-    RouterModule, // ✅ necesario si usas routerLink
+    FormsModule,
+    RouterModule,
     LandingRoutingModule
   ]
 })

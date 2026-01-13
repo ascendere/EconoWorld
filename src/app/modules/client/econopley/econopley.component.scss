@@ -1,4 +1,3 @@
-
 /* ======================== VARIABLES ======================== */
 :root {
   --primary-blue: #003f72;
@@ -13,7 +12,8 @@
 
 /* ========== BUSCADOR CON FILTROS Y LUPA ========== */
 .search-section {
-  background-color: #40a9ff; /* azul claro institucional */
+  background-color: #40a9ff;
+  /* azul claro institucional */
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -79,8 +79,10 @@
   height: 1.2rem;
   background-color: #ffffff;
 }
+
 .search-box input::placeholder {
-  color: #ffffff !important; /* blanco puro */
+  color: #ffffff !important;
+  /* blanco puro */
   opacity: 1;
 }
 
@@ -132,10 +134,14 @@
   text-align: center;
   color: white;
   z-index: 1;
-  display: flex;               /* Añade flexbox */
-  flex-direction: column;      /* Que sea columna */
-  align-items: center;         /* Centra horizontalmente */
-  gap: 3rem;                 /* Espacio vertical entre título, texto y botón */
+  display: flex;
+  /* Añade flexbox */
+  flex-direction: column;
+  /* Que sea columna */
+  align-items: center;
+  /* Centra horizontalmente */
+  gap: 3rem;
+  /* Espacio vertical entre título, texto y botón */
 }
 
 .hero-section h1 {
@@ -225,6 +231,7 @@
   font-size: 1.1rem;
   margin-bottom: 6px;
 }
+
 .subtext {
   display: flex;
   align-items: center;
@@ -235,11 +242,14 @@
   max-width: 900px;
   margin: 0 auto;
   padding: 0 20px;
-  gap: 20px;   /* Aumenta espacio entre texto y líneas */
+  gap: 20px;
+  /* Aumenta espacio entre texto y líneas */
 }
+
 .subtext .line {
   flex-grow: 1;
-  min-width: 200px;   /* Puedes subir o bajar este valor según lo que quieras */
+  min-width: 200px;
+  /* Puedes subir o bajar este valor según lo que quieras */
   height: 1px;
   background-color: #d6d6d6;
   position: relative;
@@ -400,7 +410,8 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 2rem;
-  padding: 0 2rem; /* Añade margen lateral para evitar que estén pegados */
+  padding: 0 2rem;
+  /* Añade margen lateral para evitar que estén pegados */
 }
 
 .juegos-header h2 {
@@ -435,13 +446,17 @@
 .juegos-header .ver-mas:hover {
   background-color: #002f54;
 }
+
 .juegos-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
-  max-width: 1100px; /* Ancho máximo del contenedor */
-  margin: 0 auto;     /* Centrado horizontal */
-  padding: 0 1rem;    /* Espaciado lateral en móvil */
+  max-width: 1100px;
+  /* Ancho máximo del contenedor */
+  margin: 0 auto;
+  /* Centrado horizontal */
+  padding: 0 1rem;
+  /* Espaciado lateral en móvil */
 }
 
 /*jUEGOS*/
@@ -521,11 +536,13 @@
 .titulo-container {
   position: relative;
   padding: 4rem 1rem;
-  background-color: #003f72; /* Fondo azul */
+  background-color: #003f72;
+  /* Fondo azul */
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 1vh; /* Para ocupar toda la altura de la pantalla */
+  height: 1vh;
+  /* Para ocupar toda la altura de la pantalla */
 }
 
 .titulo-estilo {
@@ -533,35 +550,44 @@
   font-size: 8rem;
   font-weight: bold;
   color: white;
-  font-family: 'Poppins', sans-serif; /* Tipografía moderna */
+  font-family: 'Poppins', sans-serif;
+  /* Tipografía moderna */
   display: inline-block;
-  z-index: 1; /* Asegura que el texto esté por encima del fondo */
+  z-index: 1;
+  /* Asegura que el texto esté por encima del fondo */
 }
 
 .titulo-estilo::before {
-  content: "EconoWorld"; /* El texto que deseas mostrar como fondo */
+  content: "EconoWorld";
+  /* El texto que deseas mostrar como fondo */
   position: absolute;
   top: 0;
   left: 0;
   font-size: 8rem;
   font-weight: bold;
-  color: rgba(255, 255, 255, 0.08); /* Color tenue para el fondo */
-  transform: rotate(-10deg); /* Rotación para un estilo más dinámico */
-  z-index: -1; /* Lo pone detrás del texto principal */
-  text-align: center; /* Alinea el texto en el centro */
+  color: rgba(255, 255, 255, 0.08);
+  /* Color tenue para el fondo */
+  transform: rotate(-10deg);
+  /* Rotación para un estilo más dinámico */
+  z-index: -1;
+  /* Lo pone detrás del texto principal */
+  text-align: center;
+  /* Alinea el texto en el centro */
   width: 100%;
 }
 
 /* ======================== Responsive Design ======================== */
 @media (max-width: 1024px) {
   .titulo-estilo {
-    font-size: 6rem; /* Tamaño más pequeño para pantallas medianas */
+    font-size: 6rem;
+    /* Tamaño más pequeño para pantallas medianas */
   }
 }
 
 @media (max-width: 768px) {
   .titulo-estilo {
-    font-size: 4rem; /* Tamaño más pequeño para pantallas pequeñas */
+    font-size: 4rem;
+    /* Tamaño más pequeño para pantallas pequeñas */
   }
 }
 
@@ -708,12 +734,14 @@
   align-items: center;
   gap: 0.4rem;
 }
+
 .contenido {
   background-color: white;
   padding: 1.3rem 1.2rem 1rem;
   position: relative;
   z-index: 1;
 }
+
 .testimonial-card.superpuesta::after {
   content: "";
   position: absolute;
@@ -738,7 +766,7 @@
   .testimonial-card {
     width: 90%;
   }
-  
+
 }
 
 // ====================== Footer ======================
@@ -856,7 +884,7 @@ footer {
 .footer-top .column h4 {
   font-size: 1.1rem;
   margin-bottom: 0.5rem;
-  color:  #7d7d7d;
+  color: #7d7d7d;
   display: inline-block;
   padding-bottom: 0.4rem;
   position: relative;
@@ -959,28 +987,340 @@ footer {
   }
 }
 
-/* ======================== FLOATING ACTION BUTTON ======================== */
-.fab {
+// ======================== LOADING & EMPTY STATES ========================
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+
+  .spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid rgba(0, 63, 114, 0.3);
+    border-top-color: #ffce00;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+
+  p {
+    margin-top: 1rem;
+    color: #003f72;
+    font-size: 1.1rem;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  text-align: center;
+  padding: 2rem;
+
+  .empty-icon {
+    font-size: 5rem;
+    opacity: 0.3;
+    margin-bottom: 1rem;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+    color: #003f72;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    color: #7d7d7d;
+  }
+}
+
+// ======================== JUEGOS HEADER MEJORADO ========================
+.juegos-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding: 0 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+
+  h2 {
+    background-color: #f0b400;
+    color: #003f72;
+    padding: 12px 24px;
+    border-radius: 25px;
+    font-size: 1rem;
+    margin: 0;
+    font-weight: 600;
+  }
+
+  .game-count {
+    color: #7d7d7d;
+    font-size: 0.9rem;
+    margin-left: auto;
+  }
+
+  .btn-vermas {
+    background-color: #003f72;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: #002f54;
+    }
+  }
+}
+
+// ======================== FILTERS RESPONSIVE ========================
+.filters {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: #ffffff;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.filters span {
+  position: relative;
+  padding: 0.5rem 0.8rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 0.5rem;
+  white-space: nowrap;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  &.active {
+    font-weight: 700;
+    background: rgba(255, 255, 255, 0.15);
+    border-bottom: 3px solid #ffce00;
+    padding-bottom: 0.5rem;
+  }
+}
+
+// Remover separadores si los había
+.filters span::after {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .filters {
+    gap: 0.8rem;
+    font-size: 0.85rem;
+
+    span {
+      padding: 0.4rem 0.6rem;
+      font-size: 0.85rem;
+    }
+  }
+
+  .juegos-header {
+    padding: 0 1rem;
+
+    .game-count {
+      order: 3;
+      width: 100%;
+      text-align: center;
+      margin-left: 0;
+    }
+  }
+}
+
+// ======================== JUEGO CARDS MEJORADOS ========================
+.juego-card {
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  }
+
+  .category-tag {
+    background: #f0b400;
+    color: #003f72;
+    padding: 0.2rem 0.8rem;
+    border-radius: 1rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    display: inline-block;
+    margin: 0.3rem 0;
+  }
+
+  .description {
+    color: #666;
+    font-size: 0.85rem;
+    line-height: 1.4;
+    min-height: 40px;
+  }
+}
+
+// ======================== GAME MODAL ========================
+.game-modal {
   position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  width: 60px;
-  height: 60px;
-  background: #40a9ff;
-  border-radius: 50%;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.92);
+  z-index: 9999;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 20px rgba(64, 169, 255, 0.4);
+  padding: 1rem;
+  animation: fadeIn 0.3s ease;
+  backdrop-filter: blur(8px);
+}
+
+.game-modal-content {
+  background: white;
+  border-radius: 1rem;
+  width: 100%;
+  max-width: 1200px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  animation: slideUp 0.4s ease;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 40px;
+  height: 40px;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 1.5rem;
   cursor: pointer;
-  z-index: 1000;
-  transition: transform 0.3s, box-shadow 0.3s;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: #a71930;
+    transform: rotate(90deg);
+  }
 }
-.fab img {
-  width: 36px;
-  height: 36px;
+
+.modal-header {
+  padding: 2rem 2rem 1rem;
+  border-bottom: 2px solid #e0ded8;
+
+  h2 {
+    font-size: 1.8rem;
+    color: #003f72;
+    margin: 0 0 0.8rem 0;
+    font-weight: 700;
+    padding-right: 40px;
+  }
+
+  .game-meta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+
+    .category {
+      background: #ffce00;
+      color: #003f72;
+      padding: 0.3rem 1rem;
+      border-radius: 2rem;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+  }
 }
-.fab:hover {
-  transform: scale(1.08);
-  box-shadow: 0 6px 24px rgba(64, 169, 255, 0.5);
+
+.game-container {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%; // Aspect ratio 16:9
+  background: #000;
+
+  iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+}
+
+.modal-body {
+  padding: 2rem;
+
+  h3 {
+    font-size: 1.3rem;
+    color: #003f72;
+    margin: 0 0 1rem 0;
+  }
+
+  p {
+    color: #4b5563;
+    line-height: 1.6;
+    font-size: 1rem;
+  }
+}
+
+// ========== RESPONSIVE MODAL ==========
+@media (max-width: 768px) {
+  .game-modal {
+    padding: 0;
+  }
+
+  .game-modal-content {
+    max-width: 100%;
+    max-height: 100vh;
+    border-radius: 0;
+  }
+
+  .modal-header {
+    padding: 1.5rem 1rem 1rem;
+
+    h2 {
+      font-size: 1.3rem;
+    }
+  }
+
+  .modal-body {
+    padding: 1.5rem 1rem;
+  }
 }

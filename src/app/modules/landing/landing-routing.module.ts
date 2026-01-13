@@ -12,14 +12,14 @@ import { EconoPlayComponent } from '../client/econopley/econopley.component';
 import { Econopley1Component } from '../client/econopley/econopley1/econopley1.component';
 import { EconoNewsComponent } from '../client/econonew/econonew.component';
 import { EconoBookComponent } from '../client/econobook/econobook.component';
-import { Econobook1Component } from '../client/econobook/econobook1/econobook1.component';
+import { EconobookViewerComponent } from '../client/econobook/econobook1/econobook1.component';
 import { EconoDataComponent } from '../client/econodata/econodata.component';
 import { EconoBotComponent } from '../client/econobot/econobot.component';
 import { EconovideosComponent } from '../client/econovideos/econovideos.component';
 import { Econovideos1Component } from '../client/econovideos/econovideos1/econovideos1.component';
 import { Econonews1Component } from '../client/econonew/econonew1/econonews1.component';
 
-@Injectable({ providedIn: 'root' })
+/*@Injectable({ providedIn: 'root' })
 export class NoAdminOnLandingGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) {}
   canActivate(): Observable<boolean> {
@@ -33,21 +33,21 @@ export class NoAdminOnLandingGuard implements CanActivate {
       })
     );
   }
-}
+}*/
 
 const routes: Routes = [
-  { path: '', component: DashboardComponent, canActivate: [NoAdminOnLandingGuard] },
+  { path: '', component: DashboardComponent /*, canActivate: [NoAdminOnLandingGuard]*/ },
   { path: 'econotest', component: HomeClientComponent },
   { path: 'econoplay', component: EconoPlayComponent },
   { path: 'econopley1', component: Econopley1Component },
   { path: 'econonews', component: EconoNewsComponent },
   { path: 'econobook', component: EconoBookComponent },
-  { path: 'econobook1', component: Econobook1Component },
+  { path: 'econobook1', component: EconobookViewerComponent },
   { path: 'econodata', component: EconoDataComponent },
   { path: 'econobot', component: EconoBotComponent },
   { path: 'econovideos', component: EconovideosComponent },
-  { path: 'econovideos1', component: Econovideos1Component},
-  { path: 'econonews1', component: Econonews1Component}
+  { path: 'econovideos1', component: Econovideos1Component },
+  { path: 'econonews1', component: Econonews1Component }
 ];
 
 @NgModule({

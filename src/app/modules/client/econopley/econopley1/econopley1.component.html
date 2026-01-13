@@ -1,102 +1,162 @@
-<!DOCTYPE html>
-<html lang="es">
+<div class="page-container">
+  <!-- BACK BUTTON -->
+  <div class="back-section">
+    <button class="back-btn" (click)="regresar()">
+      <span>← Regresar</span>
+    </button>
+  </div>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="econopley1.component.scss">
-</head>
-
-<body>
-    <div class="back-section">
-        <button class="back-btn" (click)="regresar()">
-            <span>← Regresar</span>
-        </button>
+  <!-- SEARCH SECTION -->
+  <section class="search-section">
+    <div class="search-box">
+      <input 
+        type="text" 
+        placeholder="Buscar juegos..."
+        [(ngModel)]="terminoBusqueda"
+        (input)="buscarJuegos()" />
+      <button class="search-btn">
+        <img src="assets/images/lupa.png" alt="Buscar" width="16" height="16" />
+      </button>
     </div>
-    
-    <section class="search-section">
-        <div class="search-box">
-            <input type="text" placeholder="Buscar..." />
-            <button class="search-btn">
-                <img src="assets/images/lupa.png" alt="Buscar" width="16" height="16" />
-            </button>
+    <div class="filters">
+      <span 
+        *ngFor="let cat of categorias" 
+        [class.active]="categoriaActual === cat"
+        (click)="filtrarPorCategoria(cat)">
+        {{ cat }}
+      </span>
+    </div>
+  </section>
+
+  <!-- JUEGOS SECTION -->
+  <section class="juegos-section">
+    <!-- CATEGORY HEADER -->
+    <div class="category-header">
+      <h2>{{ categoriaActual }}</h2>
+      <span class="game-count" *ngIf="!cargando">{{ gamesFiltrados.length }} juegos</span>
+    </div>
+
+    <!-- LOADING STATE -->
+    <div class="loading-state" *ngIf="cargando">
+      <div class="spinner"></div>
+      <p>Cargando juegos...</p>
+    </div>
+
+    <!-- EMPTY STATE -->
+    <div class="empty-state" *ngIf="!cargando && gamesFiltrados.length === 0">
+      <div class="empty-icon">🎮</div>
+      <h3>No hay juegos disponibles</h3>
+      <p *ngIf="terminoBusqueda">No se encontraron resultados para "{{ terminoBusqueda }}"</p>
+      <p *ngIf="!terminoBusqueda && categoriaActual !== 'Todos'">
+        No hay juegos en la categoría "{{ categoriaActual }}"
+      </p>
+      <p *ngIf="!terminoBusqueda && categoriaActual === 'Todos'">Aún no se han publicado juegos</p>
+    </div>
+
+    <!-- JUEGOS GRID -->
+    <div class="juegos-grid" *ngIf="!cargando && gamesFiltrados.length > 0">
+      <div class="juego-card" *ngFor="let game of gamesFiltrados">
+        <img 
+          [src]="game.imageUrl || 'assets/images/Eonli.png'" 
+          [alt]="game.name"
+          onerror="this.src='assets/images/Eonli.png'">
+        <h3>{{ game.name }}</h3>
+        <p class="category-tag">{{ game.category }}</p>
+        <p class="description">
+          {{ game.instructions.length > 80 ? (game.instructions | slice:0:80) + '...' : game.instructions }}
+        </p>
+        <div class="botones">
+          <button class="jugar" (click)="abrirJuego(game)">Jugar</button>
+          <button class="detalles" (click)="abrirJuego(game)">Detalles</button>
         </div>
-        <div class="filters">
-            <span>Lo Último</span>
-            <span>Ediciones</span>
-            <span>Tendencias</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 🎮 MODAL DE JUEGO -->
+  <div class="game-modal" *ngIf="mostrarModal" (click)="cerrarModal()">
+    <div class="game-modal-content" (click)="$event.stopPropagation()">
+      
+      <!-- Botón cerrar -->
+      <button class="close-btn" (click)="cerrarModal()">
+        <span>✕</span>
+      </button>
+      
+      <!-- Header del modal -->
+      <div class="modal-header">
+        <h2>{{ juegoSeleccionado?.name }}</h2>
+        <div class="game-meta">
+          <span class="category">{{ juegoSeleccionado?.category }}</span>
         </div>
-    </section>
+      </div>
+      
+      <!-- Juego embebido -->
+      <div class="game-container">
+        <iframe
+          *ngIf="juegoEmbedUrl"
+          [src]="juegoEmbedUrl"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+          allowfullscreen>
+        </iframe>
+      </div>
+      
+      <!-- Instrucciones -->
+      <div class="modal-body" *ngIf="juegoSeleccionado?.instructions">
+        <h3>Instrucciones</h3>
+        <p>{{ juegoSeleccionado?.instructions }}</p>
+      </div>
+      
+    </div>
+  </div>
 
-
-    <section class="juegos-section">
-
-        <div class="juegos-grid">
-            <div class="juego-card" *ngFor="let juego of juegos">
-                <img [src]="juego.imagen" [alt]="juego.titulo">
-                <h3>{{ juego.titulo }}</h3>
-                <p>{{ juego.categoria }}</p>
-                <p>{{ juego.genero }}</p>
-                <div class="botones">
-                    <button class="jugar">Jugar</button>
-                    <button class="detalles">Detalles</button>
-                </div>
-            </div>
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-contact-block">
+      <div class="social-icons">
+        <a href="#"><img src="assets/images/facebook.png" alt="Facebook"></a>
+        <a href="#"><img src="assets/images/gorjeo.png" alt="Twitter"></a>
+        <a href="#"><img src="assets/images/instagram.png" alt="Instagram"></a>
+      </div>
+      <div class="info-block">
+        <div class="info-item">
+          <img src="assets/images/poste.png" width="16" />
+          <span><strong>Ubicación:</strong> San Cayetano Alto, Loja - Ecuador</span>
         </div>
-    </section>
-
-
-
-
-    <footer>
-        <div class="footer-contact-block">
-            <div class="social-icons">
-                <a href="#"><img src="assets/images/facebook.png" alt="Facebook"></a>
-                <a href="#"><img src="assets/images/gorjeo.png" alt="Twitter"></a>
-                <a href="#"><img src="assets/images/instagram.png" alt="Instagram"></a>
-            </div>
-            <div class="info-block">
-                <div class="info-item">
-                    <img src="assets/images/poste.png" width="16" />
-                    <span><strong>Ubicación:</strong> San Cayetano Alto, Loja - Ecuador</span>
-                </div>
-                <div class="divider"></div>
-                <div class="info-item">
-                    <img src="assets/images/manzana.png" width="16" />
-                    <span><strong>Email:</strong> Buzón de Consultas</span>
-                </div>
-            </div>
+        <div class="divider"></div>
+        <div class="info-item">
+          <img src="assets/images/manzana.png" width="16" />
+          <span><strong>Email:</strong> Buzón de Consultas</span>
         </div>
+      </div>
+    </div>
 
-        <div class="footer-top footer-centered">
-            <div class="column">
-                <h4>Vínculos De Interés</h4>
-                <ul>
-                    <li><img src="assets/images/graduacion.png" width="16" /> Carrera de Economía</li>
-                    <li><img src="assets/images/directorio.png" width="16" /> Guía Estudiantes</li>
-                    <li><img src="assets/images/tierra.png" width="16" /> Internacional</li>
-                    <li><img src="assets/images/periodico.png" width="16" /> Noticias</li>
-                    <li><img src="assets/images/aceptara.png" width="16" /> Admisiones</li>
-                    <li><img src="assets/images/calendario.png" width="16" /> Eventos</li>
-                </ul>
-            </div>
-            <div class="column">
-                <h4>Estudiantes</h4>
-                <ul>
-                    <li><img src="assets/images/calendario.png" width="16" /> Calendario Académico</li>
-                    <li><img src="assets/images/directorio.png" width="16" /> Guía para Estudiantes</li>
-                    <li><img src="assets/images/virtual.png" width="16" /> Aula Virtual</li>
-                </ul>
-            </div>
-        </div>
+    <div class="footer-top footer-centered">
+      <div class="column">
+        <h4>Vínculos De Interés</h4>
+        <ul>
+          <li><img src="assets/images/graduacion.png" width="16" /> Carrera de Economía</li>
+          <li><img src="assets/images/directorio.png" width="16" /> Guía Estudiantes</li>
+          <li><img src="assets/images/tierra.png" width="16" /> Internacional</li>
+          <li><img src="assets/images/periodico.png" width="16" /> Noticias</li>
+          <li><img src="assets/images/aceptara.png" width="16" /> Admisiones</li>
+          <li><img src="assets/images/calendario.png" width="16" /> Eventos</li>
+        </ul>
+      </div>
+      <div class="column">
+        <h4>Estudiantes</h4>
+        <ul>
+          <li><img src="assets/images/calendario.png" width="16" /> Calendario Académico</li>
+          <li><img src="assets/images/directorio.png" width="16" /> Guía para Estudiantes</li>
+          <li><img src="assets/images/virtual.png" width="16" /> Aula Virtual</li>
+        </ul>
+      </div>
+    </div>
 
-        <div class="footer-bottom">
-            <div class="logo">UTPL | EconoWorld</div>
-            <div class="scroll-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">↑</div>
-            <div>© 2025 EconoWorld By LiiD</div>
-        </div>
-    </footer>
-
-</body>
-
-</html>
+    <div class="footer-bottom">
+      <div class="logo">UTPL | EconoWorld</div>
+      <div class="scroll-top" (click)="scrollTop()">↑</div>
+      <div>© 2025 EconoWorld By LiiD</div>
+    </div>
+  </footer>
+</div>

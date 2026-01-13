@@ -1,6 +1,6 @@
 // src/app/modules/admin/admin.module.ts
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
-import { CommonModule } from '@angular/common'; // ✅ CORRECTO
+import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
@@ -12,10 +12,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 
+import { EditorModule } from '@tinymce/tinymce-angular'
+
 // Módulos internos
 import { AdminRoutingModule } from './admin-routing.module';
-import { EconotestModule } from './econotestAdmin/econotest.admin'; // ✅ Módulo funcional
-import { EconobookAdminComponent } from './econobookAdmin/forms/econobok.component.admin'; // Asegúrate de importar el componente
+import { EconotestModule } from './econotestAdmin/econotest.admin'; 
+import { EconobookAdminComponent } from './econobookAdmin/forms/econobok.component.admin'; 
 import { VideosListComponent } from './econovidiosAdmin/list/videos-list.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { EcononewsAdminComponent } from './econonewsAdmin/forms/econonews-admin.component';
@@ -40,12 +42,12 @@ import { EconovidiosAdminComponent } from './econovidiosAdmin/form/econovidios-a
     MatDialogModule,
     MatProgressSpinnerModule,
     MatIconModule,
+    EditorModule,
     MatButtonModule,
     MatSelectModule,
     MatInputModule,
     AdminRoutingModule,
     EconotestModule,
- // ✅ Submódulo bien importado
   ],
   schemas: [NO_ERRORS_SCHEMA]
 })

@@ -7,43 +7,150 @@
     <span class="font-sans font-semibold text-xl tracking-tight">{{ tituloActual }}</span>
   </div>
 
-  <!-- ENLACES para LANDING -->
-  <div *ngIf="currentRoute === '/'" class="flex items-center space-x-6">
+  <!-- ========== LANDING: Solo para usuarios NO autenticados ========== -->
+  <div *ngIf="!isAuthenticated" class="flex items-center space-x-6">
     <a routerLink="/" class="text-white hover:underline font-medium admin-button">Inicio</a>
-    <a routerLink="/nosotros" class="text-white hover:underline font-medium admin-button">Sobre Nosotros</a>
-    <a routerLink="/servicios" class="text-white hover:underline font-medium admin-button">Servicios</a>
-    <a routerLink="/econovideos" class="nav-link">EconoVideos</a>
+
+    <!-- Dropdown Servicios Landing -->
+    <div class="relative servicios-dropdown">
+      <button class="text-white font-medium admin-button flex items-center gap-2"
+        (click)="toggleServiciosMenu(); $event.stopPropagation()">
+        <span>Servicios</span>
+        <span class="text-xs">{{ isServiciosOpen ? '▲' : '▼' }}</span>
+      </button>
+
+      <div *ngIf="isServiciosOpen" class="dropdown-menu">
+        <a routerLink="/econobook" (click)="isServiciosOpen = false" class="dropdown-item">
+          EconoBook
+        </a>
+        <a routerLink="/econodata" (click)="isServiciosOpen = false" class="dropdown-item">
+          EconoData
+        </a>
+        <a routerLink="/econonews" (click)="isServiciosOpen = false" class="dropdown-item">
+          EconoNews
+        </a>
+        <a routerLink="/econoplay" (click)="isServiciosOpen = false" class="dropdown-item">
+          EconoPlay
+        </a>
+        <a routerLink="/tematica" (click)="isServiciosOpen = false" class="dropdown-item">
+          EconoTest
+        </a>
+        <a routerLink="/econovideos" (click)="isServiciosOpen = false" class="dropdown-item">
+          EconoVideos
+        </a>
+      </div>
+    </div>
+
     <button (click)="openLoginModal('/econotest')"
       class="ml-4 px-5 py-2 rounded-xl border-2 border-yellow-400 text-white font-medium hover:bg-yellow-500 hover:text-blue-900 shadow-md transition">
       Empecemos
     </button>
   </div>
 
-  <!-- CONTENIDO PARA OTRAS RUTAS -->
-  <div *ngIf="currentRoute !== '/'" class="flex items-center space-x-6">
+  <!-- ========== ADMINISTRADOR ========== -->
+  <div *ngIf="isAdmin" class="flex items-center space-x-6">
+    <a routerLink="/" class="text-white font-medium admin-button flex items-center gap-2">
+      <span>Inicio</span>
+    </a>
 
-<!-- ECONOTEST Y TEMATICA -->
-<ng-container *ngIf="isAuthenticated && (currentRoute.startsWith('/econotest') || currentRoute.startsWith('/tematica'))">
-  <a *ngIf="mostrarAlbum" (click)="navigateToStickers()" class="text-white ml-4 admin-button">Álbum</a>
-  <a [routerLink]="'/tematica'" class="text-white ml-4 admin-button">Portada</a>
-</ng-container>
+    <a (click)="navigateToAdmin()" class="text-white font-medium admin-button flex items-center gap-2 cursor-pointer">
+      <span>Administrador</span>
+    </a>
 
-<!-- Solo mostrar nombre de usuario en EconoTest/Tematica -->
-<div *ngIf="mostrarNombre" class="text-white mr-4 name">{{ userName }}</div>
+    <!-- Dropdown Servicios Admin -->
+    <div class="relative servicios-dropdown">
+      <button class="text-white font-medium admin-button flex items-center gap-2"
+        (click)="toggleServiciosMenu(); $event.stopPropagation()">
+        <span>Servicios</span>
+        <span class="text-xs">{{ isServiciosOpen ? '▲' : '▼' }}</span>
+      </button>
 
-<!-- LOGIN y LOGOUT siguen igual -->
-<ng-container *ngIf="isAuthenticated && !(userRole === 'admin' && currentRoute.startsWith('/admin'))">
-  <button (click)="signOut()"
-    class="text-sm p-4 cursor-pointer rounded-lg text-white bg-button-blue hover:border-transparent hover:text-brand-blue hover:bg-white ml-4">
-    <i class="fas fa-sign-out-alt mr-2"></i> Cerrar sesión
-  </button>
-</ng-container>
+      <div *ngIf="isServiciosOpen" class="dropdown-menu">
+        <a routerLink="/econobook" (click)="isServiciosOpen = false" class="dropdown-item">
+          EconoBook
+        </a>
+        <a routerLink="/econodata" (click)="isServiciosOpen = false" class="dropdown-item">
+          EconoData
+        </a>
+        <a routerLink="/econonews" (click)="isServiciosOpen = false" class="dropdown-item">
+          EconoNews
+        </a>
+        <a routerLink="/econoplay" (click)="isServiciosOpen = false" class="dropdown-item">
+          EconoPlay
+        </a>
+        <a routerLink="/tematica" (click)="isServiciosOpen = false" class="dropdown-item">
+          EconoTest
+        </a>
+        <a routerLink="/econovideos" (click)="isServiciosOpen = false" class="dropdown-item">
+          EconoVideos
+        </a>
+      </div>
+    </div>
+
+    <div class="name">{{ userName }}</div>
+
+    <button (click)="signOut()"
+      class="px-5 py-2 rounded-xl border-2 border-yellow-400 text-white font-medium hover:bg-yellow-500 hover:text-blue-900 shadow-md transition">
+      Cerrar sesión
+    </button>
+  </div>
+
+  <!-- ========== CLIENTES AUTENTICADOS (sin restricción de ruta) ========== -->
+  <div *ngIf="isAuthenticated && !isAdmin" class="flex items-center space-x-6">
+
+    <!-- Inicio -->
+    <a routerLink="/" class="text-white hover:underline font-medium admin-button">Inicio</a>
+
+    <!-- Dropdown Servicios -->
+    <div class="relative servicios-dropdown">
+      <button class="text-white font-medium admin-button flex items-center gap-2"
+        (click)="toggleServiciosMenu(); $event.stopPropagation()">
+        <span>Servicios</span>
+        <span class="text-xs">{{ isServiciosOpen ? '▲' : '▼' }}</span>
+      </button>
+
+      <div *ngIf="isServiciosOpen" class="dropdown-menu">
+        <a routerLink="/econobook" (click)="isServiciosOpen = false" class="dropdown-item">
+          EconoBook
+        </a>
+        <a routerLink="/econodata" (click)="isServiciosOpen = false" class="dropdown-item">
+          EconoData
+        </a>
+        <a routerLink="/econonews" (click)="isServiciosOpen = false" class="dropdown-item">
+          EconoNews
+        </a>
+        <a routerLink="/econoplay" (click)="isServiciosOpen = false" class="dropdown-item">
+          EconoPlay
+        </a>
+        <a routerLink="/tematica" (click)="isServiciosOpen = false" class="dropdown-item">
+          EconoTest
+        </a>
+        <a routerLink="/econovideos" (click)="isServiciosOpen = false" class="dropdown-item">
+          EconoVideos
+        </a>
+      </div>
+    </div>
+
+    <!-- Botones condicionales para EconoTest/Tematica -->
+    <ng-container *ngIf="currentRoute.startsWith('/econotest') || currentRoute.startsWith('/tematica')">
+      <a *ngIf="mostrarAlbum" (click)="navigateToStickers()" class="text-white admin-button cursor-pointer">Álbum</a>
+      <a [routerLink]="'/tematica'" class="text-white admin-button">Portada</a>
+    </ng-container>
+
+    <!-- Nombre del usuario -->
+    <div class="text-white name">{{ userName }}</div>
+
+    <!-- Botón cerrar sesión -->
+    <button (click)="signOut()"
+      class="px-5 py-2 rounded-xl border-2 border-yellow-400 text-white font-medium hover:bg-yellow-500 hover:text-blue-900 shadow-md transition">
+      Cerrar sesión
+    </button>
   </div>
 </nav>
-<!-- MODAL LOGIN -->
+
+<!-- Modal de login -->
 <div id="loginModal" #loginModal class="modal">
   <div class="modal-content m">
-    <!-- ❌ BOTÓN DE CIERRE -->
     <span class="close" (click)="closeLoginModal()">&times;</span>
 
     <span class="font-sans font-semibold text-xl tracking-tight">

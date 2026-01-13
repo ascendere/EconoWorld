@@ -4,6 +4,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+//import { EditorModule } from '@tinymce/tinymce-angular';
+
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
@@ -14,8 +16,8 @@ import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthService } from './services/auth.service';
 import { HttpClientModule } from '@angular/common/http';
-import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { ReactiveFormsModule } from '@angular/forms';
+
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent],
@@ -28,14 +30,15 @@ import { ReactiveFormsModule } from '@angular/forms';
     AngularFirestoreModule,
     AngularFireStorageModule,
     FormsModule,
-    ReactiveFormsModule,   // ← FALTABA ESTO
+    ReactiveFormsModule,  
     BrowserAnimationsModule,
     HttpClientModule,
-    CKEditorModule,
+    
+    //EditorModule
   ],
   providers: [
     AuthService, // Provide AuthService at the AppModule level
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

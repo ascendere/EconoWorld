@@ -53,8 +53,8 @@
 
           <!-- Enlace del video -->
           <td>
-            <ng-container *ngIf="v.videoUrl && v.videoUrl.length > 0; else noLink">
-              <a [href]="v.videoUrl[0].url" target="_blank">
+            <ng-container *ngIf="v.videoUrl?.url; else noLink">
+              <a [href]="v.videoUrl?.url" target="_blank">
                 Ver Video
               </a>
             </ng-container>

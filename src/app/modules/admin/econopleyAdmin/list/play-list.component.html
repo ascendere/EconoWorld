@@ -32,7 +32,6 @@
         <tr>
           <th>Nombre</th>
           <th>Categoría</th>
-          <th>Enlace</th>
           <th>Instrucciones</th>
           <th>Acciones</th>
         </tr>
@@ -47,15 +46,7 @@
           <!-- Categoría -->
           <td class="capitalize">{{ g.category }}</td>
 
-          <!-- Enlace Externo -->
-          <td>
-            <ng-container *ngIf="g.accessUrl; else noLink">
-              <a [href]="g.accessUrl" target="_blank">Abrir juego</a>
-            </ng-container>
-            <ng-template #noLink>Sin enlace</ng-template>
-          </td>
-
-          <!-- Instrucciones (solo preview) -->
+          <!-- Instrucciones-->
           <td>
             <span *ngIf="g.instructions; else noInstructions">
               {{ g.instructions.substring(0, 40) }}...

@@ -12,7 +12,7 @@ export interface Video {
   videoUrl?: {
     name: string;
     url: string;
-  }[];
+  };
   thumbnailUrl?: string;
   createAt: Date;
 }
@@ -25,7 +25,7 @@ export class EconovideosAdminService {
   constructor(
     private firestore: AngularFirestore,
     private storage: StorageService
-  ) {}
+  ) { }
 
   async addVideo(video: Video, archivoVideo?: File) {
     try {
@@ -34,12 +34,11 @@ export class EconovideosAdminService {
       if (archivoVideo) {
         const uploadedUrl = await this.storage.subirArchivo(archivoVideo, 'videos');
 
-        video.videoUrl = [
-          {
-            name: archivoVideo.name,
-            url: uploadedUrl
-          }
-        ];
+        video.videoUrl =
+        {
+          name: archivoVideo.name,
+          url: uploadedUrl
+        };
 
         console.log('✅ Video subido:', video.videoUrl);
       }

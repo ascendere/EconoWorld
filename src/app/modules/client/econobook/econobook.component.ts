@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/services/auth.service';
-import { EconobookService, Book } from 'src/app/services/econobook.service';
+import { EconobookService, Book, Publisher, Author } from 'src/app/services/econobook.service';
 
 @Component({
   selector: 'app-econobook',
@@ -9,67 +8,149 @@ import { EconobookService, Book } from 'src/app/services/econobook.service';
   styleUrls: ['./econobook.component.scss']
 })
 export class EconoBookComponent implements OnInit {
-  libros: Book[] = [];
-  librosDestacados: Book[] = [];
-  loading = true;
-  error = false;
+
+  publishedBooks: Book[] = [];
+  featuredBooks: Book[] = [];
+  filteredBooks: Book[] = [];
+
+  // 🆕 PROPIEDADES PARA EDITORIALES Y AUTORES
+  featuredPublishers: Publisher[] = [];
+  featuredAuthors: Author[] = [];
+
+  loading: boolean = false;
+  errorMessage: string | null = null;
+
+  selectedBook: Book | null = null;
+
+  searchTerm: string = '';
+  currentFilter: string = 'latest';
 
   constructor(
     private router: Router,
-    private authService: AuthService,
     private econobookService: EconobookService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
-    this.cargarLibros();
+    this.loadBooks();
+    this.loadFeaturedPublishers();
+    this.loadFeaturedAuthors();
   }
 
-  cargarLibros(): void {
+  loadBooks(): void {
     this.loading = true;
-    this.error = false;
+    this.errorMessage = null;
 
-    // Cargar libros publicados
     this.econobookService.getPublishedBooks().subscribe({
-      next: (libros: Book[]) => {
-        this.libros = libros;
+      next: (books: Book[]) => {
+        this.publishedBooks = books;
         this.loading = false;
-        console.log('Libros cargados:', libros);
+        console.log('Published books:', books);
       },
-      error: (error: any) => {
-        console.error('Error al cargar libros:', error);
-        this.error = true;
+      error: (error) => {
+        console.error('Error loading published books', error);
+        this.errorMessage = 'No se pudieron cargar los libros';
         this.loading = false;
       }
     });
 
-    // Cargar libros destacados
     this.econobookService.getFeaturedBooks().subscribe({
-      next: (libros: Book[]) => {
-        this.librosDestacados = libros;
-        console.log('Libros destacados cargados:', libros);
+      next: (books: Book[]) => {
+        this.featuredBooks = books;
+        this.filteredBooks = books;
+        console.log('Featured books:', books);
       },
-      error: (error: any) => {
-        console.error('Error al cargar libros destacados:', error);
+      error: (error) => {
+        console.error('Error loading featured books', error);
       }
     });
   }
 
-  // Método para generar estrellas basado en el nivel de recomendación
-  generarEstrellas(nivel: number): string {
-    const estrellasLlenas = '★'.repeat(nivel);
-    const estrellasVacias = '☆'.repeat(5 - nivel);
-    return estrellasLlenas + estrellasVacias;
+  // 🆕 CARGAR EDITORIALES DESTACADAS
+  loadFeaturedPublishers(): void {
+    this.econobookService.getFeaturedPublishers().subscribe({
+      next: (publishers: Publisher[]) => {
+        this.featuredPublishers = publishers;
+        console.log('Featured publishers:', publishers);
+      },
+      error: (error) => {
+        console.error('Error loading publishers', error);
+      }
+    });
   }
 
-  // Método para obtener URL del archivo
-  obtenerArchivoUrl(libro: Book): string {
-    if (libro.pdfUrl && libro.pdfUrl.trim() !== '') {
-      return libro.pdfUrl;
+  // 🆕 CARGAR AUTORES DESTACADOS
+  loadFeaturedAuthors(): void {
+    this.econobookService.getFeaturedAuthors().subscribe({
+      next: (authors: Author[]) => {
+        this.featuredAuthors = authors;
+        console.log('Featured authors:', authors);
+      },
+      error: (error) => {
+        console.error('Error loading featured authors', error);
+      }
+    });
+  }
+
+  onSearch(): void {
+    const term = this.searchTerm.toLowerCase().trim();
+
+    if (!term) {
+      this.filteredBooks = this.featuredBooks;
+      return;
     }
-    return '#';
+
+    this.filteredBooks = this.featuredBooks.filter(book =>
+      book.title.toLowerCase().includes(term) ||
+      book.authors.some(author => author.toLowerCase().includes(term)) ||
+      (book.publisher && book.publisher.toLowerCase().includes(term))
+    );
   }
 
-  iniciar(): void {
-    this.router.navigate(['/econobook']);
+  applyFilter(filter: string): void {
+    this.currentFilter = filter;
+
+    switch (filter) {
+      case 'latest':
+        this.filteredBooks = [...this.featuredBooks].sort((a, b) => {
+          const dateA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+          const dateB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+          return dateB - dateA;
+        });
+        break;
+
+      case 'editions':
+        this.filteredBooks = [...this.featuredBooks].sort((a, b) => {
+          return (b.year || 0) - (a.year || 0);
+        });
+        break;
+
+      case 'trending':
+        this.filteredBooks = [...this.featuredBooks].sort(() => Math.random() - 0.5);
+        break;
+
+      default:
+        this.filteredBooks = this.featuredBooks;
+    }
+  }
+
+  openBook(book: Book): void {
+    if (!book?.pdfUrl) {
+      alert('Este libro no tiene un PDF disponible');
+      return;
+    }
+
+    this.selectedBook = book;
+  }
+
+  closeModal(): void {
+    this.selectedBook = null;
+  }
+
+  verMasLibros(): void {
+    this.router.navigate(['/econobook1']);
+  }
+
+  scrollTop(): void {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 }

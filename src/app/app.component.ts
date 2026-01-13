@@ -9,7 +9,7 @@ export class AppComponent implements OnInit {
   title = 'econotest';
 
   ngOnInit() {
-    localStorage.clear();
-    sessionStorage.clear();
+    //localStorage.clear();
+    //sessionStorage.clear();
   }
 }

@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, ViewChild, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, ViewChild, OnInit, HostListener } from '@angular/core';
 import { Router, Event, NavigationEnd } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { filter } from 'rxjs/operators';
@@ -11,13 +11,17 @@ import { filter } from 'rxjs/operators';
 export class HeaderComponent implements OnInit, OnDestroy {
   isOpen = false;
   isAuthenticated = false;
+  isAdmin: boolean = false;
   userName = '';
   userRole = '';
   redirectAfterLogin = '/';
   currentRoute: string = '';
   tituloActual = 'EconoWorld';
+  forzarVistaUsuario: boolean = false;
   esLanding: boolean = false;
   private _redirigiendo = false;
+
+  isServiciosOpen = false;
 
   @ViewChild('loginModal') loginModal!: ElementRef;
 
@@ -36,9 +40,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
     '/': 'EconoWorld',
   };
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
+    const role = localStorage.getItem('userRole');
     this.authService.checkAuthentication().subscribe((authenticated) => {
       this.isAuthenticated = authenticated;
       if (authenticated) {
@@ -46,17 +51,40 @@ export class HeaderComponent implements OnInit, OnDestroy {
           if (user) {
             this.userName = user.name || user.givenName || '';
             this.userRole = user.role || '';
+            this.isAdmin = this.userRole === 'admin';
 
-            if (!this._redirigiendo) {
+            // lista de rutas permitidas para admins
+            const rutasPermitidasParaAdmin = [
+              '/',
+              '/econobook',
+              '/econovideos',
+              '/econonews',
+              '/econoplay',
+              '/econodata',
+              '/econobot',
+              '/tematica'
+            ];
+
+            if (!this._redirigiendo && !this.forzarVistaUsuario) {
               const rutaActual = this.router.url;
-              let destino = this.userRole === 'admin'
-                ? '/admin'
-                : this.redirectAfterLogin || '/';
-              if (rutaActual !== destino && !rutaActual.startsWith(destino)) {
-                this._redirigiendo = true;
-                this.router.navigate([destino]).then(() => {
-                  this._redirigiendo = false;
-                });
+
+              // Verificar si es una ruta permitida para admins
+              const esRutaPermitida = rutasPermitidasParaAdmin.some(ruta =>
+                rutaActual.startsWith(ruta)
+              );
+
+              // Solo redirigir si NO es una ruta permitida
+              if (!esRutaPermitida) {
+                let destino = this.userRole === 'admin'
+                  ? '/admin'
+                  : this.redirectAfterLogin || '/';
+
+                if (rutaActual !== destino && !rutaActual.startsWith(destino)) {
+                  this._redirigiendo = true;
+                  this.router.navigate([destino]).then(() => {
+                    this._redirigiendo = false;
+                  });
+                }
               }
             }
 
@@ -78,7 +106,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
       .pipe(filter((event: Event): event is NavigationEnd => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
         this.currentRoute = event.urlAfterRedirects;
-        
+
+        this.isServiciosOpen = false;
+
         // Solo actualiza título y landing, no redirige aquí
         const match = Object.keys(this.routeTitles).find((key) =>
           event.urlAfterRedirects.startsWith(key)
@@ -127,9 +157,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
           this.userName = user.name || user.givenName || '';
           this.userRole = user.role || '';
 
-          // NO redirigir aquí, dejar que ngOnInit maneje la redirección
-          // La redirección se manejará automáticamente en ngOnInit cuando se detecte el cambio de autenticación
-
           this.closeLoginModal();
           this.closeAuthPopup();
         }
@@ -138,6 +165,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   signOut(): void {
+    this.forzarVistaUsuario = false;
     this.authService.signOut();
     this.isAuthenticated = false;
     this.userName = '';
@@ -153,7 +181,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     console.log('Ruta original:', originalPath);
 
     if (this.userRole === 'admin') {
-      // Para admin, siempre redirigir a /admin/tematicas como página principal
       if (originalPath === '/econotest' || originalPath === '/tematica') {
         return '/admin/tematicas';
       }
@@ -169,20 +196,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
       if (originalPath === '/econovideos') {
         return '/admin/econovidiosadmin';
       }
-      // Si ya está en /admin o subrutas, no redirigir
       if (originalPath.startsWith('/admin')) {
         return originalPath;
       }
-      // Para cualquier otra ruta, ir a admin
       return '/admin/tematicas';
     }
 
-    // Si el usuario NO es admin y está en /admin, redirigir a /tematica
     if (originalPath.startsWith('/admin')) {
       return '/tematica';
     }
 
-    // Si no, dejarlo en su ruta original
     return originalPath;
   }
 
@@ -193,10 +216,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   public navegar(ruta: string): void {
-    // Evitar redirecciones múltiples verificando si ya estamos en la ruta correcta
     const destino = this.getRedirectUrl(ruta);
     const rutaActual = this.router.url;
-    
+
     if (rutaActual !== destino && !rutaActual.startsWith(destino)) {
       console.log('Navegando a:', destino);
       this.router.navigate([destino]);
@@ -215,6 +237,18 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   navigateToAdmin(): void {
     this.router.navigate(['/admin']);
+  }
+
+  toggleServiciosMenu(): void {
+    this.isServiciosOpen = !this.isServiciosOpen;
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.servicios-dropdown')) {
+      this.isServiciosOpen = false;
+    }
   }
 
   get mostrarNombre(): boolean {
@@ -240,7 +274,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       '/econopley1',
       '/tematica',
       '/econovideos',
-      '/econovideos1', // <-- Agregado para mostrar enlaces generales en /econovideos1
+      '/econovideos1',
       '/econodata',
     ];
     return rutas.some(ruta => this.currentRoute.startsWith(ruta)) && this.isAuthenticated;

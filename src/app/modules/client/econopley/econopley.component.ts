@@ -1,18 +1,135 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/services/auth.service';
+import { EconoplayAdminService, Game } from 'src/app/services/admin/econoplay-admin.service';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
-  selector: 'app-dashboard',
+  selector: 'app-econopley',
   templateUrl: './econopley.component.html',
   styleUrls: ['./econopley.component.scss']
 })
-export class EconoPlayComponent {
+export class EconoPlayComponent implements OnInit {
 
-  constructor(private router: Router) {}
+  games: Game[] = [];
+  gamesFiltrados: Game[] = [];
+  cargando = true;
+  categoriaActual = 'Todos';
+  terminoBusqueda = '';
 
-iniciar(): void {
-  this.router.navigate(['/econopley']);
-}
+  // 🎮 Variables para el modal
+  mostrarModal = false;
+  juegoSeleccionado: Game | null = null;
+  juegoEmbedUrl: SafeResourceUrl | null = null;
 
+  // 📋 Categorías reales de Firebase
+  categorias = [
+    'Todos',
+    'Habilidades',
+    'Macroeconomía',
+    'Microeconomía',
+    'Finanzas',
+    'Economía General'
+  ];
+
+  constructor(
+    private router: Router,
+    private econoplayService: EconoplayAdminService,
+    private sanitizer: DomSanitizer
+  ) {}
+
+  ngOnInit(): void {
+    this.cargarJuegos();
+  }
+
+  cargarJuegos(): void {
+    this.cargando = true;
+
+    this.econoplayService.getGames().subscribe({
+      next: (data) => {
+        this.games = data;
+        this.gamesFiltrados = [...this.games];
+        this.cargando = false;
+        console.log('✅ Juegos cargados:', this.games);
+      },
+      error: (err) => {
+        console.error('❌ Error al cargar juegos:', err);
+        this.cargando = false;
+      }
+    });
+  }
+
+  // 🔍 Filtrar por categoría
+  filtrarPorCategoria(categoria: string): void {
+    this.categoriaActual = categoria;
+    this.terminoBusqueda = ''; // Limpiar búsqueda al cambiar categoría
+    this.aplicarFiltros();
+  }
+
+  // 🔍 Buscar juegos por nombre o instrucciones
+  buscarJuegos(): void {
+    this.aplicarFiltros();
+  }
+
+  // 🔧 Aplicar filtros combinados (categoría + búsqueda)
+  private aplicarFiltros(): void {
+    let juegosTemp = [...this.games];
+
+    // Filtro por categoría
+    if (this.categoriaActual !== 'Todos') {
+      juegosTemp = juegosTemp.filter(
+        g => g.category === this.categoriaActual
+      );
+    }
+
+    // Filtro por búsqueda (nombre o instrucciones)
+    if (this.terminoBusqueda.trim()) {
+      const busqueda = this.terminoBusqueda.toLowerCase();
+      juegosTemp = juegosTemp.filter(g => 
+        g.name?.toLowerCase().includes(busqueda) ||
+        g.instructions?.toLowerCase().includes(busqueda)
+      );
+    }
+
+    this.gamesFiltrados = juegosTemp;
+  }
+
+  // 🎮 Abrir juego en modal
+  abrirJuego(game: Game): void {
+    if (!game.embedCode) {
+      alert('Este juego no tiene código embebido disponible');
+      return;
+    }
+
+    this.juegoSeleccionado = game;
+
+    // Sanitizar el código embebido (puede ser iframe o URL)
+    if (game.embedCode.includes('<iframe')) {
+      // Si ya es un iframe completo, extraer el src
+      const srcMatch = game.embedCode.match(/src=["']([^"']+)["']/);
+      if (srcMatch) {
+        this.juegoEmbedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(srcMatch[1]);
+      }
+    } else {
+      // Si es solo una URL
+      this.juegoEmbedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(game.embedCode);
+    }
+
+    this.mostrarModal = true;
+    document.body.style.overflow = 'hidden';
+  }
+
+  cerrarModal(): void {
+    this.mostrarModal = false;
+    this.juegoSeleccionado = null;
+    this.juegoEmbedUrl = null;
+    document.body.style.overflow = 'auto';
+  }
+
+  scrollTop(): void {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  navegarAEconopley1(): void {
+    this.router.navigate(['/econopley1']);
+  }
 }

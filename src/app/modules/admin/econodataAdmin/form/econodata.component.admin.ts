@@ -1,8 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule, AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { EconodataAdminService, Data } from 'src/app/services/admin/econodata-admin.service';
+
+function atLeastOneRequired(fileControl: () => File | null): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+        const enlaceValue = control.value;
+        const fileValue = fileControl();
+
+        if (!enlaceValue && !fileValue) {
+            return { atLeastOneRequired: true };
+        }
+
+        return null;
+    };
+}
 
 @Component({
     selector: 'app-econodata-admin',
@@ -38,11 +51,15 @@ export class EconodataAdminComponent implements OnInit {
     ngOnInit(): void {
         this.dataForm = this.fb.group({
             title: ['', Validators.required],
-            enlace: ['', Validators.required],
+            enlace: [''],
             category: ['', Validators.required],
             createdAt: [{ value: '', disabled: true }],
             updatedAt: [{ value: '', disabled: true }]
         });
+
+        this.dataForm.get('enlace')?.setValidators([
+            atLeastOneRequired(() => this.file)
+        ]);
 
         this.route.params.subscribe(params => {
             if (params['id']) {
@@ -68,11 +85,13 @@ export class EconodataAdminComponent implements OnInit {
             this.dataForm.patchValue({
                 title: item.title,
                 category: item.category,
+                enlace: item.accessUrl || '',
                 createdAt: item.createdAt,
                 updatedAt: item.updatedAt
             });
 
             this.existingFileUrl = item.fileUrl ?? null;
+            this.dataForm.get('enlace')?.updateValueAndValidity();
 
         } catch (err) {
             console.error(err);
@@ -95,18 +114,16 @@ export class EconodataAdminComponent implements OnInit {
 
         const sizeMB = file.size / 1024 / 1024;
 
-        if (sizeMB < 15) {
-            alert("El archivo no puede superar los 25 MB.");
-            return;
-        }
-
         this.file = file;
         this.fileSizeMB = Number(sizeMB.toFixed(2));
+        this.dataForm.get('enlace')?.updateValueAndValidity();
     }
 
     removeFile() {
         this.file = null;
         this.fileSizeMB = 0;
+
+        this.dataForm.get('enlace')?.updateValueAndValidity();
     }
 
     openFile() {
@@ -118,15 +135,22 @@ export class EconodataAdminComponent implements OnInit {
     }
 
     async save() {
+
         if (this.dataForm.invalid) {
             this.dataForm.markAllAsTouched();
+
+            if (this.dataForm.get('enlace')?.hasError('atLeastOneRequired')) {
+                return alert('Debe proporcionar al menos un enlace o adjuntar un archivo.');
+            }
+
             return alert('Complete los campos obligatorios.');
         }
 
         const formData: Partial<Data> = {
             title: this.dataForm.value.title,
             category: this.dataForm.value.category,
-            fileUrl: this.existingFileUrl || ''
+            accessUrl: this.dataForm.value.enlace || null,
+            fileUrl: this.existingFileUrl || null
         };
 
         if (!this.isEditMode) {
@@ -146,7 +170,7 @@ export class EconodataAdminComponent implements OnInit {
             }
 
             this.resetForm();
-            this.goDashboard();
+            this.goTable();
 
         } catch (err) {
             console.error(err);

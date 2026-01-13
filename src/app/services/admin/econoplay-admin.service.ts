@@ -8,7 +8,7 @@ export interface Game {
   name: string;
   category: string;
   instructions: string;
-  accessUrl: string;
+  embedCode: string;  
   imageUrl?: string | null;
 
   createdAt?: Timestamp | Date | FieldValue;

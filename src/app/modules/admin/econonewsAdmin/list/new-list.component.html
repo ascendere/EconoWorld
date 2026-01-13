@@ -42,11 +42,13 @@
 
           <!-- Enlace -->
           <td>
-            <ng-container *ngIf="n.resources && n.resources.length > 0; else noLink">
-              <a [href]="n.resources[0].url" target="_blank">Abrir enlace</a>
+            <!-- ✅ DESPUÉS: -->
+            <ng-container *ngIf="n.resource && n.resource.url; else noLink">
+              <a [href]="n.resource.url" target="_blank">Abrir enlace</a>
             </ng-container>
-
-            <ng-template #noLink>Sin enlace</ng-template>
+            <ng-template #noLink>
+              Sin enlace
+            </ng-template>
           </td>
 
           <!-- Palabras Clave -->

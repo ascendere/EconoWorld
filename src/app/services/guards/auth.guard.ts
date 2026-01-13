@@ -13,7 +13,7 @@ import { AuthService } from '../auth.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanMatch, CanActivate {
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) { }
 
   private redirectIfNotAuthenticated(stateUrl?: string): Observable<boolean> {
     return this.authService.checkAuthentication().pipe(
@@ -31,25 +31,22 @@ export class AuthGuard implements CanMatch, CanActivate {
     return this.authService.getUser().pipe(
       switchMap((user: any) => {
         if (!user) {
-          this.router.navigate(['/']); // Redirige si no hay usuario
+          this.router.navigate(['/']);
           return of(false);
         }
 
         const userRole = user.role || '';
-        
-        // Si se espera rol vacío (client), verificar que NO sea admin
-        if (expectedRole === '' && userRole === 'admin') {
-          this.router.navigate(['/admin/tematicas']); // Redirige admin a su área específica
-          return of(false);
+
+        if (expectedRole === '') {
+          return of(true);
         }
-        
-        // Si se espera rol admin, verificar que sea admin
+
         if (expectedRole === 'admin' && userRole !== 'admin') {
-          this.router.navigate(['/tematica']); // Redirige client a su área
+          this.router.navigate(['/']);
           return of(false);
         }
-        
-        return of(true); // Permite la navegación si el rol es válido
+
+        return of(true);
       })
     );
   }

@@ -7,8 +7,8 @@ export interface Data {
     id?: string;
     title: string;
     category: string;
-    fileUrl?: string | null;      
-    accessUrl?: string | null;    
+    fileUrl?: string | null;
+    accessUrl?: string | null;
     createdAt?: string | Date;
     updatedAt?: string | Date;
 }
@@ -27,25 +27,24 @@ export class EconodataAdminService {
         try {
             const id = this.firestore.createId();
 
-            let fileUrl: string | null = null;
-
-            // Si hay archivo lo sube
-            if (file) {
-                fileUrl = await this.uploadFile(
-                    file,
-                    `data/${id}/file_${Date.now()}_${file.name}`
-                );
-            }
-
-            const payload: Data = {
+            const payload: any = {
                 ...data,
                 id,
-                fileUrl,
                 createdAt: new Date().toISOString(),
                 updatedAt: new Date().toISOString()
             };
 
-            await this.firestore.collection(this.collectionName).doc(id).set(payload);
+            if (file) {
+                const fileUrl = await this.uploadFile(
+                    file,
+                    `data/${id}/file_${Date.now()}_${file.name}`
+                );
+                payload.fileUrl = fileUrl;
+            }
+
+            const cleanPayload = this.removeNullFields(payload);
+
+            await this.firestore.collection(this.collectionName).doc(id).set(cleanPayload);
 
         } catch (error) {
             console.error('Error al agregar datos:', error);
@@ -86,7 +85,6 @@ export class EconodataAdminService {
         try {
             const updatePayload: any = { ...data };
 
-            // Subir archivo nuevo si existe
             if (newFile) {
                 const old = await this.getById(id);
 
@@ -104,7 +102,9 @@ export class EconodataAdminService {
 
             updatePayload.updatedAt = new Date().toISOString();
 
-            await this.firestore.collection(this.collectionName).doc(id).update(updatePayload);
+            const cleanPayload = this.removeNullFields(updatePayload);
+
+            await this.firestore.collection(this.collectionName).doc(id).update(cleanPayload);
 
         } catch (error) {
             console.error('Error al actualizar datos:', error);
@@ -126,6 +126,15 @@ export class EconodataAdminService {
             console.error('Error al eliminar datos:', error);
             throw error;
         }
+    }
+
+    private removeNullFields(obj: any): any {
+        return Object.entries(obj).reduce((acc, [key, value]) => {
+            if (value !== null && value !== undefined) {
+                acc[key] = value;
+            }
+            return acc;
+        }, {} as any);
     }
 
     private async uploadFile(file: File, path: string): Promise<string> {

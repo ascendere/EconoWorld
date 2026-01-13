@@ -11,7 +11,9 @@
 }
 
 /* ======================== FONDO AZUL GLOBAL ======================== */
-:host, :host ::ng-deep body, :host ::ng-deep html {
+:host,
+:host ::ng-deep body,
+:host ::ng-deep html {
   background: #003f72 !important;
   min-height: 100vh;
   width: 100vw;
@@ -37,77 +39,243 @@
   background: transparent !important;
 }
 
-/* ======================== BUSCADOR Y FILTROS ======================== */
-.search-section {
-  background-color: #40a9ff;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.2rem 2rem;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-
-.search-box {
-  display: flex;
-  align-items: center;
-  border: 1px solid #ffffff;
-  border-radius: 2rem;
+.search-section-improved {
+  background: linear-gradient(135deg, #40a9ff 0%, #1890ff 100%);
+  padding: 3rem 2rem 4rem;
+  position: relative;
   overflow: hidden;
-  background-color: transparent;
 }
 
-.search-box input {
-  padding: 0.5rem 1rem;
-  background-color: transparent;
-  color: #ffffff;
+/* Efecto de fondo animado */
+.search-section-improved::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+  animation: pulse-bg 8s ease-in-out infinite;
+  z-index: 0;
+}
+
+@keyframes pulse-bg {
+
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.3;
+  }
+
+  50% {
+    transform: scale(1.2);
+    opacity: 0.6;
+  }
+}
+
+.search-container {
+  max-width: 960px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* ===================== SEARCH BOX ===================== */
+.search-box-modern {
+  display: flex;
+  align-items: center;
+  background: #ffffff;
+  border-radius: 999px;
+  overflow: hidden;
+  height: 56px;
+  max-width: 680px;
+  margin: 0 auto;
+  width: 100%;
+  border: 2px solid transparent;
+  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.18);
+  transition: box-shadow 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
+}
+
+.search-box-modern:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.25);
+}
+
+.search-box-modern:focus-within {
+  border-color: #eaab00;
+  box-shadow: 0 14px 42px rgba(234, 171, 0, 0.35);
+}
+
+.search-input {
+  flex: 1;
+  padding: 0 1.8rem;
   border: none;
   outline: none;
+  background: transparent;
   font-size: 1rem;
-  width: 200px;
+  font-weight: 500;
+  color: #1b1b1b;
 }
 
-.search-btn {
-  border-left: 1px solid #ffffff;
-  padding: 0.5rem 1rem;
+.search-input::placeholder {
+  color: #9aa3ad;
+  font-weight: 400;
+}
+
+/* ===================== BOTÓN BUSCAR ===================== */
+.search-btn-modern {
+  position: relative;
+  min-width: 64px;
+  height: 100%;
+  background: linear-gradient(135deg, #eaab00 0%, #ffc107 100%);
+  border: none;
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
+  transition: transform 0.25s ease;
 }
 
-.search-btn img {
-  width: 16px;
-  height: 16px;
+.search-btn-modern::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.35), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
-.filters {
+.search-btn-modern:hover {
+  transform: scale(1.05);
+}
+
+.search-btn-modern:hover::before {
+  opacity: 1;
+}
+
+.search-btn-modern img {
+  z-index: 1;
+  filter: brightness(0) invert(1);
+}
+
+/* ===================== FILTROS ===================== */
+.filters-modern {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.filters-modern::before {
+  content: "Categorías";
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding-right: 0.9rem;
+  margin-right: 0.5rem;
+  border-right: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+/* ===================== CHIP ===================== */
+.filter-chip {
+  position: relative;
+  padding: 0.6rem 1.8rem;
+  min-width: 100px;
+  text-align: center;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1.8px solid rgba(255, 255, 255, 0.3);
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  transition: all 0.25s ease;
+}
+
+.filter-chip:hover {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+}
+
+.filter-chip.active {
+  background: linear-gradient(135deg, #eaab00 0%, #ffc107 100%);
+  border-color: #eaab00;
+  color: #003f72;
+  font-weight: 700;
+  box-shadow: 0 6px 18px rgba(234, 171, 0, 0.35), 0 0 0 3px rgba(234, 171, 0, 0.25);
+  transform: translateY(-2px);
+}
+
+.filter-chip.active::after {
+  content: "✓";
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #003f72;
+  color: #ffffff;
+  font-size: 0.7rem;
+  font-weight: bold;
   display: flex;
   align-items: center;
-  gap: 2rem;
-  font-size: 0.95rem;
-  font-weight: 400;
-  color: #ffffff;
+  justify-content: center;
+  border: 2px solid #ffffff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
 
-.filters span {
-  position: relative;
-  padding: 0 0.5rem;
+/* ===================== RESPONSIVE ===================== */
+@media (max-width: 768px) {
+  .search-section-improved {
+    padding: 2.5rem 1rem 3.5rem;
+  }
+
+  .search-container {
+    gap: 2rem;
+  }
+
+  .search-box-modern {
+    height: 50px;
+    max-width: 100%;
+  }
+
+  .search-input {
+    font-size: 0.9rem;
+    padding: 0 1.5rem;
+  }
+
+  .search-btn-modern {
+    min-width: 60px;
+  }
+
+  .filters-modern::before {
+    display: none;
+  }
+
+  .filter-chip {
+    padding: 0.6rem 1.5rem;
+    font-size: 0.85rem;
+    min-width: 90px;
+  }
 }
 
-.filters span:not(:last-child)::after {
-  content: '';
-  position: absolute;
-  right: -1rem;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 1px;
-  height: 1.2rem;
-  background-color: #ffffff;
-}
-
-.search-box input::placeholder {
-  color: #ffffff !important;
-  opacity: 1;
+/* ===================== REDUCED MOTION ===================== */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
 }
 
 /* ======================== TITULO SOBRE AZUL ======================== */
@@ -125,7 +293,8 @@
   padding: 1.5rem 2rem;
 }
 
-.content-title, .content-subtitle {
+.content-title,
+.content-subtitle {
   color: var(--white);
   font-size: 1.8rem;
   font-weight: 700;
@@ -163,8 +332,8 @@
   }
 
   .card-content {
-    flex: 1;
-    padding: 1.5rem;
+    display: flex;
+    gap: 0.8rem;
 
     .card-title {
       font-size: 1.1rem;
@@ -182,19 +351,41 @@
     }
 
     .visit-btn {
-      background: var(--primary-blue);
-      color: var(--white);
-      border: none;
-      padding: 0.6rem 1.2rem;
-      border-radius: 6px;
-      font-weight: 500;
+      background: linear-gradient(135deg, #003f72, #005fa3);
+      color: #fff;
+      padding: 0.6rem 1.4rem;
+      border-radius: 8px;
       font-size: 0.9rem;
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 4px 14px rgba(0, 63, 114, 0.35);
+      transition: all 0.25s ease;
+    }
 
-      &:hover {
-        background: #004a8c;
-      }
+    .visit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 63, 114, 0.45);
+    }
+
+    .visit-btn.secondary {
+      background: transparent;
+      color: #003f72;
+      border: 2px solid #003f72;
+      padding: 0.55rem 1.2rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.25s ease;
+    }
+
+    .visit-btn.secondary:hover {
+      background: rgba(0, 63, 114, 0.08);
+      transform: translateY(-2px);
     }
   }
 
@@ -223,7 +414,7 @@
       border-radius: 6px;
       padding: 0.4rem;
       border: 1px solid rgba(224, 224, 224, 0.8);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
       backdrop-filter: blur(2px);
 
       .format-label {
@@ -564,7 +755,7 @@ footer {
 .data-card {
   background: #fff;
   border-radius: 16px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.10);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.10);
   display: flex;
   overflow: hidden;
   margin: 0 1rem;
@@ -756,34 +947,6 @@ footer {
   color: var(--primary-blue);
 }
 
-/* ======================== Tabs (EconoData | Base de Economía) ======================== */
-.tab-header {
-  display: flex;
-  justify-content: center;
-  background-color: white;
-  border-bottom: 4px solid var(--primary-blue);
-}
-
-.tab {
-  padding: 1rem 2.5rem;
-  font-weight: 700;
-  font-size: 1.1rem;
-  color: #1b1b1b;
-  background-color: transparent;
-  border: none;
-  border-bottom: 2px solid transparent;
-  transition: border-color 0.3s;
-  cursor: pointer;
-}
-
-.tab.active {
-  border-bottom: 2px solid black;
-}
-
-.tab + .tab {
-  border-left: 1px solid #ccc;
-}
-
 /* ======================== Nivel de apertura de datos ======================== */
 .data-openness-section {
   background: var(--primary-blue);
@@ -833,7 +996,7 @@ footer {
 .star {
   color: #ffc107 !important;
   font-size: 2.5rem;
-  text-shadow: 0 2px 8px rgba(0,0,0,0.10);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.10);
 }
 
 /* ======================== Mejoras de Espaciado y Layout ======================== */
@@ -851,7 +1014,7 @@ footer {
 .data-card {
   background: #fff;
   border-radius: 16px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.10);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.10);
   display: flex;
   overflow: hidden;
   margin: 0;
@@ -879,23 +1042,6 @@ footer {
   color: #222;
 }
 
-.visit-btn {
-  background: #003f72;
-  color: #fff;
-  border: none;
-  padding: 0.6rem 1.2rem;
-  border-radius: 6px;
-  font-weight: 500;
-  font-size: 0.95rem;
-  cursor: pointer;
-  align-self: flex-start;
-  transition: background 0.2s;
-}
-
-.visit-btn:hover {
-  background: #005fa3;
-}
-
 .card-image {
   width: 180px;
   min-width: 180px;
@@ -921,7 +1067,7 @@ footer {
   background: #e3f2fd;
   border-radius: 8px;
   padding: 0.4rem 0.7rem;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -946,37 +1092,56 @@ footer {
   margin-top: 0.1rem;
 }
 
+.data-table-wrapper {
+  background: #f4f6f8;
+  overflow: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+thead th {
+  position: sticky;
+  top: 0;
+  background: #003f72;
+  color: #fff;
+  padding: 0.6rem;
+  text-align: left;
+}
+
+tbody td {
+  padding: 0.5rem;
+  border-bottom: 1px solid #e0e0e0;
+  white-space: nowrap;
+}
+
 /* Responsive para pantallas pequeñas */
 @media (max-width: 700px) {
   .data-cards-container {
     max-width: 100%;
     padding: 0 0.3rem;
   }
+
   .data-card {
     flex-direction: column;
     min-height: unset;
   }
+
   .card-image {
     width: 100%;
     min-width: unset;
     height: 120px;
     border-radius: 0 0 16px 16px;
   }
+
   .card-image img {
     border-radius: 0 0 16px 16px;
   }
+
   .card-content {
     padding: 1.2rem 1rem 1rem 1rem;
   }
-}
-
-.data-openness-section {
-  margin-top: 2.5rem;
-  margin-bottom: 2.5rem;
-  border-radius: 0 0 16px 16px;
-  max-width: 900px;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 1rem;
-  padding-right: 1rem;
 }

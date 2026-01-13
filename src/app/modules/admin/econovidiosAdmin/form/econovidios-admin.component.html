@@ -79,36 +79,23 @@
     </div>
 
     <!-- URLs de Video -->
-    <label class="label">Enlaces del Video (YouTube) *</label>
+    <div class="form-section">
+      <label>Enlace del Video (YouTube) *</label>
+      <div class="row-auth">
+        <input class="input" [(ngModel)]="videoUrl" [ngModelOptions]="{ standalone: true }"
+          placeholder="https://youtube.com/..." type="url">
 
-    <div class="row-auth">
-      <input class="input" [(ngModel)]="videoInput" [ngModelOptions]="{ standalone: true }"
-        placeholder="https://youtube.com/..." (keydown.enter)="$event.preventDefault(); addVideoUrl()">
-      <button type="button" class="btn-small" (click)="addVideoUrl()">
-        Agregar
-      </button>
-    </div>
-
-    <!-- LISTA URLs -->
-    <div class="authors-list" *ngIf="videos.length > 0">
-      <div *ngFor="let url of videos; let i = index; trackBy: trackByIndex" class="author-item">
-
-        <input class="author-edit" [(ngModel)]="videos[i]" [ngModelOptions]="{standalone: true}">
-
-        <button type="button" class="visit-btn" (click)="openVideo(videos[i])">
-          🔗
+        <button type="button" class="visit-btn" (click)="openVideo()" *ngIf="videoUrl.trim()">
+          Visitar
         </button>
+      </div>
 
-        <button type="button" class="delete-btn" (click)="removeVideoUrl(i)">
-          ×
-        </button>
-
+      <div *ngIf="!videoUrl.trim()" class="error">
+        Debe agregar el enlace del video.
       </div>
     </div>
 
-    <div *ngIf="videos.length === 0" class="error">
-      Debe agregar al menos un enlace de video.
-    </div>
+    <br>
 
     <!-- Botones -->
     <div class="form-buttons">

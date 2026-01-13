@@ -55,7 +55,6 @@ export class EconobookAdminComponent implements OnInit {
         return;
       }
 
-      // Cargar datos del formulario con valores por defecto
       this.bookForm.patchValue({
         title: book.title ?? '',
         publisher: book.publisher ?? '',
@@ -63,13 +62,10 @@ export class EconobookAdminComponent implements OnInit {
         description: book.description ?? ''
       });
 
-      // Cargar autores
       this.authors = book.authors ?? [];
 
-      // Cargar URLs existentes
       this.existingPdfUrl = book.pdfUrl ?? null;
 
-      // Mostrar info del PDF existente
       if (book.pdfUrl) {
         this.pdfSizeMB = 0;
       }
@@ -115,10 +111,6 @@ export class EconobookAdminComponent implements OnInit {
     }
 
     const sizeMB = file.size / 1024 / 1024;
-    if (sizeMB > 25) {
-      alert("El PDF no puede superar los 25 MB.");
-      return;
-    }
 
     this.pdfFile = file;
     this.pdfSizeMB = Number(sizeMB.toFixed(2));

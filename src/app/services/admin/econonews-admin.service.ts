@@ -1,17 +1,20 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { serverTimestamp } from 'firebase/firestore';
 import { StorageService } from 'src/app/services/storage.service';
 
 export interface Noticia {
   id?: string;
-  title: string;             
-  category: string;           
-  content: string;            
-  keywords?: string[];       
-  resources?: {               
+  title: string;
+  category: string;
+  content: string;
+  keywords?: string[];
+  resource?: {
     name: string;
     url: string;
-  }[];
+  };
+  createdAt?: any;
+  updatedAt?: any;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -28,7 +31,7 @@ export class EcononewsAdminService {
     try {
       console.log('📰 Preparando noticia...', news);
 
-      // Limpiar campos vacíos antes de guardar
+      // Limpiar campos vacíos
       Object.keys(news).forEach(key => {
         const value = news[key as keyof Noticia];
         if (value === '' || value === null || value === undefined) {
@@ -36,13 +39,27 @@ export class EcononewsAdminService {
         }
       });
 
-      return await this.firestore.collection(this.collectionName).add(news);
+      if (news.resource && (!news.resource.name || !news.resource.url)) {
+        delete news.resource;
+      }
+
+      const id = this.firestore.createId();
+
+      return await this.firestore
+        .collection(this.collectionName)
+        .doc(id)
+        .set({
+          ...news,
+          createdAt: serverTimestamp(),
+          updatedAt: serverTimestamp()
+        });
 
     } catch (error) {
       console.error('❌ Error al crear la noticia:', error);
       throw error;
     }
   }
+
 
   getNews() {
     return this.firestore
@@ -58,17 +75,25 @@ export class EcononewsAdminService {
   }
 
   async updateNews(id: string, data: Partial<Noticia>) {
-  try {
-    return await this.firestore
-      .collection(this.collectionName)
-      .doc(id)
-      .update(data);
 
-  } catch (e) {
-    console.error("❌ Error actualizando noticia:", e);
-    throw e;
+    if (data.resource && (!data.resource.name || !data.resource.url)) {
+      delete data.resource;
+    }
+
+    try {
+      return await this.firestore
+        .collection(this.collectionName)
+        .doc(id)
+        .update({
+          ...data,
+          updatedAt: serverTimestamp()
+        });
+
+    } catch (e) {
+      console.error('❌ Error actualizando noticia:', e);
+      throw e;
+    }
   }
-}
 
   deleteNews(id: string) {
     return this.firestore.collection(this.collectionName).doc(id).delete();

@@ -5,32 +5,27 @@ import { Observable } from 'rxjs';
 export interface News {
   id?: string;
   title: string;
-  body: string;
   category: string;
-  mediaUrl?: string;
-  extraMediaUrl?: string;
-  tags?: string | string[];
-  featured?: boolean;
+  content: string;
+  keywords?: string[];
+  resource?: {
+    name: string;
+    url: string;
+  };
+  createdAt?: any;
+  updatedAt?: any;
 }
 
 @Injectable({ providedIn: 'root' })
 export class EconoNewService {
   private collectionName = 'news';
 
-  constructor(private firestore: AngularFirestore) {}
-
-  addNews(news: News) {
-    const data = {
-      ...news,
-      featured: news.featured ?? false
-    };
-    return this.firestore.collection(this.collectionName).add(data);
-  }
+  constructor(private firestore: AngularFirestore) { }
 
   getNews(): Observable<News[]> {
-  return this.firestore
-    .collection<News>(this.collectionName)
-    .valueChanges({ idField: 'id' }) as Observable<News[]>;
+    return this.firestore
+      .collection<News>('news', ref => ref.orderBy('createdAt', 'desc'))
+      .valueChanges({ idField: 'id' });
   }
 
   getFeaturedNews(): Observable<News[]> {

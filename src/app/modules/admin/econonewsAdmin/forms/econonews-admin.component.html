@@ -38,10 +38,12 @@
       </small>
     </div>
 
-    <!-- Cuerpo -->
+    <!-- Cuerpo con TinyMCE -->
     <div class="form-group">
-      <label>Cuerpo *</label>
-      <textarea formControlName="content" rows="8" placeholder="Escribe aquí la noticia..."></textarea>
+      <label>Cuerpo de la noticia *</label>
+
+      <editor [init]="tinyMceConfig" formControlName="content" apiKey="gtuwz1tkwvxnisbi88dmwewhp50s16n0nqzuvytgpkyoogpp">
+      </editor>
 
       <small class="error" *ngIf="form.get('content')?.touched && form.get('content')?.hasError('required')">
         El cuerpo de la noticia es obligatorio.
@@ -65,31 +67,17 @@
     </div>
 
     <!-- Recursos adicionales -->
-    <div class="form-group">
-      <label>Recursos adicionales</label>
+    <div class="form-group" formGroupName="resource">
+      <label>Recurso adicional</label>
 
-      <div formArrayName="resources">
-        <div class="resource-row" *ngFor="let r of resources.controls; let i = index" [formGroupName]="i">
-
-          <input type="text" formControlName="name" placeholder="Nombre del recurso" />
-
-          <input type="text" formControlName="url" placeholder="URL" />
-
-          <a class="btn-visitar" [href]="r.get('url')?.value" target="_blank" rel="noopener noreferrer"
-            *ngIf="r.get('url')?.value">
-            Visitar
-          </a>
-
-          <button type="button" class="btn-eliminar" (click)="removeResource(i)">
-            Eliminar
-          </button>
-
-        </div>
+      <div class="resource-row">
+        <input type="text" formControlName="name" placeholder="Nombre del recurso" />
+        <input type="text" formControlName="url" placeholder="URL" />
+        <a class="btn-visitar" [href]="form.get('resource.url')?.value" target="_blank" rel="noopener noreferrer"
+          *ngIf="form.get('resource.url')?.value">
+          Visitar
+        </a>
       </div>
-
-      <button type="button" class="btn-add" (click)="addResource()">
-        + Añadir enlace
-      </button>
     </div>
 
 

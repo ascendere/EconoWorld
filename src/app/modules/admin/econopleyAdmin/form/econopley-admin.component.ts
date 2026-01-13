@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { EconoplayAdminService, Game } from 'src/app/services/admin/econoplay-admin.service';
 import { serverTimestamp, Timestamp } from '@angular/fire/firestore';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-econoplay-admin',
@@ -15,12 +16,14 @@ export class EconoplayAdminComponent implements OnInit {
   form!: FormGroup;
   editingId: string | null = null;
   isEditMode = false;
+  previewHtml: SafeHtml | null = null;
 
   constructor(
     private fb: FormBuilder,
     private econoplayService: EconoplayAdminService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private sanitizer: DomSanitizer
   ) { }
 
   ngOnInit(): void {
@@ -29,10 +32,9 @@ export class EconoplayAdminComponent implements OnInit {
       name: ['', Validators.required],
       category: ['', Validators.required],
       createdAt: [{ value: '', disabled: true }],
-      accessUrl: ['', Validators.required],
+      embedCode: ['', Validators.required],
       instructions: ['', Validators.required]
     });
-
     const id = this.route.snapshot.paramMap.get('id');
 
     if (id) {
@@ -42,6 +44,10 @@ export class EconoplayAdminComponent implements OnInit {
     } else {
       this.form.get('createdAt')?.setValue(new Date().toLocaleString());
     }
+
+    this.form.get('embedCode')?.valueChanges.subscribe(() => {
+      this.updatePreview();
+    });
   }
 
   async loadGame(id: string) {
@@ -61,9 +67,11 @@ export class EconoplayAdminComponent implements OnInit {
         name: game.name ?? '',
         category: game.category ?? '',
         createdAt: createdAtFormatted,
-        accessUrl: game.accessUrl ?? '',
+        embedCode: game.embedCode ?? '',
         instructions: game.instructions ?? ''
       });
+
+      this.updatePreview();
 
     } catch (err) {
       console.error('Error loading game:', err);
@@ -86,6 +94,16 @@ export class EconoplayAdminComponent implements OnInit {
     return new Date(value).toLocaleString();
   }
 
+  updatePreview() {
+    const code = this.form.get('embedCode')?.value || '';
+
+    if (code.trim()) {
+      this.previewHtml = this.sanitizer.bypassSecurityTrustHtml(code);
+    } else {
+      this.previewHtml = null;
+    }
+  }
+
   async saveGame() {
     if (this.form.invalid) {
       alert('Please complete all required fields.');
@@ -98,7 +116,7 @@ export class EconoplayAdminComponent implements OnInit {
         name: this.form.value.name,
         category: this.form.value.category,
         instructions: this.form.value.instructions,
-        accessUrl: this.form.value.accessUrl
+        embedCode: this.form.value.embedCode 
       };
 
       // EDITAR

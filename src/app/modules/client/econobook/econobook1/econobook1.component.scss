@@ -1,4 +1,3 @@
-
 /* ======================== VARIABLES ======================== */
 :root {
   --primary-blue: #003f72;
@@ -11,281 +10,548 @@
   --search-blue: #40a9ff;
 }
 
-/* ========== BUSCADOR CON FILTROS Y LUPA ========== */
-.search-section {
-  background-color: #40a9ff; /* azul claro institucional */
+/* ======================== BACK SECTION MEJORADA ======================== */
+.back-section-improved {
+  background: linear-gradient(135deg, #003f72 0%, #0059a5 100%);
+  padding: 1.5rem 2rem;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.back-btn-improved {
+  background-color: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  padding: 0.7rem 1.5rem;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  transition: all 0.3s ease;
+}
+
+.back-btn-improved:hover {
+  background-color: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateX(-5px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.back-btn-improved svg {
+  transition: transform 0.3s ease;
+}
+
+.back-btn-improved:hover svg {
+  transform: translateX(-3px);
+}
+
+/* ===================== LIBROS MEJOR VALORADOS REDISEÑADO ===================== */
+.mejor-valorados-improved {
+  background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
+  padding: 5rem 2rem;
+  position: relative;
+}
+
+.contenedor-blanco-improved {
+  max-width: 1400px;
+  margin: 0 auto;
+  background-color: white;
+  border-radius: 2rem;
+  padding: 3.5rem 2.5rem;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+  position: relative;
+  overflow: hidden;
+}
+
+/* ===================== CONTENEDOR DE BÚSQUEDA ===================== */
+.search-section-improved {
+  margin-bottom: 3rem;
+}
+
+.search-container {
+  max-width: 960px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* ===================== SEARCH BOX ===================== */
+.search-box-modern {
+  display: flex;
+  align-items: center;
+  background: #ffffff;
+  border-radius: 999px;
+  overflow: hidden;
+  height: 56px;
+  max-width: 680px;
+  margin: 0 auto;
+  width: 100%;
+  border: 2px solid transparent;
+  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.18);
+  transition: box-shadow 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
+}
+
+.search-box-modern:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.25);
+}
+
+.search-box-modern:focus-within {
+  border-color: #eaab00;
+  box-shadow: 0 14px 42px rgba(234, 171, 0, 0.35);
+}
+
+.search-input {
+  flex: 1;
+  padding: 0 1.8rem;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #1b1b1b;
+}
+
+.search-input::placeholder {
+  color: #9aa3ad;
+  font-weight: 400;
+}
+
+/* ===================== BOTÓN BUSCAR ===================== */
+.search-btn-modern {
+  position: relative;
+  min-width: 64px;
+  height: 100%;
+  background: linear-gradient(135deg, #eaab00 0%, #ffc107 100%);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: transform 0.25s ease;
+}
+
+.search-btn-modern::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.35), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.search-btn-modern:hover {
+  transform: scale(1.05);
+}
+
+.search-btn-modern:hover::before {
+  opacity: 1;
+}
+
+.search-btn-modern img {
+  z-index: 1;
+  filter: brightness(0) invert(1);
+}
+
+/* ===================== FILTROS ===================== */
+.filters-modern {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.filters-modern::before {
+  content: "Filtrar por";
+  color: rgba(0, 0, 0, 0.5);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding-right: 0.9rem;
+  margin-right: 0.5rem;
+  border-right: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+/* ===================== CHIP ===================== */
+.filter-chip {
+  position: relative;
+  padding: 0.6rem 1.8rem;
+  min-width: 120px;
+  text-align: center;
+  border-radius: 999px;
+  background: rgba(0, 63, 114, 0.08);
+  border: 1.8px solid rgba(0, 63, 114, 0.2);
+  color: #003f72;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  transition: all 0.25s ease;
+}
+
+.filter-chip:hover {
+  background: rgba(0, 63, 114, 0.12);
+  border-color: rgba(0, 63, 114, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+}
+
+.filter-chip.active {
+  background: linear-gradient(135deg, #eaab00 0%, #ffc107 100%);
+  border-color: #eaab00;
+  color: #003f72;
+  font-weight: 700;
+  box-shadow: 0 6px 18px rgba(234, 171, 0, 0.35), 0 0 0 3px rgba(234, 171, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+.filter-chip.active::after {
+  content: "✓";
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #003f72;
+  color: #ffffff;
+  font-size: 0.7rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #ffffff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* ===================== HEADER ===================== */
+.section-header-improved {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.2rem 2rem;
-  flex-wrap: wrap;
-  gap: 1rem;
+  margin-bottom: 4rem;
+  padding-bottom: 2rem;
+  position: relative;
 }
 
-.search-box {
+.section-header-improved::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, #EAAB00 0%, transparent 100%);
+  border-radius: 10px;
+}
+
+.section-header-improved h2 {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #003f72;
+  margin: 0;
+  position: relative;
+  padding-left: 1.2rem;
   display: flex;
   align-items: center;
-  border: 1px solid #ffffff;
-  border-radius: 2rem;
-  overflow: hidden;
-  background-color: transparent;
 }
 
-.search-box input {
-  padding: 0.5rem 1rem;
-  background-color: transparent;
-  color: #ffffff;
+.section-header-improved h2::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 5px;
+  height: 65%;
+  background: linear-gradient(180deg, #EAAB00 0%, #ffc107 100%);
+  border-radius: 10px;
+}
+
+/* ========== ESTADOS ========== */
+.loading-state,
+.error-state,
+.no-results {
+  text-align: center;
+  padding: 3rem;
+  color: #666;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #EAAB00;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.btn-retry {
+  margin-top: 1rem;
+  padding: 0.7rem 2rem;
+  background: linear-gradient(135deg, #EAAB00 0%, #ffc107 100%);
+  color: #003f72;
   border: none;
-  outline: none;
-  font-size: 1rem;
-  width: 200px;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(234, 171, 0, 0.3);
 }
 
-.search-btn {
-  border-left: 1px solid #ffffff;
+.btn-retry:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(234, 171, 0, 0.4);
+}
+
+.no-results {
+  font-size: 1.1rem;
+  color: #999;
+}
+
+/* ===================== GRID DE LIBROS MÁS ESPACIADO ===================== */
+.books-grid-improved {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 3rem;
+  position: relative;
+}
+
+.book-card-improved {
+  background-color: white;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: 2px solid #f0f0f0;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  animation: fadeInUp 0.6s ease backwards;
+}
+
+.book-card-improved:nth-child(1) { animation-delay: 0.1s; }
+.book-card-improved:nth-child(2) { animation-delay: 0.15s; }
+.book-card-improved:nth-child(3) { animation-delay: 0.2s; }
+.book-card-improved:nth-child(4) { animation-delay: 0.25s; }
+.book-card-improved:nth-child(5) { animation-delay: 0.3s; }
+.book-card-improved:nth-child(6) { animation-delay: 0.35s; }
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.book-card-improved::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(135deg, #EAAB00, #40a9ff);
+  border-radius: 1.5rem;
+  opacity: 0;
+  transition: opacity 0.3s;
+  z-index: -1;
+}
+
+.book-card-improved:hover::before {
+  opacity: 1;
+}
+
+.book-card-improved:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* ===================== PORTADA DEL LIBRO ===================== */
+.book-cover-wrapper {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.book-cover-improved {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+
+.book-card-improved:hover .book-cover-improved {
+  transform: scale(1.05);
+}
+
+.book-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.book-card-improved:hover .book-overlay {
+  opacity: 1;
+}
+
+.quick-action {
+  background-color: #EAAB00;
+  border: none;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.quick-action:hover {
+  transform: scale(1.15);
+  background-color: #ffffff;
+}
+
+.publisher-badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: linear-gradient(135deg, rgba(0, 63, 114, 0.95) 0%, rgba(0, 89, 165, 0.95) 100%);
+  color: white;
   padding: 0.5rem 1rem;
+  border-radius: 50px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  z-index: 2;
+}
+
+.book-card-improved:hover .publisher-badge {
+  background: linear-gradient(135deg, #EAAB00 0%, #ffd633 100%);
+  color: #003f72;
+  transform: scale(1.08);
+}
+
+/* ===================== INFO DEL LIBRO ===================== */
+.book-info-improved {
+  padding: 1.5rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.book-title-improved {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.4;
+  min-height: 2.8rem;
+  transition: color 0.3s ease;
+}
+
+.book-card-improved:hover .book-title-improved {
+  color: #003f72;
+}
+
+.book-authors {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.author-avatar-small {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid #EAAB00;
+}
+
+.book-rating {
+  margin-top: auto;
+}
+
+.stars {
+  color: #EAAB00;
+  font-size: 0.95rem;
+}
+
+/* ===================== ACCIONES DEL LIBRO ===================== */
+.book-actions-improved {
+  display: flex;
+  justify-content: space-around;
+  padding: 1rem;
+  border-top: 1px solid #f5f5f5;
+  background-color: #fafafa;
+}
+
+.action-btn {
+  background-color: transparent;
+  border: none;
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.search-btn img {
-  width: 16px;
-  height: 16px;
+.action-btn:hover {
+  background-color: #e8e8e8;
+  transform: scale(1.1);
 }
-
-/* ========== FILTROS DE NOTICIAS ========== */
-.filters {
-  display: flex;
-  align-items: center;
-  gap: 2rem;
-  font-size: 0.95rem;
-  font-weight: 400;
-  color: #ffffff;
-}
-
-.filters span {
-  position: relative;
-  padding: 0 0.5rem;
-}
-
-.filters span:not(:last-child)::after {
-  content: '';
-  position: absolute;
-  right: -1rem;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 1px;
-  height: 1.2rem;
-  background-color: #ffffff;
-}
-.search-box input::placeholder {
-  color: #ffffff !important; /* blanco puro */
-  opacity: 1;
-}
-
-/* ========== RESPONSIVO ========== */
-@media (max-width: 768px) {
-  .search-section {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .search-box {
-    width: 100%;
-  }
-
-  .search-box input {
-    width: 100%;
-  }
-
-  .filters {
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 1rem;
-  }
-}
-
-/* ======================== Sección Mejor Valorados ======================== */
-.mejor-valorados {
-  padding: 4rem 2rem;
-  background-color: #003f72; /* Fondo azul principal */
-}
-
-.contenedor-blanco {
-  position: relative;
-  background-color: #ffffff; /* Fondo blanco para el contenedor de los libros */
-  border-radius: 1rem;
-  padding: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.mejor-valorados-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 2rem;
-}
-
-.mejor-valorados-header h2 {
-  font-size: 1.8rem;
-  font-weight: bold;
-  color: #000000; /* Texto blanco en el encabezado */
-}
-
-.libros {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr); /* Dos libros por fila */
-  gap: 1.5rem;
-}
-
-.libro {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: white; /* Fondo blanco para cada libro */
-  padding: 1rem 1.5rem;
-  border: 1px solid #ddd;
-  border-radius: 1rem;
-  position: relative;
-  gap: 1rem;
-  transition: box-shadow 0.3s;
-
-  &:hover {
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
-  }
-}
-
-.libro .portada {
-  width: 70px;
-  height: auto;
-  border-radius: 0.5rem;
-  flex-shrink: 0;
-}
-
-.libro .info {
-  flex: 1;
-  margin-left: 1rem;
-}
-
-.libro .categoria {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: #003f72; /* Azul */
-  display: block;
-  margin-bottom: 0.2rem;
-  background-color: transparent;
-}
-
-.libro h3 {
-  font-size: 1rem;
-  font-weight: bold;
-  margin: 0 0 0.4rem;
-  color: #111;
-}
-
-.libro .autor-estrellas {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-}
-
-.libro .autor {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  font-size: 0.85rem;
-  color: #0077cc;
-}
-
-.libro .autor .avatar-libro {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid #EAAB00;
-}
-
-.libro .rating {
-  color: #f5b301;
-  font-size: 1rem;
-  display: flex;
-  gap: 0.2rem;
-}
-
-.libro .acciones {
-  position: absolute;
-  top: 1rem;
-  right: 1.2rem;
-  display: flex;
-  gap: 0.6rem;
-  align-items: center;
-}
-
-.libro .acciones img {
-  width: 22px;
-  height: 22px;
-  background-color: white;
-  border-radius: 50%;
-  padding: 4px;
-  box-shadow: 0 0 0 1px #ddd;
-  cursor: pointer;
-  transition: all 0.2s ease;
-
-  &:hover {
-    background-color: #f0f0f0;
-    transform: scale(1.1);
-  }
-}
-
-/* ======================== Responsive Design ======================== */
-@media (max-width: 1024px) {
-  .libros {
-    grid-template-columns: repeat(2, 1fr); /* Mantener dos libros por fila */
-  }
-}
-
-@media (max-width: 768px) {
-  .libros {
-    grid-template-columns: 1fr; /* Un solo libro por fila en pantallas pequeñas */
-  }
-
-  .libro {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-}
-
-/* ===================== Responsive Design ===================== */
-@media (max-width: 1024px) {
-  .libros {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 768px) {
-  .libros {
-    grid-template-columns: 1fr;
-  }
-
-  .libro {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-}
-
 
 /* ======================== Título Estilo ======================== */
 .titulo-container {
   position: relative;
   padding: 4rem 2rem;
-  background-color: #003f72; /* Fondo azul */
+  background-color: #003f72;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 0.9vh; /* Para ocupar toda la altura de la pantalla */
+  height: 15vh;
 }
 
 .titulo-estilo {
@@ -293,236 +559,186 @@
   font-size: 8rem;
   font-weight: bold;
   color: white;
-  font-family: 'Poppins', sans-serif; /* Tipografía moderna */
+  font-family: 'Poppins', sans-serif;
   display: inline-block;
-  z-index: 1; /* Asegura que el texto esté por encima del fondo */
+  z-index: 1;
 }
 
 .titulo-estilo::before {
-  content: "EconoWorld"; /* El texto que deseas mostrar como fondo */
-  position: absolute;
-  top: 0;
-  left: 0;
-  font-size: 8rem;
-  font-weight: bold;
-  color: rgba(255, 255, 255, 0.08); /* Color tenue para el fondo */
-  transform: rotate(-10deg); /* Rotación para un estilo más dinámico */
-  z-index: -1; /* Lo pone detrás del texto principal */
-  text-align: center; /* Alinea el texto en el centro */
-  width: 100%;
-}
-
-/* ======================== Responsive Design ======================== */
-@media (max-width: 1024px) {
-  .titulo-estilo {
-    font-size: 6rem; /* Tamaño más pequeño para pantallas medianas */
-  }
-}
-
-@media (max-width: 768px) {
-  .titulo-estilo {
-    font-size: 4rem; /* Tamaño más pequeño para pantallas pequeñas */
-  }
-}
-
-/* ======================== Sección Nivel de Libro ======================== */
-.nivel-libro {
-  padding: 4rem 2rem;
-  background-color: #003f72;
-  position: relative;
-}
-
-.nivel-libro .background-text {
+  content: "EconoWorld";
   position: absolute;
   top: 0;
   left: 0;
   font-size: 8rem;
   font-weight: bold;
   color: rgba(255, 255, 255, 0.08);
-  z-index: 0;
-  padding: 2rem;
-  pointer-events: none;
-  width: 100%;
-  transform: rotate(-10deg); /* Rotación para un estilo más dinámico */
-  text-align: center; /* Alinea el texto en el centro */
-  font-family: 'Poppins', sans-serif; /* Tipografía moderna */
-}
-
-.nivel-libro .contenedor-blanco {
-  position: relative;
-  background-color: white;
-  border-radius: 1rem;
-  padding: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-  z-index: 1;
+  transform: rotate(-10deg);
+  z-index: -1;
   text-align: center;
+  width: 100%;
 }
 
-.nivel-libro .mejor-valorados-header {
+/* ===================== MODAL PDF ===================== */
+.pdf-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 10000;
   display: flex;
+  align-items: center;
   justify-content: center;
-  align-items: center;
-  margin-bottom: 2rem;
+  animation: fadeIn 0.3s ease;
 }
 
-.nivel-libro .mejor-valorados-header h2 {
-  font-size: 3rem;
-  font-weight: bold;
-  color: #05080a;
-  text-transform: uppercase; /* Para darle un estilo más moderno */
-  letter-spacing: 4px; /* Espaciado entre letras para mayor impacto */
-  font-family: 'Roboto', sans-serif; /* Fuente más limpia y moderna */
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Sombra para un efecto visual más dinámico */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
-.nivel-libro .libros {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1.5rem;
-}
-
-.nivel-libro .libro {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+.pdf-modal-container {
+  width: 95%;
+  max-width: 1400px;
+  height: 95vh;
   background-color: white;
-  padding: 1rem 1.5rem;
-  border: 1px solid #ddd;
   border-radius: 1rem;
-  position: relative;
-  gap: 1rem;
-  transition: box-shadow 0.3s;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  animation: slideUp 0.3s ease;
 }
 
-.nivel-libro .libro:hover {
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+@keyframes slideUp {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
-.nivel-libro .libro .portada {
-  width: 70px;
-  height: auto;
-  border-radius: 0.5rem;
+.pdf-modal-header {
+  background: linear-gradient(135deg, #003f72 0%, #0059a5 100%);
+  color: white;
+  padding: 1.5rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 4px solid #EAAB00;
   flex-shrink: 0;
 }
 
-.nivel-libro .libro .info {
-  flex: 1;
-  margin-left: 1rem;
-}
-
-.nivel-libro .libro .categoria {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: #003f72;
-  display: block;
-  margin-bottom: 0.2rem;
-  background-color: transparent;
-}
-
-.nivel-libro .libro h3 {
-  font-size: 1rem;
+.book-info-header h2 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.8rem;
   font-weight: bold;
-  margin: 0 0 0.4rem;
-  color: #111;
 }
 
-.nivel-libro .libro .autor-estrellas {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-}
-
-.nivel-libro .libro .autor {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  font-size: 0.85rem;
-  color: #0077cc;
-}
-
-.nivel-libro .libro .autor .avatar-libro {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid #EAAB00;
-}
-
-.nivel-libro .libro .rating {
-  color: #f5b301;
+.book-info-header .authors {
+  margin: 0;
   font-size: 1rem;
-  display: flex;
-  gap: 0.2rem;
+  opacity: 0.9;
 }
 
-.nivel-libro .libro .acciones {
-  position: absolute;
-  top: 1rem;
-  right: 1.2rem;
-  display: flex;
-  gap: 0.6rem;
-  align-items: center;
-}
-
-.nivel-libro .libro .acciones img {
-  width: 22px;
-  height: 22px;
-  background-color: white;
+.close-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid white;
+  color: white;
+  font-size: 1.8rem;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
-  padding: 4px;
-  box-shadow: 0 0 0 1px #ddd;
   cursor: pointer;
-  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+  flex-shrink: 0;
+  font-weight: bold;
 }
 
-.nivel-libro .libro .acciones img:hover {
-  background-color: #f0f0f0;
-  transform: scale(1.1);
+.close-btn:hover {
+  background-color: white;
+  color: #003f72;
+  transform: rotate(90deg);
 }
 
-/* ======================== Responsive Design ======================== */
-@media (max-width: 1024px) {
-  .nivel-libro .libros {
-    grid-template-columns: repeat(2, 1fr);
-  }
+.pdf-viewer-wrapper {
+  flex: 1;
+  background-color: #525659;
+  position: relative;
+  overflow: hidden;
 }
 
-@media (max-width: 768px) {
-  .nivel-libro .libros {
-    grid-template-columns: 1fr;
-  }
-
-  .nivel-libro .libro {
-    flex-direction: column;
-    align-items: flex-start;
-  }
+.pdf-viewer-wrapper iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
 }
 
+.pdf-modal-footer {
+  background-color: #f8f9fa;
+  padding: 1.5rem 2rem;
+  border-top: 1px solid #dee2e6;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  flex-shrink: 0;
+}
 
+.book-metadata {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
 
+.book-metadata span {
+  color: #495057;
+  font-size: 0.95rem;
+}
 
+.actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
 
+.btn-action {
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.3s;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
 
+.btn-new-tab {
+  background-color: #003f72;
+  color: white;
+  box-shadow: 0 2px 8px rgba(0, 63, 114, 0.3);
+}
 
+.btn-new-tab:hover {
+  background-color: #002a4d;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 63, 114, 0.5);
+}
 
-
-
-
-
-
-
-
-
-// ====================== Footer ======================
-
+/* ====================== Footer ====================== */
 footer {
   background: #003f72;
   padding: 3rem 2rem 1rem;
   color: white;
-  border-top-left-radius: 0rem;
-  border-top-right-radius: 0rem;
   box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.2);
 }
 
@@ -591,35 +807,6 @@ footer {
   text-align: left;
 }
 
-.footer-top .contact {
-  display: flex;
-  flex-direction: column;
-  gap: 1.2rem;
-}
-
-.footer-top .contact div {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  font-size: 1rem;
-}
-
-.footer-social {
-  display: flex;
-  gap: 1rem;
-}
-
-.footer-social a img {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  transition: transform 0.3s ease;
-}
-
-.footer-social a img:hover {
-  transform: scale(1.1);
-}
-
 .footer-top .column {
   display: flex;
   flex-direction: column;
@@ -630,24 +817,22 @@ footer {
 .footer-top .column h4 {
   font-size: 1.1rem;
   margin-bottom: 0.5rem;
-  color:  #7d7d7d;
+  color: #7d7d7d;
   display: inline-block;
   padding-bottom: 0.4rem;
   position: relative;
-
-  &::after {
-    content: "";
-    display: block;
-    height: 3px;
-    width: 100%;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    background: linear-gradient(to right, #ffffff 20px, #ffce00 20px);
-  }
 }
 
-
+.footer-top .column h4::after {
+  content: "";
+  display: block;
+  height: 3px;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background: linear-gradient(to right, #ffffff 20px, #ffce00 20px);
+}
 
 .footer-top .column ul {
   list-style: none;
@@ -700,51 +885,74 @@ footer {
   background: #ffd633;
 }
 
-.btn-back {
-  background: #40a9ff;
-  color: #fff;
-  border: none;
-  border-radius: 10px;
-  padding: 0.7rem 2.2rem;
-  font-size: 1.2rem;
-  font-weight: 500;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin: 2rem 0 2rem 2rem;
-  box-shadow: 0 2px 8px rgba(64, 169, 255, 0.15);
-  transition: background 0.2s;
-}
-.btn-back:hover {
-  background: #1890ff;
+/* ======================== Responsive Design ======================== */
+@media (max-width: 1024px) {
+  .books-grid-improved {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .titulo-estilo {
+    font-size: 6rem;
+  }
 }
 
-/* ======================== BACK SECTION ======================== */
-.back-section {
-    background-color: #003f72;
-    padding: 1rem 2rem;
-    display: flex;
-    align-items: center;
-}
-
-.back-btn {
-    background-color: #40a9ff;
-    color: white;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: background-color 0.3s ease;
-}
-
-.back-btn:hover {
-    background-color: #1890ff;
-}
-
-// Responsive
 @media (max-width: 768px) {
+  .back-section-improved {
+    padding: 1rem 1.5rem;
+  }
+  
+  .search-container {
+    gap: 2rem;
+  }
+
+  .search-box-modern {
+    height: 50px;
+    max-width: 100%;
+  }
+
+  .search-input {
+    font-size: 0.9rem;
+    padding: 0 1.5rem;
+  }
+
+  .search-btn-modern {
+    min-width: 60px;
+  }
+
+  .filters-modern::before {
+    display: none;
+  }
+
+  .filter-chip {
+    padding: 0.6rem 1.5rem;
+    font-size: 0.85rem;
+    min-width: 110px;
+  }
+  
+  .section-header-improved {
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: flex-start;
+    margin-bottom: 3rem;
+  }
+
+  .section-header-improved h2 {
+    font-size: 1.6rem;
+  }
+  
+  .books-grid-improved {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  .book-cover-wrapper {
+    height: 240px;
+  }
+  
+  .titulo-estilo {
+    font-size: 4rem;
+  }
+  
   .footer-top {
     flex-direction: column;
     align-items: center;

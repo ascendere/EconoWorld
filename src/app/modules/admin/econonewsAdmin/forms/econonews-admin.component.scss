@@ -38,7 +38,8 @@
   }
 }
 
-.btn-dashboard, .btn-admin {
+.btn-dashboard,
+.btn-admin {
   margin-right: 20px;
 }
 
@@ -116,7 +117,7 @@ textarea {
 
   display: flex;
   align-items: center;
-  justify-content: center;  
+  justify-content: center;
 }
 
 .btn-visitar:hover {
@@ -200,4 +201,20 @@ button:hover {
   line-height: 0.9rem;
 }
 
+// Estilos para el editor TinyMCE
+.form-group {
 
+  ::ng-deep .tox-tinymce {
+    border: 2px solid #cbd5e1;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  ::ng-deep .tox-editor-header {
+    background-color: #f8fafc;
+  }
+
+  ::ng-deep .tox-statusbar {
+    border-top: 1px solid #e2e8f0;
+  }
+}

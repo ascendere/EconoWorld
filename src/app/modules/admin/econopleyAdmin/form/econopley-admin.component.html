@@ -53,24 +53,34 @@
 
     <br>
 
-    <!-- Enlace Externo -->
+    <!-- Código Embebido -->
     <div class="form-group">
-      <label>Enlace de acceso *</label>
+      <label>Código *</label>
 
-      <!-- Contenedor en fila -->
-      <div class="url-row">
-        <input type="text" formControlName="accessUrl"
-          placeholder="https://view.genially.com/... o https://canva.com/..." />
+      <p class="help-text">
+        Pega aquí el código completo del juego (Canva, Genially, etc.)
+      </p>
 
-        <a class="btn-visitar" *ngIf="form.get('accessUrl')?.value" [href]="form.get('accessUrl')?.value"
-          target="_blank" rel="noopener noreferrer">
-          Visitar
-        </a>
-      </div>
+      <!-- Textarea para el código -->
+      <textarea formControlName="embedCode" rows="4"
+        placeholder='<iframe src="https://..." width="800" height="600"></iframe>' class="code-input"
+        (input)="updatePreview()">
+  </textarea>
 
-      <small class="error" *ngIf="form.get('accessUrl')?.touched && form.get('accessUrl')?.hasError('required')">
-        El enlace es obligatorio.
+      <small class="error" *ngIf="form.get('embedCode')?.touched && form.get('embedCode')?.hasError('required')">
+        El código es obligatorio.
       </small>
+
+      <!-- VISTA PREVIA -->
+      <div class="preview-section" *ngIf="previewHtml">
+        <label class="preview-label">Vista Previa del Juego:</label>
+
+        <div class="preview-container" [innerHTML]="previewHtml"></div>
+
+        <p class="preview-note">
+          ⚠️ Prueba el juego antes de publicar para verificar que funciona correctamente.
+        </p>
+      </div>
     </div>
 
     <br>

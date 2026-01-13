@@ -1,11 +1,20 @@
-<div class="news-detail-container">
-  <!-- HEADER Y BUSCADOR -->
-  <div class="back-section">
-    <button class="back-btn" (click)="regresar()">
-        <span>← Regresar</span>
-    </button>
+<!-- LOADING STATE -->
+<div *ngIf="loading" class="loading-container">
+  <div class="spinner"></div>
+  <p>Cargando noticia...</p>
 </div>
 
+<!-- CONTENIDO PRINCIPAL -->
+<div *ngIf="!loading && news" class="news-detail-container">
+
+  <!-- BOTÓN REGRESAR -->
+  <div class="back-section">
+    <button class="back-btn" (click)="regresar()">
+      <span>← Regresar</span>
+    </button>
+  </div>
+
+  <!-- BUSCADOR Y FILTROS -->
   <section class="search-section">
     <div class="search-box">
       <input type="text" placeholder="Buscar..." />
@@ -21,24 +30,44 @@
   </section>
 
   <!-- NOTICIA PRINCIPAL -->
-  <main class="main-news">
+  <main class="main-news" *ngIf="news">
     <div class="news-card-detail">
+
+      <!-- METADATA -->
       <div class="news-card-header">
         <span class="date">
           <img src="assets/images/reloj.png" alt="Fecha" width="16" />
-          27.05.2025
+          {{ getFormattedDate(news) }}
         </span>
-        <span class="tag yellow">Nacional</span>
+        <span class="tag yellow">{{ news.category || 'General' }}</span>
       </div>
-      <h1 class="news-title">La interrupción del servicio de ReZoom dejó a algunas personas bloqueadas.</h1>
-      <p class="news-summary">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+
+      <!-- TÍTULO -->
+      <h1 class="news-title">{{ news.title || 'Sin título' }}</h1>
+
+      <!-- RESUMEN (primeros 200 caracteres del contenido) -->
+      <p class="news-summary" *ngIf="news.content">
+        {{ stripHtmlAndTruncate(news.content, 200) }}
+      </p>
+
+      <!-- IMAGEN -->
       <div class="news-image">
-        <img src="assets/images/figma1.jpg" alt="Noticia Principal" />
+        <img [src]="getAutoImage(news)" [alt]="news.title || 'Noticia'" (error)="onImageError($event)" />
       </div>
-      <div class="news-content">
-        <p>Ese es uno de los cinco planteamientos presentados este miércoles, 2 de julio, por la Confederación Nacional de Jubilados y Pensionistas de Montepío del Ecuador (CNJE), cuyos dirigentes esperan ser recibidos por el presidente de la República, Daniel Noboa, para exponer sus observaciones y propuestas ante la crisis que vive el IESS.</p>
-        <p>Más contenido de la noticia aquí...</p>
+
+      <!-- CONTENIDO COMPLETO -->
+      <div class="news-content" [innerHTML]="news.content || 'Sin contenido'"></div>
+
+      <!-- KEYWORDS (si existen) -->
+      <div class="keywords-section" *ngIf="news.keywords && news.keywords.length > 0">
+        <h4>🏷️ Palabras clave:</h4>
+        <div class="keywords-list">
+          <span class="keyword" *ngFor="let keyword of news.keywords">
+            #{{ keyword }}
+          </span>
+        </div>
       </div>
+
     </div>
   </main>
 
@@ -62,6 +91,7 @@
         </div>
       </div>
     </div>
+
     <div class="footer-top footer-centered">
       <div class="column">
         <h4>Vínculos De Interés</h4>
@@ -83,10 +113,18 @@
         </ul>
       </div>
     </div>
+
     <div class="footer-bottom">
       <div class="logo">UTPL | EconoWorld</div>
-      <div class="scroll-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">↑</div>
+      <div class="scroll-top" (click)="scrollToTop()">↑</div>
       <div>&copy; Copyright 2025. EconoWorld By LiiD</div>
     </div>
   </footer>
-</div> 
+</div>
+
+<!-- ERROR STATE -->
+<div *ngIf="!loading && !news" class="error-container">
+  <h2>❌ Noticia no encontrada</h2>
+  <p>Lo sentimos, no pudimos encontrar la noticia que buscas.</p>
+  <button class="btn-back" (click)="regresar()">Volver a Noticias</button>
+</div>

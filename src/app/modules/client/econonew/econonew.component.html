@@ -1,301 +1,132 @@
-<!DOCTYPE html>
-<html lang="es">
+<!-- VERSIÓN SIMPLIFICADA Y FUNCIONAL -->
 
+<!-- ===================== BUSCADOR ===================== -->
+<section class="search-section">
+  <div class="search-box">
+    <input 
+      type="text" 
+      placeholder="Buscar noticias..." 
+      [(ngModel)]="searchText"
+      autocomplete="off" 
+    />
+    <button class="search-btn" type="button">
+      <img src="assets/images/lupa.png" alt="Buscar" width="16" height="16" />
+    </button>
+  </div>
 
-  <!-- BUSCADOR -->
-  <section class="search-section">
-    <div class="search-box">
-      <input type="text" placeholder="Buscar..." />
-      <button class="search-btn">
-        <img src="assets/images/lupa.png" alt="Buscar" width="16" height="16" />
+  <div class="filters">
+    <span>Lo Último</span>
+    <span>Ediciones</span>
+    <span>Tendencias</span>
+  </div>
+</section>
+
+<!-- ===================== LOADING ===================== -->
+<div *ngIf="loading" class="loading-state">
+  <div class="spinner"></div>
+  <p>Cargando noticias...</p>
+</div>
+
+<!-- ===================== CONTENIDO PRINCIPAL ===================== -->
+<div *ngIf="!loading">
+
+  <!-- CONTENEDOR AZUL PARA FEATURED + GALLERY -->
+  <div class="main-content">
+    
+    <!-- NOTICIA DESTACADA -->
+    <section *ngIf="featuredNews" class="featured-news">
+      <div class="news-image-container">
+        <div class="image-border"></div>
+        <img [src]="getAutoImage(featuredNews)" [alt]="featuredNews.title" loading="lazy" />
+      </div>
+
+      <div class="info">
+        <span class="tag">{{ featuredNews.category }}</span>
+        <h2>{{ featuredNews.title }}</h2>
+        <div class="content-preview" [innerHTML]="getTruncatedContent(featuredNews.content, 200)"></div>
+        <button class="btn" [routerLink]="['/econonews', featuredNews.id]">Ver más</button>
+      </div>
+    </section>
+
+    <!-- GALERÍA DE NOTICIAS -->
+    <section class="news-gallery">
+      <article class="news-card" *ngFor="let news of filteredNews; trackBy: trackById">
+        <div class="image-wrapper">
+          <img [src]="getAutoImage(news)" [alt]="news.title" loading="lazy" />
+          <span class="tag-overlay">{{ news.category }}</span>
+        </div>
+
+        <div class="card-content">
+          <h3 class="title">{{ news.title }}</h3>
+          <div class="content-preview" [innerHTML]="getTruncatedContent(news.content, 120)"></div>
+          <button class="btn-secondary" [routerLink]="['/econonews', news.id]">Leer Más</button>
+        </div>
+      </article>
+
+      <!-- Sin resultados -->
+      <div *ngIf="filteredNews.length === 0" class="no-results">
+        <p>No se encontraron noticias con "{{ searchText }}"</p>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- SECCIÓN BLANCA: LO ÚLTIMO / RECIENTES -->
+  <section class="last-recent-section">
+
+    <!-- LO ÚLTIMO (COLUMNA IZQUIERDA) -->
+    <div class="latest">
+      <h3>Lo Último</h3>
+
+      <div 
+        class="latest-card" 
+        *ngFor="let news of latestNews; trackBy: trackById"
+        [routerLink]="['/econonews', news.id]"
+      >
+        <img [src]="getAutoImage(news)" [alt]="news.title" />
+        <p>{{ news.title }}</p>
+      </div>
+    </div>
+
+    <!-- NOTICIAS RECIENTES (COLUMNA DERECHA) -->
+    <div class="recent" *ngIf="recentNews">
+      <h3>Noticias Recientes</h3>
+
+      <img [src]="getAutoImage(recentNews)" [alt]="recentNews.title" />
+      
+      <span class="tag">{{ recentNews.category }}</span>
+      
+      <h4>{{ recentNews.title }}</h4>
+      
+      <p>{{ getTruncatedContent(recentNews.content, 140) }}</p>
+
+      <button class="btn" [routerLink]="['/econonews', recentNews.id]">
+        Ver Más
       </button>
     </div>
-    <div class="filters">
-      <span>Lo Último</span>
-      <span>Ediciones</span>
-      <span>Tendencias</span>
-    </div>
   </section>
 
-  <!-- NOTICIA DESTACADA -->
-  <section class="featured-news">
-    <div class="news-image">
-      <div class="image-border"></div>
-      <img src="assets/images/figma1.jpg" alt="Noticia Principal" />
-    </div>
-    <div class="info">
-      <div class="meta">
-        <span class="tag">Internacional</span>
-        <span class="date">
-          <img src="assets/images/reloj.png" alt="Ícono Reloj" class="icon-reloj" />
-          27.05.2025
-        </span>
-
-      </div>
-      <h2>La interrupción del servicio de ReZoom dejó a algunas personas bloqueadas</h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
-        magna aliqua.</p>
-        <button class="btn-vermas" routerLink="/econonews1">Ver Más</button>
-          </div>
-  </section>
-
-
-
-  <!-- GALERÍA DE NOTICIAS -->
-  <section class="news-gallery">
-    <div class="news-card">
-      <div class="image-wrapper">
-        <img src="assets/images/figma1.jpg" alt="Noticia" />
-        <div class="info-top">
-          <span class="tag">Nacional</span>
-          <span class="date">
-            <img src="assets/images/reloj.png" class="icon-reloj" alt="Fecha" />
-            27.05.2025
-          </span>
-        </div>
-      </div>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut.</p>
-      <button class="btn-vermas" routerLink="/econonews1">Ver Más</button>
-        </div>
-
-    <div class="news-card">
-      <div class="image-wrapper">
-        <img src="assets/images/figma1.jpg" alt="Noticia" />
-        <div class="info-top">
-          <span class="tag">Nacional</span>
-          <span class="date">
-            <img src="assets/images/reloj.png" class="icon-reloj" alt="Fecha" />
-            27.05.2025
-          </span>
-        </div>
-      </div>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut.</p>
-      <button class="btn-vermas" routerLink="/econonews1">Ver Más</button>  
-      </div>
-
-    <div class="news-card">
-      <div class="image-wrapper">
-        <img src="assets/images/figma1.jpg" alt="Noticia" />
-        <div class="info-top">
-          <span class="tag">Nacional</span>
-          <span class="date">
-            <img src="assets/images/reloj.png" class="icon-reloj" alt="Fecha" />
-            27.05.2025
-          </span>
-        </div>
-      </div>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut.</p>
-      <button class="btn-vermas" routerLink="/econonews1">Ver Más</button>
-        </div>
-  </section>
-
-
-
-  <section class="last-recent-section">
-    <!-- LO ÚLTIMO -->
-    <div class="latest">
-      <h3>Lo Último <span class="arrows">‹ ›</span></h3>
-
-      <div class="latest-card">
-        <img src="assets/images/figma1.jpg" alt="Noticia" />
-        <span class="date">
-          <img src="assets/images/reloj.png" class="icon-reloj" alt="Fecha" />
-          27.05.2025
-        </span>
-        <p>Lorem ipsum dolor sit amet</p>
-      </div>
-
-      <div class="latest-card">
-        <img src="assets/images/figma1.jpg" alt="Noticia" />
-        <span class="date">
-          <img src="assets/images/reloj.png" class="icon-reloj" alt="Fecha" />
-          27.05.2025
-        </span>
-        <p>Lorem ipsum dolor sit amet</p>
-      </div>
-
-      <div class="latest-card">
-        <img src="assets/images/figma1.jpg" alt="Noticia" />
-        <span class="date">
-          <img src="assets/images/reloj.png" class="icon-reloj" alt="Fecha" />
-          27.05.2025
-        </span>
-        <p>Lorem ipsum dolor sit amet</p>
-      </div>
-    </div>
-
-    <!-- NOTICIAS RECIENTES -->
-    <div class="recent">
-      <h3>Noticias Recientes <span class="arrows">‹ ›</span></h3>
-      <img src="assets/images/figma1.jpg" alt="Noticia Principal" />
-      <div class="meta">
-        <span class="tag">Universidad</span>
-        <span class="date">
-          <img src="assets/images/reloj2.png" class="icon-reloj" alt="Fecha" />
-          27.05.2025
-        </span>
-      </div>
-      <h4>Lorem ipsum dolor sit amet</h4>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
-        magna aliqua.</p>
-        <button class="btn-vermas" routerLink="/econonews1">Ver Más</button>
-          </div>
-
-    <!-- REDES SOCIALES -->
-    <div class="social-icons-container">
-      <div class="social-icons">
-        <a href="#"><img src="assets/images/facebook2.png" alt="Facebook"></a>
-        <a href="#"><img src="assets/images/gorjeo2.png" alt="Twitter"></a>
-        <a href="#"><img src="assets/images/instagram2.png" alt="Instagram"></a>
-      </div>
-    </div>
-  </section>
-
-
-
-<div class="titulo-container">
+  <!-- TÍTULO DECORATIVO -->
+  <div class="titulo-container">
     <h1 class="titulo-estilo">EconoWorld</h1>
   </div>
 
   <!-- BANNER ECONONEWS -->
-<section class="banner-econonews-container">
-  <!-- Contenedor con imagen y overlay -->
-  <section class="banner-econonews">
-    <div class="overlay">
-      <div class="etiqueta">EconoNews</div>
-      <h2>Haz que tu noticia cuente</h2>
-      <p>Crea y comparte</p>
-      <button>Inténtalo Ahora</button>
-      <p class="disponible">Disponible para Docentes y Alumnos</p>
-    </div>
-    <img src="assets/images/new.png" alt="EconoNews Preview" />
+  <section class="banner-econonews-container">
+    <section class="banner-econonews">
+      <div class="overlay">
+        <div class="etiqueta">EconoNews</div>
+        <h2>Haz que tu noticia cuente</h2>
+        <p>Crea y comparte noticias económicas</p>
+        <button routerLink="/admin/econonews">Crear Noticia</button>
+        <p class="disponible">Disponible para Docentes y Alumnos</p>
+      </div>
+      <img src="assets/images/new.png" alt="EconoNews Preview" />
+    </section>
   </section>
-</section>
 
-
-<section class="testimonios">
-  <h2>Testimonios</h2>
-  <div class="testimonials-wrapper">
-    
-    <!-- Testimonio 1 -->
-    <div class="testimonial-card superpuesta">
-      <div class="avatar">
-        <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Usuario" />
-      </div>
-      <img src="assets/images/figma1.jpg" alt="Testimonio" class="testimonio-img" />
-      <div class="info-bar">
-        <span class="pill">Comentado por</span>
-        <span class="pill">Sebastián Contento</span>
-        <span class="pill">
-          <img src="assets/images/reloj.png" alt="Fecha" width="14" />
-          Mayo 25, 2025
-        </span>
-      </div>
-      <div class="contenido">
-        <div class="rating">★★★★★</div>
-        <p>Lorem ipsum dolor sit amet, eiusmod</p>
-        <div class="separator"></div>
-        <div class="interactions">
-          <span><img src="assets/images/chat.png" alt="Comentarios" width="18" /> 25</span>
-          <span><img src="assets/images/gusta.png" alt="Likes" width="18" /> 35</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Testimonio 2 -->
-    <div class="testimonial-card superpuesta">
-      <div class="avatar">
-        <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Usuario" />
-      </div>
-      <img src="assets/images/figma1.jpg" alt="Testimonio" class="testimonio-img" />
-      <div class="info-bar">
-        <span class="pill">Comentado por</span>
-        <span class="pill">Laura Martínez</span>
-        <span class="pill">
-          <img src="assets/images/reloj.png" alt="Fecha" width="14" />
-          Abril 12, 2025
-        </span>
-      </div>
-      <div class="contenido">
-        <div class="rating">★★★★★</div>
-        <p>Lorem ipsum dolor sit amet, eiusmod</p>
-        <div class="separator"></div>
-        <div class="interactions">
-          <span><img src="assets/images/chat.png" alt="Comentarios" width="18" /> 18</span>
-          <span><img src="assets/images/gusta.png" alt="Likes" width="18" /> 42</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Testimonio 3 -->
-    <div class="testimonial-card superpuesta">
-      <div class="avatar">
-        <img src="https://randomuser.me/api/portraits/men/60.jpg" alt="Usuario" />
-      </div>
-      <img src="assets/images/figma1.jpg" alt="Testimonio" class="testimonio-img" />
-      <div class="info-bar">
-        <span class="pill">Comentado por</span>
-        <span class="pill">Carlos Núñez</span>
-        <span class="pill">
-          <img src="assets/images/reloj.png" alt="Fecha" width="14" />
-          Marzo 8, 2025
-        </span>
-      </div>
-      <div class="contenido">
-        <div class="rating">★★★★★</div>
-        <p>Lorem ipsum dolor sit amet, eiusmod</p>
-        <div class="separator"></div>
-        <div class="interactions">
-          <span><img src="assets/images/chat.png" alt="Comentarios" width="18" /> 12</span>
-          <span><img src="assets/images/gusta.png" alt="Likes" width="18" /> 28</span>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- Botón flotante -->
-<div class="fab" (click)="toggleChat()">
-  <img src="assets/images/robotica.png" alt="Chat" width="24" height="24">
-</div>
-
-<!-- Chat EconoBot -->
-<div *ngIf="showChat" class="econobot-chat-overlay">
-  <div class="econobot-chat-container">
-    <div class="econobot-header">
-      <img src="assets/images/robotica.png" class="econobot-avatar" />
-      <span class="econobot-title">EconoBot</span>
-      <div class="econobot-menu"></div>
-    </div>
-    <div class="econobot-messages">
-      <div class="econobot-message econobot-message-user">
-        <div class="econobot-message-content">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit
-        </div>
-        <div class="econobot-message-time">00:00</div>
-        <img src="assets/images/persona.png" class="econobot-user-avatar" />
-      </div>
-      <div class="econobot-message econobot-message-bot">
-        <img src="assets/images/robotica.png" class="econobot-avatar" />
-        <div>
-          <div class="econobot-message-content bot">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit
-          </div>
-          <div class="econobot-message-time">00:00</div>
-        </div>
-      </div>
-    </div>
-    <div class="econobot-input-bar">
-      <input type="text" placeholder="Escribe algo..." />
-      <button class="econobot-send-btn">
-        <svg width="32" height="32" viewBox="0 0 24 24"><path fill="#40a9ff" d="M2 21l21-9-21-9v7l15 2-15 2z"/></svg>
-      </button>
-    </div>
-  </div>
-</div>
-
-<footer>
+  <!-- FOOTER -->
+  <footer>
     <div class="footer-contact-block">
       <div class="social-icons">
         <a href="#"><img src="assets/images/facebook.png" alt="Facebook"></a>
@@ -339,7 +170,9 @@
 
     <div class="footer-bottom">
       <div class="logo">UTPL | EconoWorld</div>
-      <div class="scroll-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">↑</div>
+      <div class="scroll-top" (click)="scrollToTop()">↑</div>
       <div>Copyright 2025. EconoWorld By LiiD</div>
     </div>
   </footer>
+
+</div>

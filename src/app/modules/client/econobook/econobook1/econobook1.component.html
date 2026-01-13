@@ -8,346 +8,174 @@
 </head>
 
 <body>
-  <div class="back-section">
-    <button class="back-btn" (click)="regresar()">
-      <span>← Regresar</span>
+  <!-- SECCIÓN DE NAVEGACIÓN CON DISEÑO MEJORADO -->
+  <div class="back-section-improved">
+    <button class="back-btn-improved" (click)="regresar()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="19" y1="12" x2="5" y2="12"></line>
+        <polyline points="12 19 5 12 12 5"></polyline>
+      </svg>
+      <span>Regresar</span>
     </button>
   </div>
 
-  <section class="search-section">
-    <div class="search-box">
-      <input type="text" placeholder="Buscar..." />
-      <button class="search-btn">
-        <img src="assets/images/lupa.png" alt="Buscar" width="16" height="16" />
-      </button>
-    </div>
-    <div class="filters">
-      <span>Lo Último</span>
-      <span>Ediciones</span>
-      <span>Tendencias</span>
-    </div>
-  </section>
+  <!-- LIBROS MEJOR VALORADOS - DISEÑO UNIFICADO -->
+  <section class="mejor-valorados-improved">
+    <div class="contenedor-blanco-improved">
 
-  <section class="mejor-valorados">
-    <div class="contenedor-blanco">
-      <div class="mejor-valorados-header">
-        <h2>Libros Mejor Valorados</h2>
+      <!-- BARRA DE BÚSQUEDA Y FILTROS MEJORADA -->
+      <section class="search-section-improved">
+        <div class="search-container">
+          <!-- Buscador -->
+          <div class="search-box-modern">
+            <input type="text" placeholder="Buscar libros, autores, editoriales..." [(ngModel)]="searchTerm"
+              (input)="onSearch()" class="search-input" />
+            <button class="search-btn-modern">
+              <img src="assets/images/lupa.png" alt="Buscar" width="20" height="20" />
+            </button>
+          </div>
+
+          <!-- Filtros -->
+          <div class="filters-modern">
+            <button class="filter-chip" [class.active]="currentFilter === 'all'" (click)="applyFilter('all')">
+              Todos
+            </button>
+            <button class="filter-chip" [class.active]="currentFilter === 'latest'" (click)="applyFilter('latest')">
+              Lo Último
+            </button>
+            <button class="filter-chip" [class.active]="currentFilter === 'editions'" (click)="applyFilter('editions')">
+              Ediciones
+            </button>
+            <button class="filter-chip" [class.active]="currentFilter === 'trending'" (click)="applyFilter('trending')">
+              Tendencias
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-header-improved">
+        <h2>Todos los Libros ({{ filteredBooks.length }})</h2>
       </div>
 
-      <div class="libros">
+      <!-- ESTADO DE CARGA -->
+      <div *ngIf="loading" class="loading-state">
+        <div class="spinner"></div>
+        <p>Cargando libros...</p>
+      </div>
 
-        <!-- LIBRO 1 -->
-        <div class="libro">
-          <img class="portada" src="assets/images/inversione.png" alt="El Santo Grial de la Inversión">
-          <div class="info">
-            <span class="categoria">Finanzas Públicas</span>
-            <h3>El Santo Grial de la Inversión</h3>
-            <div class="autor-estrellas">
-              <div class="autor">
-                <img class="avatar-libro" src="assets/images/persona.png" alt="Tony Robbins">
-                <span>Tony Robbins</span>
-              </div>
-              <div class="rating">★★★★★</div>
+      <!-- ESTADO DE ERROR -->
+      <div *ngIf="errorMessage && !loading" class="error-state">
+        <p>{{ errorMessage }}</p>
+        <button (click)="retryLoad()" class="btn-retry">Reintentar</button>
+      </div>
+
+      <!-- MENSAJE SI NO HAY RESULTADOS -->
+      <div *ngIf="!loading && !errorMessage && filteredBooks.length === 0" class="no-results">
+        <p>No se encontraron libros con tu búsqueda.</p>
+      </div>
+
+      <!-- GRID DE LIBROS DINÁMICO CON DISEÑO UNIFICADO -->
+      <div class="books-grid-improved" *ngIf="!loading && !errorMessage && filteredBooks.length > 0">
+
+        <div class="book-card-improved" *ngFor="let book of filteredBooks">
+
+          <!-- Portada del libro -->
+          <div class="book-cover-wrapper">
+            <img class="book-cover-improved"
+              [src]="book.coverUrl && book.coverUrl.trim() ? book.coverUrl : 'assets/images/book-placeholder.jpg'"
+              [alt]="book.title" onerror="this.src='https://via.placeholder.com/200x280/667eea/ffffff?text=PDF'" />
+
+            <!-- Overlay con acciones rápidas -->
+            <div class="book-overlay">
+              <button class="quick-action" title="Ver PDF" (click)="openBook(book)">
+                <img src="https://cdn-icons-png.flaticon.com/512/709/709612.png" width="24" alt="Ver">
+              </button>
+            </div>
+
+            <!-- Badge de editorial -->
+            <div class="publisher-badge">
+              {{ book.publisher || 'UTPL' }}
             </div>
           </div>
-          <div class="acciones">
-            <img src="assets/icons/corazon.png" alt="Corazón">
-            <img src="assets/icons/guardar.png" alt="Guardar">
-            <img src="assets/icons/ver.png" alt="Ver">
-          </div>
-        </div>
 
-        <!-- LIBRO 2 -->
-        <div class="libro">
-          <img class="portada" src="assets/images/hombrerico.png" alt="El Hombre Más Rico de Babilonia">
-          <div class="info">
-            <span class="categoria">Finanzas Públicas</span>
-            <h3>El Hombre Más Rico de Babilonia</h3>
-            <div class="autor-estrellas">
-              <div class="autor">
-                <img class="avatar-libro" src="assets/images/persona.png" alt="George S. Clason">
-                <span>George S. Clason</span>
-              </div>
-              <div class="rating">★★★★☆</div>
+          <!-- Info del libro -->
+          <div class="book-info-improved">
+            <h3 class="book-title-improved" [title]="book.title">
+              {{ book.title }}
+            </h3>
+
+            <div class="book-authors">
+              <img src="assets/images/persona.png" class="author-avatar-small" alt="Autor" />
+              <span>{{ book.authors.join(', ') }}</span>
+            </div>
+
+            <div class="book-rating">
+              <span class="stars">★★★★★</span>
             </div>
           </div>
-          <div class="acciones">
-            <img src="assets/icons/corazon.png" alt="Corazón">
-            <img src="assets/icons/guardar.png" alt="Guardar">
-            <img src="assets/icons/ver.png" alt="Ver">
-          </div>
-        </div>
 
-        <!-- LIBRO 3 -->
-        <div class="libro">
-          <img class="portada" src="assets/images/inversione.png" alt="Un Paso por Delante de Wall Street">
-          <div class="info">
-            <span class="categoria">Finanzas Públicas</span>
-            <h3>Un Paso por Delante de Wall Street</h3>
-            <div class="autor-estrellas">
-              <div class="autor">
-                <img class="avatar-libro" src="assets/images/persona.png" alt="Peter Lynch">
-                <span>Peter Lynch</span>
-              </div>
-              <div class="rating">★★★★★</div>
-            </div>
+          <!-- Acciones del libro -->
+          <div class="book-actions-improved">
+            <button class="action-btn like-btn" title="Me gusta">
+              <img src="https://cdn-icons-png.flaticon.com/512/833/833472.png" width="18" alt="Like">
+            </button>
+            <button class="action-btn save-btn" title="Guardar">
+              <img src="https://cdn-icons-png.flaticon.com/512/992/992651.png" width="18" alt="Guardar">
+            </button>
+            <button class="action-btn view-btn" title="Ver PDF" (click)="openBook(book)">
+              <img src="https://cdn-icons-png.flaticon.com/512/709/709612.png" width="18" alt="Ver">
+            </button>
           </div>
-          <div class="acciones">
-            <img src="assets/icons/corazon.png" alt="Corazón">
-            <img src="assets/icons/guardar.png" alt="Guardar">
-            <img src="assets/icons/ver.png" alt="Ver">
-          </div>
-        </div>
 
-        <!-- LIBRO 4 -->
-        <div class="libro">
-          <img class="portada" src="assets/images/hombrerico.png" alt="Invierte con Poco">
-          <div class="info">
-            <span class="categoria">Finanzas Públicas</span>
-            <h3>Invierte con Poco</h3>
-            <div class="autor-estrellas">
-              <div class="autor">
-                <img class="avatar-libro" src="assets/images/persona.png" alt="Natalia De Santiago">
-                <span>Natalia De Santiago</span>
-              </div>
-              <div class="rating">★★★☆☆</div>
-            </div>
-          </div>
-          <div class="acciones">
-            <img src="assets/icons/corazon.png" alt="Corazón">
-            <img src="assets/icons/guardar.png" alt="Guardar">
-            <img src="assets/icons/ver.png" alt="Ver">
-          </div>
-        </div>
-
-        <!-- LIBRO 5 -->
-        <div class="libro">
-          <img class="portada" src="assets/images/inversione.png" alt="Padre Rico Padre Pobre">
-          <div class="info">
-            <span class="categoria">Finanzas Públicas</span>
-            <h3>Padre Rico Padre Pobre</h3>
-            <div class="autor-estrellas">
-              <div class="autor">
-                <img class="avatar-libro" src="assets/images/persona.png" alt="Robert T. Kiyosaki">
-                <span>Robert T. Kiyosaki</span>
-              </div>
-              <div class="rating">★★★★★</div>
-            </div>
-          </div>
-          <div class="acciones">
-            <img src="assets/icons/corazon.png" alt="Corazón">
-            <img src="assets/icons/guardar.png" alt="Guardar">
-            <img src="assets/icons/ver.png" alt="Ver">
-          </div>
-        </div>
-
-        <!-- LIBRO 6 -->
-        <div class="libro">
-          <img class="portada" src="assets/images/hombrerico.png" alt="La Gran Transformación">
-          <div class="info">
-            <span class="categoria">Finanzas Públicas</span>
-            <h3>La Gran Transformación</h3>
-            <div class="autor-estrellas">
-              <div class="autor">
-                <img class="avatar-libro" src="assets/images/persona.png" alt="Karl Polanyi">
-                <span>Karl Polanyi</span>
-              </div>
-              <div class="rating">★★★★★</div>
-            </div>
-          </div>
-          <div class="acciones">
-            <img src="assets/icons/corazon.png" alt="Corazón">
-            <img src="assets/icons/guardar.png" alt="Guardar">
-            <img src="assets/icons/ver.png" alt="Ver">
-          </div>
-        </div>
-
-        <!-- LIBRO 7 -->
-        <div class="libro">
-          <img class="portada" src="assets/images/inversione.png" alt="La Psicología del Dinero">
-          <div class="info">
-            <span class="categoria">Economía Conductual</span>
-            <h3>La Psicología del Dinero</h3>
-            <div class="autor-estrellas">
-              <div class="autor">
-                <img class="avatar-libro" src="assets/images/persona.png" alt="Morgan Housel">
-                <span>Morgan Housel</span>
-              </div>
-              <div class="rating">★★★★☆</div>
-            </div>
-          </div>
-          <div class="acciones">
-            <img src="assets/icons/corazon.png" alt="Corazón">
-            <img src="assets/icons/guardar.png" alt="Guardar">
-            <img src="assets/icons/ver.png" alt="Ver">
-          </div>
-        </div>
-
-        <!-- LIBRO 8 -->
-        <div class="libro">
-          <img class="portada" src="assets/images/hombrerico.png" alt="Nunca Cambies">
-          <div class="info">
-            <span class="categoria">Macroeconomía</span>
-            <h3>Nunca Cambies</h3>
-            <div class="autor-estrellas">
-              <div class="autor">
-                <img class="avatar-libro" src="assets/images/persona.png" alt="Eduardo Martínez">
-                <span>Eduardo Martínez</span>
-              </div>
-              <div class="rating">★★★☆☆</div>
-            </div>
-          </div>
-          <div class="acciones">
-            <img src="assets/icons/corazon.png" alt="Corazón">
-            <img src="assets/icons/guardar.png" alt="Guardar">
-            <img src="assets/icons/ver.png" alt="Ver">
-          </div>
-        </div>
-
-        <!-- LIBRO 9 -->
-        <div class="libro">
-          <img class="portada" src="assets/images/inversione.png" alt="Principios de Economía">
-          <div class="info">
-            <span class="categoria">Teoría Económica</span>
-            <h3>Principios de Economía</h3>
-            <div class="autor-estrellas">
-              <div class="autor">
-                <img class="avatar-libro" src="assets/images/persona.png" alt="Gregory Mankiw">
-                <span>Gregory Mankiw</span>
-              </div>
-              <div class="rating">★★★★★</div>
-            </div>
-          </div>
-          <div class="acciones">
-            <img src="assets/icons/corazon.png" alt="Corazón">
-            <img src="assets/icons/guardar.png" alt="Guardar">
-            <img src="assets/icons/ver.png" alt="Ver">
-          </div>
-        </div>
-
-        <!-- LIBRO 10 -->
-        <div class="libro">
-          <img class="portada" src="assets/images/hombrerico.png" alt="Microeconomía Moderna">
-          <div class="info">
-            <span class="categoria">Microeconomía</span>
-            <h3>Microeconomía Moderna</h3>
-            <div class="autor-estrellas">
-              <div class="autor">
-                <img class="avatar-libro" src="assets/images/persona.png" alt="Hal Varian">
-                <span>Hal Varian</span>
-              </div>
-              <div class="rating">★★★★☆</div>
-            </div>
-          </div>
-          <div class="acciones">
-            <img src="assets/icons/corazon.png" alt="Corazón">
-            <img src="assets/icons/guardar.png" alt="Guardar">
-            <img src="assets/icons/ver.png" alt="Ver">
-          </div>
         </div>
 
       </div>
     </div>
   </section>
 
+  <!-- TÍTULO DECORATIVO -->
   <div class="titulo-container">
     <h1 class="titulo-estilo">EconoWorld</h1>
   </div>
-  <section class="nivel-libro">
-    <div class="contenedor-blanco">
-      <div class="mejor-valorados-header">
-        <h2>Nivel de Libro</h2>
+
+  <!-- MODAL PDF -->
+  <div class="pdf-modal-overlay" *ngIf="selectedBook" (click)="closeModal()">
+    <div class="pdf-modal-container" (click)="$event.stopPropagation()">
+
+      <!-- Header -->
+      <div class="pdf-modal-header">
+        <div class="book-info-header">
+          <h2>{{ selectedBook.title }}</h2>
+          <p class="authors">{{ selectedBook.authors.join(', ') }}</p>
+        </div>
+        <button class="close-btn" (click)="closeModal()">✕</button>
       </div>
-      <div class="libros">
-        <!-- LIBRO 1 -->
-        <div class="libro">
-          <img class="portada" src="assets/images/inversione.png" alt="El Santo Grial de la Inversión">
-          <div class="info">
-            <span class="categoria">Grado</span>
-            <h3>El Santo Grial de la Inversión</h3>
-            <div class="autor-estrellas">
-              <div class="autor">
-                <img class="avatar-libro" src="assets/images/persona.png" alt="Tony Robbins">
-                <span>Tony Robbins</span>
-              </div>
-              <div class="rating">★★★★★</div>
-            </div>
-          </div>
-          <div class="acciones">
-            <img src="https://cdn-icons-png.flaticon.com/512/833/833472.png" alt="Corazón">
-            <img src="https://cdn-icons-png.flaticon.com/512/992/992651.png" alt="Guardar">
-            <img src="https://cdn-icons-png.flaticon.com/512/709/709612.png" alt="Ver">
-          </div>
-        </div>
 
-        <!-- LIBRO 2 -->
-        <div class="libro">
-          <img class="portada" src="assets/images/hombrerico.png" alt="El Hombre Más Rico de Babilonia">
-          <div class="info">
-            <span class="categoria">Posgrado</span>
-            <h3>El Hombre Más Rico de Babilonia</h3>
-            <div class="autor-estrellas">
-              <div class="autor">
-                <img class="avatar-libro" src="assets/images/persona.png" alt="George S. Clason">
-                <span>George S. Clason</span>
-              </div>
-              <div class="rating">★★★★☆</div>
-            </div>
-          </div>
-          <div class="acciones">
-            <img src="https://cdn-icons-png.flaticon.com/512/833/833472.png" alt="Corazón">
-            <img src="https://cdn-icons-png.flaticon.com/512/992/992651.png" alt="Guardar">
-            <img src="https://cdn-icons-png.flaticon.com/512/709/709612.png" alt="Ver">
-          </div>
-        </div>
+      <!-- PDF Viewer -->
+      <div class="pdf-viewer-wrapper">
+        <iframe [src]="(selectedBook.pdfUrl + '#toolbar=1&navpanes=1&scrollbar=1') | safe" frameborder="0"
+          allowfullscreen>
+        </iframe>
+      </div>
 
-        <!-- LIBRO 3 -->
-        <div class="libro">
-          <img class="portada" src="assets/images/inversione.png" alt="El Santo Grial de la Inversión">
-          <div class="info">
-            <span class="categoria">Maestría</span>
-            <h3>El Santo Grial de la Inversión</h3>
-            <div class="autor-estrellas">
-              <div class="autor">
-                <img class="avatar-libro" src="assets/images/persona.png" alt="Tony Robbins">
-                <span>Tony Robbins</span>
-              </div>
-              <div class="rating">★★★★★</div>
-            </div>
-          </div>
-          <div class="acciones">
-            <img src="https://cdn-icons-png.flaticon.com/512/833/833472.png" alt="Corazón">
-            <img src="https://cdn-icons-png.flaticon.com/512/992/992651.png" alt="Guardar">
-            <img src="https://cdn-icons-png.flaticon.com/512/709/709612.png" alt="Ver">
-          </div>
+      <!-- Footer con acciones -->
+      <div class="pdf-modal-footer">
+        <div class="book-metadata">
+          <span><strong>Editorial:</strong> {{ selectedBook.publisher || 'N/A' }}</span>
+          <span><strong>Año:</strong> {{ selectedBook.year || 'N/A' }}</span>
         </div>
-
-        <!-- LIBRO 4 -->
-        <div class="libro">
-          <img class="portada" src="assets/images/hombrerico.png" alt="El Hombre Más Rico de Babilonia">
-          <div class="info">
-            <span class="categoria">Grado</span>
-            <h3>El Hombre Más Rico de Babilonia</h3>
-            <div class="autor-estrellas">
-              <div class="autor">
-                <img class="avatar-libro" src="assets/images/persona.png" alt="George S. Clason">
-                <span>George S. Clason</span>
-              </div>
-              <div class="rating">★★★★☆</div>
-            </div>
-          </div>
-          <div class="acciones">
-            <img src="https://cdn-icons-png.flaticon.com/512/833/833472.png" alt="Corazón">
-            <img src="https://cdn-icons-png.flaticon.com/512/992/992651.png" alt="Guardar">
-            <img src="https://cdn-icons-png.flaticon.com/512/709/709612.png" alt="Ver">
-          </div>
+        <div class="actions">
+          <a [href]="selectedBook.pdfUrl" target="_blank" class="btn-action btn-new-tab">
+            🔗 Abrir en nueva pestaña
+          </a>
         </div>
       </div>
+
     </div>
-  </section>
+  </div>
 
-
-  <!-- FOOTER -->
+  <!-- FOOTER COMPLETO -->
   <footer>
     <div class="footer-contact-block">
       <div class="social-icons">
@@ -358,7 +186,7 @@
       <div class="info-block">
         <div class="info-item">
           <img src="assets/images/poste.png" width="16" />
-          <span><strong>Ubicación:</strong> San Cayetano Alto, Loja - Ecuador</span>
+          <span><strong>Ubicación:</strong> Loja - Ecuador</span>
         </div>
         <div class="divider"></div>
         <div class="info-item">
@@ -368,7 +196,7 @@
       </div>
     </div>
 
-    <div class="footer-top footer-centered">
+    <div class="footer-top">
       <div class="column">
         <h4>Vínculos De Interés</h4>
         <ul>
@@ -392,8 +220,8 @@
 
     <div class="footer-bottom">
       <div class="logo">UTPL | EconoWorld</div>
-      <div class="scroll-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">↑</div>
-      <div>Copyright 2025. EconoWorld By LiiD</div>
+      <div class="scroll-top" (click)="scrollTop()">↑</div>
+      <div>Copyright 2025. EconoWorld</div>
     </div>
   </footer>
 </body>

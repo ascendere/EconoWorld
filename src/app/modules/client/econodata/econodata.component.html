@@ -1,263 +1,199 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  
-  <link rel="stylesheet" href="econodata.component.scss"> <!-- Agrega tu CSS aquí -->
-</head>
-<body>
-  <div class="page-container">
+<div class="page-container">
 
-    <!-- SEARCH SECTION -->
-    <section class="search-section">
-      <div class="search-box">
-        <input type="text" placeholder="Buscar..." />
-        <button class="search-btn"><img src="assets/images/lupa.png" alt="Buscar" width="16" /></button>
+  <!-- ===================== BARRA DE BÚSQUEDA Y FILTROS MEJORADA ===================== -->
+  <section class="search-section-improved">
+    <div class="search-container">
+
+      <!-- Buscador -->
+      <div class="search-box-modern">
+        <input type="text" placeholder="Buscar datasets, categorías..." [(ngModel)]="searchText"
+          (input)="onSearchChange()" class="search-input" />
+        <button class="search-btn-modern">
+          <img src="assets/images/lupa.png" alt="Buscar" width="20" height="20" />
+        </button>
       </div>
-      <div class="filters">
-        <span>Nacional</span>
-        <span>Internacional</span>
+
+      <!-- Filtros por Categoría -->
+      <div class="filters-modern">
+        <!-- Botón "Todos" -->
+        <button class="filter-chip" [class.active]="!selectedCategory || selectedCategory === ''"
+          (click)="setCategory('')">
+          Todos
+        </button>
+
+        <!-- Categorías dinámicas desde Firebase -->
+        <button class="filter-chip" *ngFor="let category of categories" [class.active]="selectedCategory === category"
+          (click)="setCategory(category)">
+          {{ category }}
+        </button>
       </div>
-    </section>
 
-    <!-- NAVIGATION -->
-    <section class="navigation-section">
-      <a href="#" class="back-link">
-        <div class="back-button"><img src="assets/images/left-arrow.png" alt="Volver" width="16" height="16" /></div>
-        <span>Volver al Catálogo</span>
-      </a>
-    </section>
+    </div>
+  </section>
 
-    <!-- TAGS -->
-    <section class="tags-section">
-      <h3>Etiquetas</h3>
-      <div class="tags-container">
-        <button class="tag-btn">Economía</button>
-        <button class="tag-btn">PIB</button>
-        <button class="tag-btn">Inflación</button>
-        <button class="tag-btn">Macroeconomía</button>
-      </div>
-    </section>
+  <!-- LOADING -->
+  <div *ngIf="loading" class="loading">
+    Cargando datasets...
+  </div>
 
-    <!-- TABS -->
-    <section class="tab-header">
-      <button class="tab active">EconoData</button>
-      <button class="tab">Base de Economía</button>
-    </section>
+  <!-- NO RESULTS -->
+  <div *ngIf="!loading && filtered.length === 0" class="no-results">
+    No se encontraron datasets con los filtros aplicados.
+  </div>
 
-    <!-- CARDS -->
-    <main class="main-content">
-      <div class="data-cards-container">
-        <!-- Data Card 1 -->
-        <div class="data-card">
-            <div class="card-content">
-                <h3 class="card-title">Diccionario de Variables Económicas</h3>
-                <p class="card-description">
-                    Explicación detallada de cada variable económica incluida en la base: definición, unidad de medida, periodicidad y fuente.
-                </p>
-                <button class="visit-btn">Visitar</button>
-            </div>
-            <div class="card-image">
-                <img src="assets/images/figma1.jpg" alt="Base de datos" />
-                <div class="format-overlay">
-                    <div class="format-label">Formatos</div>
-                    <button class="format-btn">XLSX</button>
-                </div>
-            </div>
+  <!-- CARDS -->
+  <main class="main-content" *ngIf="!loading">
+    <div class="data-cards-container">
+
+      <div class="data-card" *ngFor="let d of filtered">
+
+        <div class="card-content">
+          <h3 class="card-title">{{ d.title }}</h3>
+
+          <p class="card-description">
+            {{ d.category }}
+          </p>
+
+          <button class="visit-btn" (click)="openDataModal(d)">
+            👁 Ver datos
+          </button>
+
+          <button class="visit-btn secondary" (click)="openLink(d.fileUrl)">
+            ⬇ Descargar {{ getFileType(d.fileUrl) }}
+          </button>
         </div>
-        <!-- Data Card 2 -->
-        <div class="data-card">
-            <div class="card-content">
-                <h3 class="card-title">Indicadores Macroeconómicos</h3>
-                <p class="card-description">
-                    Datos actualizados de PIB, inflación, desempleo y otros indicadores económicos clave del país.
-                </p>
-                <button class="visit-btn">Visitar</button>
-            </div>
-            <div class="card-image">
-                <img src="assets/images/figma1.jpg" alt="Indicadores económicos" />
-                <div class="format-overlay">
-                    <div class="format-label">Formatos</div>
-                    <button class="format-btn">CSV</button>
-                </div>
-            </div>
-        </div>
-        <!-- Data Card 3 -->
-        <div class="data-card">
-            <div class="card-content">
-                <h3 class="card-title">Series Temporales</h3>
-                <p class="card-description">
-                    Datos históricos y series temporales de variables económicas para análisis y investigación.
-                </p>
-                <button class="visit-btn">Visitar</button>
-            </div>
-            <div class="card-image">
-                <img src="assets/images/figma1.jpg" alt="Series temporales" />
-                <div class="format-overlay">
-                    <div class="format-label">Formatos</div>
-                    <button class="format-btn">JSON</button>
-                </div>
-            </div>
-        </div>
-        <!-- Data Card 4 -->
-        <div class="data-card">
-            <div class="card-content">
-                <h3 class="card-title">Datos de Comercio Exterior</h3>
-                <p class="card-description">
-                    Estadísticas de importaciones y exportaciones, balanza comercial y principales socios comerciales.
-                </p>
-                <button class="visit-btn">Visitar</button>
-            </div>
-            <div class="card-image">
-                <img src="assets/images/figma1.jpg" alt="Comercio exterior" />
-                <div class="format-overlay">
-                    <div class="format-label">Formatos</div>
-                    <button class="format-btn">XLSX</button>
-                </div>
-            </div>
-        </div>
-        <!-- Data Card 5 -->
-        <div class="data-card">
-            <div class="card-content">
-                <h3 class="card-title">Encuestas Económicas</h3>
-                <p class="card-description">
-                    Resultados de encuestas sobre empleo, consumo, inversión y otros temas económicos relevantes.
-                </p>
-                <button class="visit-btn">Visitar</button>
-            </div>
-            <div class="card-image">
-                <img src="assets/images/figma1.jpg" alt="Encuestas económicas" />
-                <div class="format-overlay">
-                    <div class="format-label">Formatos</div>
-                    <button class="format-btn">CSV</button>
-                </div>
-            </div>
-        </div>
-        <!-- Data Card 6 -->
-        <div class="data-card">
-            <div class="card-content">
-                <h3 class="card-title">Precios y Canasta Básica</h3>
-                <p class="card-description">
-                    Información sobre precios al consumidor, canasta básica y variaciones de precios en el tiempo.
-                </p>
-                <button class="visit-btn">Visitar</button>
-            </div>
-            <div class="card-image">
-                <img src="assets/images/figma1.jpg" alt="Precios y canasta básica" />
-                <div class="format-overlay">
-                    <div class="format-label">Formatos</div>
-                    <button class="format-btn">JSON</button>
-                </div>
-            </div>
-        </div>
-        <!-- Data Card 7 -->
-        <div class="data-card">
-            <div class="card-content">
-                <h3 class="card-title">Finanzas Públicas</h3>
-                <p class="card-description">
-                    Datos sobre ingresos, gastos, deuda pública y presupuesto del Estado.
-                </p>
-                <button class="visit-btn">Visitar</button>
-            </div>
-            <div class="card-image">
-                <img src="assets/images/figma1.jpg" alt="Finanzas públicas" />
-                <div class="format-overlay">
-                    <div class="format-label">Formatos</div>
-                    <button class="format-btn">XLSX</button>
-                </div>
-            </div>
-        </div>
-        <!-- Data Card 8 -->
-        <div class="data-card">
-            <div class="card-content">
-                <h3 class="card-title">Mercado Laboral</h3>
-                <p class="card-description">
-                    Estadísticas de empleo, desempleo, subempleo y participación laboral.
-                </p>
-                <button class="visit-btn">Visitar</button>
-            </div>
-            <div class="card-image">
-                <img src="assets/images/figma1.jpg" alt="Mercado laboral" />
-                <div class="format-overlay">
-                    <div class="format-label">Formatos</div>
-                    <button class="format-btn">CSV</button>
-                </div>
-            </div>
+
+        <div class="card-image">
+          <img [src]="d.image || 'assets/images/figma1.jpg'" alt="Dataset" />
+
+          <div class="format-overlay" *ngIf="d.fileUrl">
+            <span class="format-label">
+              {{ getFileType(d.fileUrl) }}
+            </span>
+          </div>
         </div>
 
       </div>
-    </main>
 
-    <!-- DATA OPENNESS SECTION -->
-    <section class="data-openness-section">
-      <div class="openness-content">
-        <div class="openness-text">
-          <h3>Nivel de apertura de datos</h3>
-          <div class="info-icon">i</div>
-        </div>
-        <div class="stars-container">
-          <span class="star">★</span>
-          <span class="star">★</span>
-          <span class="star">★</span>
-          <span class="star">★</span>
-          <span class="star">★</span>
-        </div>
+    </div>
+  </main>
+
+  <div class="pdf-modal-overlay" *ngIf="showDataModal" (click)="closeDataModal()">
+  <div class="pdf-modal-container" (click)="$event.stopPropagation()">
+
+    <!-- Header -->
+    <div class="pdf-modal-header">
+      <div class="book-info-header">
+        <h2>{{ selectedDataset?.title }}</h2>
+        <p class="authors">
+          {{ getFileType(selectedDataset?.fileUrl) }} · Vista previa (50 filas)
+        </p>
       </div>
-    </section>
-
-    <!-- BOTÓN FLOTANTE DE CHAT -->
-    <div class="fab">
-      <img src="assets/images/robotica.png" alt="Chat" width="24" height="24">
+      <button class="close-btn" (click)="closeDataModal()">✕</button>
     </div>
 
-    <!-- FOOTER -->
-    <footer>
-      <div class="footer-contact-block">
-        <div class="social-icons">
-          <a href="#"><img src="assets/images/facebook.png" alt="Facebook"></a>
-          <a href="#"><img src="assets/images/gorjeo.png" alt="Twitter"></a>
-          <a href="#"><img src="assets/images/instagram.png" alt="Instagram"></a>
-        </div>
-        <div class="info-block">
-          <div class="info-item">
-            <img src="assets/images/poste.png" width="16" />
-            <span><strong>Ubicación:</strong> San Cayetano Alto, Loja - Ecuador</span>
-          </div>
-          <div class="divider"></div>
-          <div class="info-item">
-            <img src="assets/images/manzana.png" width="16" />
-            <span><strong>Email:</strong> Buzón de Consultas</span>
-          </div>
-        </div>
-      </div>
+    <!-- Tabla -->
+    <div class="pdf-viewer-wrapper data-table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th *ngFor="let h of previewHeaders">{{ h }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of previewRows">
+            <td *ngFor="let h of previewHeaders">
+              {{ row[h] }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
-      <div class="footer-top footer-centered">
-        <div class="column">
-          <h4>Vínculos De Interés</h4>
-          <ul>
-            <li><img src="assets/images/graduacion.png" width="16" /> Carrera de Economía</li>
-            <li><img src="assets/images/directorio.png" width="16" /> Guía Estudiantes</li>
-            <li><img src="assets/images/tierra.png" width="16" /> Internacional</li>
-            <li><img src="assets/images/periodico.png" width="16" /> Noticias</li>
-            <li><img src="assets/images/aceptara.png" width="16" /> Admisiones</li>
-            <li><img src="assets/images/calendario.png" width="16" /> Eventos</li>
-          </ul>
-        </div>
-        <div class="column">
-          <h4>Estudiantes</h4>
-          <ul>
-            <li><img src="assets/images/calendario.png" width="16" /> Calendario Académico</li>
-            <li><img src="assets/images/directorio.png" width="16" /> Guía para Estudiantes</li>
-            <li><img src="assets/images/virtual.png" width="16" /> Aula Virtual</li>
-          </ul>
-        </div>
-      </div>
+    <!-- Footer -->
+    <div class="pdf-modal-footer">
+      <span>
+        Mostrando {{ previewRows.length }} filas
+      </span>
 
-      <div class="footer-bottom">
-        <div class="logo">UTPL | EconoWorld</div>
-        <div class="scroll-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">↑</div>
-        <div>&copy; Copyright 2025. EconoWorld By LiiD</div>
+      <div class="actions">
+        <a
+          [href]="selectedDataset?.fileUrl"
+          target="_blank"
+          class="btn-action btn-download">
+          ⬇ Descargar {{ getFileType(selectedDataset?.fileUrl) }}
+        </a>
       </div>
-    </footer>
+    </div>
+
   </div>
-</body>
-</html>
+</div>
+
+
+  <!-- DATA OPENNESS SECTION -->
+  <section class="data-openness-section">
+    <div class="openness-content">
+      <div class="openness-text">
+        <h3>Nivel de apertura de datos</h3>
+        <div class="info-icon">i</div>
+      </div>
+      <div class="stars-container">
+        <span class="star">★</span>
+        <span class="star">★</span>
+        <span class="star">★</span>
+        <span class="star">★</span>
+        <span class="star">★</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER COMPLETO -->
+  <footer>
+    <div class="footer-contact-block">
+      <div class="social-icons">
+        <a href="#"><img src="assets/images/facebook.png" alt="Facebook"></a>
+        <a href="#"><img src="assets/images/gorjeo.png" alt="Twitter"></a>
+        <a href="#"><img src="assets/images/instagram.png" alt="Instagram"></a>
+      </div>
+      <div class="info-block">
+        <div class="info-item">
+          <img src="assets/images/poste.png" width="16" />
+          <span><strong>Ubicación:</strong> Loja - Ecuador</span>
+        </div>
+        <div class="divider"></div>
+        <div class="info-item">
+          <img src="assets/images/manzana.png" width="16" />
+          <span><strong>Email:</strong> Buzón de Consultas</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-top">
+      <div class="column">
+        <h4>Vínculos De Interés</h4>
+        <ul>
+          <li><img src="assets/images/graduacion.png" width="16" /> Carrera de Economía</li>
+          <li><img src="assets/images/directorio.png" width="16" /> Guía Estudiantes</li>
+          <li><img src="assets/images/tierra.png" width="16" /> Internacional</li>
+          <li><img src="assets/images/periodico.png" width="16" /> Noticias</li>
+          <li><img src="assets/images/aceptara.png" width="16" /> Admisiones</li>
+          <li><img src="assets/images/calendario.png" width="16" /> Eventos</li>
+        </ul>
+      </div>
+      <div class="column">
+        <h4>Estudiantes</h4>
+        <ul>
+          <li><img src="assets/images/calendario.png" width="16" /> Calendario Académico</li>
+          <li><img src="assets/images/directorio.png" width="16" /> Guía para Estudiantes</li>
+          <li><img src="assets/images/virtual.png" width="16" /> Aula Virtual</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="logo">UTPL | EconoWorld</div>
+      <div class="scroll-top" (click)="scrollTop()">↑</div>
+      <div>Copyright 2025. EconoWorld</div>
+    </div>
+  </footer>
+</div>

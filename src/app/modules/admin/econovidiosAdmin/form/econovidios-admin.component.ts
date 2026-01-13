@@ -18,8 +18,7 @@ export class EconovidiosAdminComponent implements OnInit {
   authors: string[] = [];
   authorInput: string = '';
 
-  videos: string[] = [];
-  videoInput: string = '';
+  videoUrl: string = '';
 
   constructor(
     private fb: FormBuilder,
@@ -44,7 +43,6 @@ export class EconovidiosAdminComponent implements OnInit {
     }
   }
 
-  /* --- AUTORES --- */
   addAuthor() {
     const clean = this.authorInput.trim();
     if (!clean) return;
@@ -57,20 +55,6 @@ export class EconovidiosAdminComponent implements OnInit {
     this.authors.splice(index, 1);
   }
 
-  /* --- URLs VIDEO --- */
-  addVideoUrl() {
-    const clean = this.videoInput.trim();
-    if (!clean) return;
-
-    this.videos.push(clean);
-    this.videoInput = '';
-  }
-
-  removeVideoUrl(index: number) {
-    this.videos.splice(index, 1);
-  }
-
-  /* --- Cargar datos --- */
   async loadVideo(id: string) {
     try {
       const video = await firstValueFrom(this.videosService.getVideoById(id));
@@ -87,25 +71,13 @@ export class EconovidiosAdminComponent implements OnInit {
         description: video.description ?? '',
       });
 
-      // Cargar autores
       this.authors = [...(video.author ?? [])];
 
-      // Cargar enlaces
-      const raw = video.videoUrl;
-
-      let urls: string[] = [];
-
-      if (Array.isArray(raw)) {
-        urls = raw.map((v: any) => v.url);
+      if (video.videoUrl && video.videoUrl.url) {
+        this.videoUrl = video.videoUrl.url;
+      } else {
+        this.videoUrl = '';
       }
-      else if (typeof raw === 'string') {
-        urls = [raw];
-      }
-      else if (raw && typeof raw === 'object') {
-        urls = [(raw as any).url];
-      }
-
-      this.videos = urls;
 
     } catch (error) {
       console.error(error);
@@ -114,7 +86,6 @@ export class EconovidiosAdminComponent implements OnInit {
     }
   }
 
-  /* --- Guardar --- */
   async save() {
 
     if (this.form.invalid) {
@@ -128,8 +99,8 @@ export class EconovidiosAdminComponent implements OnInit {
       return;
     }
 
-    if (this.videos.length === 0) {
-      alert('Debe agregar al menos un enlace de video.');
+    if (!this.videoUrl.trim()) {
+      alert('Debe agregar el enlace del video.');
       return;
     }
 
@@ -138,7 +109,7 @@ export class EconovidiosAdminComponent implements OnInit {
       category: this.form.value.category,
       description: this.form.value.description,
       author: [...this.authors],
-      videoUrl: this.videos.map(url => ({ name: 'link', url })),
+      videoUrl: { name: 'link', url: this.videoUrl.trim() },
       createAt: new Date()
     };
 
@@ -164,9 +135,9 @@ export class EconovidiosAdminComponent implements OnInit {
     return index;
   }
 
-  openVideo(url: string) {
-    if (!url) return;
-    window.open(url, "_blank");
+  openVideo() {
+    if (!this.videoUrl) return;
+    window.open(this.videoUrl, "_blank");
   }
 
   autoGrow(event: any) {

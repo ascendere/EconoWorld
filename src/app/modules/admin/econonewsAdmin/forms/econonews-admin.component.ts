@@ -14,6 +14,51 @@ export class EcononewsAdminComponent implements OnInit {
   form: FormGroup;
   editingId: string | null = null;
 
+  // Configuración de TinyMCE
+  public tinyMceConfig = {
+    height: 500,
+    menubar: true,
+    plugins: [
+      'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
+      'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
+      'insertdatetime', 'media', 'table', 'help', 'wordcount'
+    ],
+    toolbar: 'undo redo | formatselect | bold italic underline strikethrough | ' +
+      'alignleft aligncenter alignright alignjustify | ' +
+      'bullist numlist outdent indent | link image media table | ' +
+      'forecolor backcolor | removeformat | help',
+    menu: {
+      edit: {
+        title: 'Editar',
+        items: 'undo redo | cut copy paste | selectall | searchreplace'
+      },
+      view: {
+        title: 'Ver',
+        items: 'code | visualaid visualchars visualblocks | preview fullscreen'
+      },
+      insert: {
+        title: 'Insertar',
+        items: 'link image media | template hr | anchor | insertdatetime'
+      },
+      format: {
+        title: 'Formato',
+        items: 'bold italic underline strikethrough superscript subscript | formats blockformats fontformats fontsizes align | forecolor backcolor | removeformat'
+      },
+      table: {
+        title: 'Tabla',
+        items: 'inserttable | cell row column | tableprops deletetable'
+      },
+      tools: {
+        title: 'Herramientas',
+        items: 'wordcount code'
+      }
+    },
+    content_style: 'body { font-family: Arial, sans-serif; font-size: 14px; line-height: 1.6; }',
+    language: 'es',
+    branding: false,
+    statusbar: true
+  };
+
   constructor(
     private fb: FormBuilder,
     private newsAdmin: EcononewsAdminService,
@@ -25,7 +70,10 @@ export class EcononewsAdminComponent implements OnInit {
       category: ['', Validators.required],
       content: ['', Validators.required],
       keywords: this.fb.control<string[]>([]),
-      resources: this.fb.array([])
+      resource: this.fb.group({
+        name: [''],
+        url: ['']
+      })
     });
   }
 
@@ -36,23 +84,6 @@ export class EcononewsAdminComponent implements OnInit {
       this.editingId = id;
       this.loadNews(id);
     }
-  }
-
-  get resources() {
-    return this.form.get('resources') as FormArray;
-  }
-
-  addResource() {
-    this.resources.push(
-      this.fb.group({
-        name: ['', Validators.required],
-        url: ['', Validators.required]
-      })
-    );
-  }
-
-  removeResource(i: number) {
-    this.resources.removeAt(i);
   }
 
   addKeywordFromInput(event: KeyboardEvent) {
@@ -80,43 +111,34 @@ export class EcononewsAdminComponent implements OnInit {
   }
 
   async loadNews(id: string) {
-  try {
-    const noticia = await firstValueFrom(
-      this.newsAdmin.getNewsById(id)
-    );
-
-    if (!noticia) {
-      alert('Noticia no encontrada');
-      this.router.navigate(['/admin/news']);
-      return;
-    }
-
-
-    this.form.patchValue({
-      title: noticia.title ?? '',
-      category: noticia.category ?? '',
-      content: noticia.content ?? '',
-      keywords: noticia.keywords ?? []
-    });
-
-
-    this.resources.clear();
-
-    (noticia.resources ?? []).forEach((res: any) => {
-      this.resources.push(
-        this.fb.group({
-          name: [res.name, Validators.required],
-          url: [res.url, Validators.required]
-        })
+    try {
+      const noticia = await firstValueFrom(
+        this.newsAdmin.getNewsById(id)
       );
-    });
 
-  } catch (error) {
-    console.error('Error cargando noticia:', error);
-    alert('Error al cargar la noticia');
-    this.router.navigate(['/admin/news']);
+      if (!noticia) {
+        alert('Noticia no encontrada');
+        this.router.navigate(['/admin/news']);
+        return;
+      }
+
+      this.form.patchValue({
+        title: noticia.title ?? '',
+        category: noticia.category ?? '',
+        content: noticia.content ?? '',
+        keywords: noticia.keywords ?? [],
+        resource: {
+          name: noticia.resource?.name ?? '',
+          url: noticia.resource?.url ?? ''
+        }
+      });
+
+    } catch (error) {
+      console.error('Error cargando noticia:', error);
+      alert('Error al cargar la noticia');
+      this.router.navigate(['/admin/news']);
+    }
   }
-}
 
   async saveNews() {
     if (this.form.invalid) {
@@ -130,7 +152,7 @@ export class EcononewsAdminComponent implements OnInit {
       category: this.form.value.category,
       content: this.form.value.content,
       keywords: this.form.value.keywords || [],
-      resources: this.form.value.resources
+      resource: this.form.value.resource
     };
 
     try {

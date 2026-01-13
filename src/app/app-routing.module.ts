@@ -1,5 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { EconoBookComponent } from './modules/client/econobook/econobook.component';
+import { AuthGuard } from './services/guards/auth.guard';
+import { EconoNewsComponent } from './modules/client/econonew/econonew.component';
+import { Econonews1Component } from './modules/client/econonew/econonew1/econonews1.component';
 
 const routes: Routes = [
   {
@@ -13,7 +17,23 @@ const routes: Routes = [
   {
     path: 'admin',
     loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule),
-  }
+  },
+  {
+    path: 'econobook',
+    component: EconoBookComponent,
+    canActivate: [AuthGuard],
+    data: { expectedRole: '' }
+  },
+  {
+    path: 'econonews',
+    component: EconoNewsComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'econonews/:id',
+    component: Econonews1Component,
+    canActivate: [AuthGuard]
+  },
 ];
 
 @NgModule({

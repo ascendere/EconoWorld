@@ -1,108 +1,187 @@
 <div class="page-container">
-<!-- BACK BUTTON -->
-<div class="back-section">
+  <!-- BACK BUTTON -->
+  <div class="back-section">
     <button class="back-btn" (click)="regresar()">
-        <span>← Regresar</span>
+      <span>← Regresar</span>
     </button>
-</div>
+  </div>
 
-<!-- SEARCH SECTION -->
-<div class="search-section">
+  <!-- SEARCH SECTION -->
+  <div class="search-section">
     <div class="search-box">
-        <input type="text" placeholder="Buscar videos...">
-        <div class="search-btn">
-            <img src="assets/images/lupa.png" alt="Buscar">
-        </div>
+      <input type="text" placeholder="Buscar videos..." [(ngModel)]="terminoBusqueda" (input)="buscarVideos()">
+      <div class="search-btn">
+        <img src="assets/images/lupa.png" alt="Buscar">
+      </div>
     </div>
-    
+
     <div class="filters">
-        <span>Todos</span>
-        <span>Educación</span>
-        <span>Economía</span>
-        <span>Recursos</span>
-        <span>Tendencia</span>
+      <span [class.active]="categoriaActual === 'Todos'" (click)="filtrarPorCategoria('Todos')">
+        Todos
+      </span>
+      <span [class.active]="categoriaActual === 'Macroeconomía'" (click)="filtrarPorCategoria('Macroeconomía')">
+        Macroeconomía
+      </span>
+      <span [class.active]="categoriaActual === 'Microeconomía'" (click)="filtrarPorCategoria('Microeconomía')">
+        Microeconomía
+      </span>
+      <span [class.active]="categoriaActual === 'Finanzas'" (click)="filtrarPorCategoria('Finanzas')">
+        Finanzas
+      </span>
+      <span [class.active]="categoriaActual === 'Política Económica'"
+        (click)="filtrarPorCategoria('Política Económica')">
+        Política Económica
+      </span>
+      <span [class.active]="categoriaActual === 'Comercio Exterior'" (click)="filtrarPorCategoria('Comercio Exterior')">
+        Comercio Exterior
+      </span>
+      <span [class.active]="categoriaActual === 'Desarrollo Económico'"
+        (click)="filtrarPorCategoria('Desarrollo Económico')">
+        Desarrollo Económico
+      </span>
+      <span [class.active]="categoriaActual === 'Econometría'" (click)="filtrarPorCategoria('Econometría')">
+        Econometría
+      </span>
+      <span [class.active]="categoriaActual === 'Economía Internacional'"
+        (click)="filtrarPorCategoria('Economía Internacional')">
+        Economía Internacional
+      </span>
     </div>
-</div>
+  </div>
 
-<!-- MAIN CONTENT -->
-<main class="main-content">
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
     <div class="videos-container">
-        <!-- CATEGORY HEADER -->
-        <div class="category-header">
-            <h2>Varios</h2>
-        </div>
+      <!-- CATEGORY HEADER -->
+      <div class="category-header">
+        <h2>{{ categoriaActual }}</h2>
+        <span class="video-count">{{ videosFiltrados.length }} videos</span>
+      </div>
 
-        <!-- VIDEO GRID -->
-        <div class="video-grid">
-            <div class="video-card" *ngFor="let video of videos">
-                <div class="video-thumbnail">
-                    <img [src]="video.thumbnail" [alt]="video.title">
-                    <div class="play-icon">▶</div>
-                </div>
-                <div class="video-info">
-                    <h3>{{ video.title }}</h3>
-                    <div class="video-meta">
-                        <span class="views">{{ video.views }}</span>
-                        <span class="date">{{ video.date }}</span>
-                    </div>
-                </div>
+      <!-- LOADING STATE -->
+      <div class="loading-state" *ngIf="cargando">
+        <div class="spinner"></div>
+        <p>Cargando videos...</p>
+      </div>
+
+      <!-- EMPTY STATE -->
+      <div class="empty-state" *ngIf="!cargando && videosFiltrados.length === 0">
+        <div class="empty-icon">🎬</div>
+        <h3>No hay videos disponibles</h3>
+        <p *ngIf="terminoBusqueda">No se encontraron resultados para "{{ terminoBusqueda }}"</p>
+        <p *ngIf="!terminoBusqueda && categoriaActual !== 'Todos'">No hay videos en la categoría "{{ categoriaActual }}"
+        </p>
+        <p *ngIf="!terminoBusqueda && categoriaActual === 'Todos'">Aún no se han publicado videos</p>
+      </div>
+
+      <!-- VIDEO GRID -->
+      <div class="video-grid" *ngIf="!cargando && videosFiltrados.length > 0">
+        <div class="video-card" *ngFor="let video of videosFiltrados" (click)="abrirVideo(video)">
+          <div class="video-thumbnail">
+            <img [src]="video.thumbnailUrl || 'assets/images/econovidios.png'" [alt]="video.title"
+              onerror="this.src='assets/images/econovidios.png'">
+            <div class="play-icon">▶</div>
+
+            <!-- Etiqueta de categoría -->
+            <span class="category-badge">{{ video.category }}</span>
+          </div>
+
+          <div class="video-info">
+            <h3>{{ video.title }}</h3>
+            <div class="video-meta">
+              <span class="author">
+                {{ video.author && video.author.length > 0 ? video.author.join(', ') : 'Autor desconocido' }}
+              </span>
+              <span class="date">{{ formatearFecha(video.createAt) }}</span>
             </div>
+          </div>
         </div>
+      </div>
     </div>
-</main>
+  </main>
 
-<!-- FLOATING ACTION BUTTON -->
-<div class="fab">
-    <img src="assets/images/robotica.png" alt="Chat" width="24" height="24">
-</div>
+  <!-- 🎬 MODAL DE VIDEO -->
+  <div class="video-modal" *ngIf="mostrarModal" (click)="cerrarModal()">
+    <div class="video-modal-content" (click)="$event.stopPropagation()">
 
-<!-- FOOTER -->
-<footer>
+      <!-- Botón cerrar -->
+      <button class="close-btn" (click)="cerrarModal()">
+        <span>✕</span>
+      </button>
+
+      <!-- Header del modal -->
+      <div class="modal-header">
+        <h2>{{ videoSeleccionado?.title }}</h2>
+        <div class="video-meta">
+          <span class="category">{{ videoSeleccionado?.category }}</span>
+          <span class="author">Por: {{ videoSeleccionado?.author?.join(', ') }}</span>
+        </div>
+      </div>
+
+      <!-- Video embebido -->
+      <div class="video-container">
+        <iframe *ngIf="videoEmbedUrl" [src]="videoEmbedUrl" frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen>
+        </iframe>
+      </div>
+
+      <!-- Descripción -->
+      <div class="modal-body" *ngIf="videoSeleccionado?.description">
+        <h3>Descripción</h3>
+        <p>{{ videoSeleccionado?.description }}</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
     <div class="footer-contact-block">
-        <div class="social-icons">
-            <a href="#"><img src="assets/images/facebook.png" alt="Facebook"></a>
-            <a href="#"><img src="assets/images/gorjeo.png" alt="Twitter"></a>
-            <a href="#"><img src="assets/images/instagram.png" alt="Instagram"></a>
+      <div class="social-icons">
+        <a href="#"><img src="assets/images/facebook.png" alt="Facebook"></a>
+        <a href="#"><img src="assets/images/gorjeo.png" alt="Twitter"></a>
+        <a href="#"><img src="assets/images/instagram.png" alt="Instagram"></a>
+      </div>
+      <div class="info-block">
+        <div class="info-item">
+          <img src="assets/images/poste.png" width="16" />
+          <span><strong>Ubicación:</strong> San Cayetano Alto, Loja - Ecuador</span>
         </div>
-        <div class="info-block">
-            <div class="info-item">
-                <img src="assets/images/poste.png" width="16" />
-                <span><strong>Ubicación:</strong> San Cayetano Alto, Loja - Ecuador</span>
-            </div>
-            <div class="divider"></div>
-            <div class="info-item">
-                <img src="assets/images/manzana.png" width="16" />
-                <span><strong>Email:</strong> Buzón de Consultas</span>
-            </div>
+        <div class="divider"></div>
+        <div class="info-item">
+          <img src="assets/images/manzana.png" width="16" />
+          <span><strong>Email:</strong> Buzón de Consultas</span>
         </div>
+      </div>
     </div>
 
     <div class="footer-top footer-centered">
-        <div class="column">
-            <h4>Vínculos De Interés</h4>
-            <ul>
-                <li><img src="assets/images/graduacion.png" width="16" /> Carrera de Economía</li>
-                <li><img src="assets/images/directorio.png" width="16" /> Guía Estudiantes</li>
-                <li><img src="assets/images/tierra.png" width="16" /> Internacional</li>
-                <li><img src="assets/images/periodico.png" width="16" /> Noticias</li>
-                <li><img src="assets/images/aceptara.png" width="16" /> Admisiones</li>
-                <li><img src="assets/images/calendario.png" width="16" /> Eventos</li>
-            </ul>
-        </div>
-        <div class="column">
-            <h4>Estudiantes</h4>
-            <ul>
-                <li><img src="assets/images/calendario.png" width="16" /> Calendario Académico</li>
-                <li><img src="assets/images/directorio.png" width="16" /> Guía para Estudiantes</li>
-                <li><img src="assets/images/virtual.png" width="16" /> Aula Virtual</li>
-            </ul>
-        </div>
+      <div class="column">
+        <h4>Vínculos De Interés</h4>
+        <ul>
+          <li><img src="assets/images/graduacion.png" width="16" /> Carrera de Economía</li>
+          <li><img src="assets/images/directorio.png" width="16" /> Guía Estudiantes</li>
+          <li><img src="assets/images/tierra.png" width="16" /> Internacional</li>
+          <li><img src="assets/images/periodico.png" width="16" /> Noticias</li>
+          <li><img src="assets/images/aceptara.png" width="16" /> Admisiones</li>
+          <li><img src="assets/images/calendario.png" width="16" /> Eventos</li>
+        </ul>
+      </div>
+      <div class="column">
+        <h4>Estudiantes</h4>
+        <ul>
+          <li><img src="assets/images/calendario.png" width="16" /> Calendario Académico</li>
+          <li><img src="assets/images/directorio.png" width="16" /> Guía para Estudiantes</li>
+          <li><img src="assets/images/virtual.png" width="16" /> Aula Virtual</li>
+        </ul>
+      </div>
     </div>
 
-            <div class="footer-bottom">
-            <div class="logo">UTPL | EconoWorld</div>
-            <div class="scroll-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">↑</div>
-            <div>Copyright 2025. EconoWorld By LiiD</div>
-        </div>
-    </footer>
+    <div class="footer-bottom">
+      <div class="logo">UTPL | EconoWorld</div>
+      <div class="scroll-top" (click)="scrollToTop()">↑</div>
+      <div>Copyright 2025. EconoWorld By LiiD</div>
+    </div>
+  </footer>
 </div>

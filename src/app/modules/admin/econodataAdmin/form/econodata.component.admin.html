@@ -18,6 +18,10 @@
 
         <form [formGroup]="dataForm" (ngSubmit)="save()">
 
+            <div class="info-message">
+                ℹ️ Debe proporcionar <strong>al menos un enlace o adjuntar un archivo</strong> (puede incluir ambos).
+            </div>
+
             <!-- TÍTULO -->
             <label class="label">Título *</label>
             <input type="text" class="input" formControlName="title" placeholder="Título del archivo...">
@@ -26,15 +30,18 @@
             </div>
 
             <!-- ENLACE -->
-            <label class="label">Enlace *</label>
+            <label class="label">Enlace (opcional si adjunta archivo)</label>
 
             <div class="flex-row">
                 <input type="text" class="input" formControlName="enlace" placeholder="https://..." />
-                <button type="button" class="btn-open" (click)="visitar()">Visitar</button>
+                <button type="button" class="btn-open" (click)="visitar()" [disabled]="!dataForm.get('enlace')?.value">
+                    Visitar
+                </button>
             </div>
 
-            <div *ngIf="dataForm.controls['enlace'].invalid && dataForm.controls['enlace'].touched" class="error">
-                El enlace es obligatorio.
+            <div *ngIf="dataForm.get('enlace')?.hasError('atLeastOneRequired') && dataForm.get('enlace')?.touched"
+                class="error">
+                ⚠️ Debe proporcionar al menos un enlace o adjuntar un archivo.
             </div>
 
             <!-- CATEGORÍA -->
@@ -53,27 +60,25 @@
             <input type="text" class="input" formControlName="createdAt" readonly>
 
             <!-- ARCHIVO -->
-            <label class="label">Archivo PDF *</label>
+            <label class="label">Archivo PDF (opcional si proporciona enlace)</label>
 
             <div class="upload-box">
-                <input type="file" (change)="onFileSelected($event)" #fileInput>
+                <input type="file" accept=".pdf,.xlsx,.xls,.csv" (change)="onFileSelected($event)" #fileInput>
 
                 <button *ngIf="file" type="button" class="remove-file-btn" (click)="removeFile(); fileInput.value = ''">
-                    Quitar archivo
+                    Eliminar archivo
                 </button>
             </div>
 
-            <div *ngIf="!isEditMode && !file" class="error">
-                El archivo es obligatorio.
-            </div>
-
+            <!-- si hay archivo existente -->
             <div *ngIf="isEditMode && existingFileUrl && !file" class="info-box">
-                Archivo actual cargado —
+                📎 Archivo actual cargado —
                 <a [href]="existingFileUrl" target="_blank" class="link">Ver archivo</a>
             </div>
 
+            <!-- info del archivo seleccionado -->
             <div *ngIf="file" class="pdf-info-box">
-                Archivo seleccionado: {{ file.name }} ({{ fileSizeMB }} MB)
+                ✅ Archivo seleccionado: <strong>{{ file.name }}</strong> ({{ fileSizeMB }} MB)
                 <button type="button" class="btn-open" (click)="openFile()">Abrir</button>
             </div>
 
