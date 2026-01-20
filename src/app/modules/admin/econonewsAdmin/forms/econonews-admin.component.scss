@@ -125,31 +125,39 @@ textarea {
 }
 
 /* Botones finales */
-.form-buttons {
+.btn-row {
+  margin-top: 25px;
   display: flex;
-  justify-content: center;
-  gap: 1.5rem;
-  margin-top: 2rem;
+  justify-content: space-between;
+  gap: 12px;
 }
 
-.btn-cancelar {
-  background: #555;
+.btn-secondary {
+  background: grey;
   color: white;
-  padding: 0.8rem 2rem;
-  border-radius: 8px;
+  padding: 10px 18px;
+  border-radius: 10px;
   border: none;
-  font-weight: bold;
   cursor: pointer;
+  transition: 0.2s ease;
 }
 
-.btn-publicar {
-  background: #a71930;
+.btn-secondary:hover {
+  background: #6b7280;
+}
+
+.btn-primary {
+  background: #2563eb;
   color: white;
-  padding: 0.8rem 2rem;
-  border-radius: 8px;
+  padding: 10px 18px;
+  border-radius: 10px;
   border: none;
-  font-weight: bold;
   cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.btn-primary:hover {
+  background: #1d4ed8;
 }
 
 button:hover {

@@ -232,7 +232,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   navigateToStickers(): void {
-    this.navegar('/tematica/cromos');
+    this.router.navigate(['/tematica/cromos']);
   }
 
   navigateToAdmin(): void {
@@ -260,8 +260,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   get mostrarAlbum(): boolean {
     return this.isAuthenticated &&
-      this.currentRoute.startsWith('/tematica/') &&
-      !this.currentRoute.includes('/cromos');
+      this.currentRoute.startsWith('/tematica')
   }
 
   isRutaGeneral(): boolean {

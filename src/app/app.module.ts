@@ -12,6 +12,7 @@ import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { environment } from '../environments/environment';
 import { HeaderComponent } from './core/component/header/header.component';
+import { FooterComponent } from './core/component/footer/footer.component';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthService } from './services/auth.service';
@@ -20,8 +21,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent],
-  exports: [HeaderComponent],
+  declarations: [AppComponent, HeaderComponent, FooterComponent],
+  exports: [HeaderComponent, FooterComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -30,10 +31,10 @@ import { ReactiveFormsModule } from '@angular/forms';
     AngularFirestoreModule,
     AngularFireStorageModule,
     FormsModule,
-    ReactiveFormsModule,  
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    
+
     //EditorModule
   ],
   providers: [

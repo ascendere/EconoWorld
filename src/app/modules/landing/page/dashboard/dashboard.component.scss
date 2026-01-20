@@ -1143,7 +1143,8 @@ footer {
     h4 {
       font-size: 1.1rem;
       margin-bottom: 0.5rem;
-      color: #7d7d7d;
+      color: #ffffff;
+      font-weight: bold;
       display: inline-block;
       padding-bottom: 0.4rem;
       position: relative;
@@ -1187,6 +1188,7 @@ footer {
       font-size: 1rem;
     }
   }
+
 }
 
 // ---------- Redes sociales ----------
@@ -1211,7 +1213,7 @@ footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 2rem;
+  // margin-top: 2rem;
   border-top: 1px solid rgba(255, 255, 255, 0.3);
   padding-top: 1rem;
   font-size: 0.9rem;
@@ -1242,6 +1244,16 @@ footer {
       background: #ffd633;
     }
   }
+}
+
+.footer-liid {
+  text-align: center;
+  width: 100%;
+  padding: 10px 0;
+  font-weight: 500;
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 1.4em;
 }
 
 // ====================== Responsive ======================

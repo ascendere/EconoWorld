@@ -2,7 +2,9 @@
 <nav class="flex items-center justify-between flex-wrap p-6" style="background-color: #003f72;">
   <!-- Logo dinámico -->
   <div class="flex-shrink-0 text-white flex items-center space-x-2">
-    <span class="font-bold text-2xl">UTPL</span>
+    <a routerLink="/" class="font-bold text-2xl hover:text-gray-200 transition-colors cursor-pointer">
+      UTPL
+    </a>
     <span class="border-l-2 border-white h-6"></span>
     <span class="font-sans font-semibold text-xl tracking-tight">{{ tituloActual }}</span>
   </div>
@@ -86,6 +88,11 @@
         </a>
       </div>
     </div>
+
+    <ng-container *ngIf="currentRoute.startsWith('/econotest') || currentRoute.startsWith('/tematica')">
+      <a *ngIf="mostrarAlbum" (click)="navigateToStickers()" class="text-white admin-button cursor-pointer">Álbum</a>
+      <a [routerLink]="'/tematica'" class="text-white admin-button">Portada</a>
+    </ng-container>
 
     <div class="name">{{ userName }}</div>
 

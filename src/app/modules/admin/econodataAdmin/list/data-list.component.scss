@@ -55,7 +55,6 @@
     border: none;
     cursor: pointer;
     margin-bottom: 15px;
-    font-weight: 500;
     transition: all 0.2s ease;
 
     &:hover {
@@ -282,7 +281,7 @@
 
     .table-container {
       overflow-x: auto;
-      
+
       .data-table {
         min-width: 700px;
       }
@@ -290,7 +289,7 @@
 
     .action-buttons {
       flex-direction: column;
-      
+
       .btn-action {
         width: 100%;
       }

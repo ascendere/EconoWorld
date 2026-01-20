@@ -3,22 +3,22 @@
 <!-- ===================== BUSCADOR ===================== -->
 <section class="search-section">
   <div class="search-box">
-    <input 
-      type="text" 
-      placeholder="Buscar noticias..." 
+    <input
+      type="text"
+      placeholder="Buscar noticias..."
       [(ngModel)]="searchText"
-      autocomplete="off" 
+      autocomplete="off"
     />
     <button class="search-btn" type="button">
       <img src="assets/images/lupa.png" alt="Buscar" width="16" height="16" />
     </button>
   </div>
 
-  <div class="filters">
+  <!-- <div class="filters">
     <span>Lo Último</span>
     <span>Ediciones</span>
     <span>Tendencias</span>
-  </div>
+  </div> -->
 </section>
 
 <!-- ===================== LOADING ===================== -->
@@ -32,7 +32,7 @@
 
   <!-- CONTENEDOR AZUL PARA FEATURED + GALLERY -->
   <div class="main-content">
-    
+
     <!-- NOTICIA DESTACADA -->
     <section *ngIf="featuredNews" class="featured-news">
       <div class="news-image-container">
@@ -72,14 +72,13 @@
   </div>
 
   <!-- SECCIÓN BLANCA: LO ÚLTIMO / RECIENTES -->
-  <section class="last-recent-section">
+  <!-- <section class="last-recent-section">
 
-    <!-- LO ÚLTIMO (COLUMNA IZQUIERDA) -->
     <div class="latest">
       <h3>Lo Último</h3>
 
-      <div 
-        class="latest-card" 
+      <div
+        class="latest-card"
         *ngFor="let news of latestNews; trackBy: trackById"
         [routerLink]="['/econonews', news.id]"
       >
@@ -88,28 +87,27 @@
       </div>
     </div>
 
-    <!-- NOTICIAS RECIENTES (COLUMNA DERECHA) -->
     <div class="recent" *ngIf="recentNews">
       <h3>Noticias Recientes</h3>
 
       <img [src]="getAutoImage(recentNews)" [alt]="recentNews.title" />
-      
+
       <span class="tag">{{ recentNews.category }}</span>
-      
+
       <h4>{{ recentNews.title }}</h4>
-      
+
       <p>{{ getTruncatedContent(recentNews.content, 140) }}</p>
 
       <button class="btn" [routerLink]="['/econonews', recentNews.id]">
         Ver Más
       </button>
     </div>
-  </section>
+  </section> -->
 
   <!-- TÍTULO DECORATIVO -->
-  <div class="titulo-container">
+  <!-- <div class="titulo-container">
     <h1 class="titulo-estilo">EconoWorld</h1>
-  </div>
+  </div> -->
 
   <!-- BANNER ECONONEWS -->
   <section class="banner-econonews-container">
@@ -124,55 +122,5 @@
       <img src="assets/images/new.png" alt="EconoNews Preview" />
     </section>
   </section>
-
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-contact-block">
-      <div class="social-icons">
-        <a href="#"><img src="assets/images/facebook.png" alt="Facebook"></a>
-        <a href="#"><img src="assets/images/gorjeo.png" alt="Twitter"></a>
-        <a href="#"><img src="assets/images/instagram.png" alt="Instagram"></a>
-      </div>
-      <div class="info-block">
-        <div class="info-item">
-          <img src="assets/images/poste.png" width="16" />
-          <span><strong>Ubicación:</strong> San Cayetano Alto, Loja - Ecuador</span>
-        </div>
-        <div class="divider"></div>
-        <div class="info-item">
-          <img src="assets/images/manzana.png" width="16" />
-          <span><strong>Email:</strong> Buzón de Consultas</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="footer-top footer-centered">
-      <div class="column">
-        <h4>Vínculos De Interés</h4>
-        <ul>
-          <li><img src="assets/images/graduacion.png" width="16" /> Carrera de Economía</li>
-          <li><img src="assets/images/directorio.png" width="16" /> Guía Estudiantes</li>
-          <li><img src="assets/images/tierra.png" width="16" /> Internacional</li>
-          <li><img src="assets/images/periodico.png" width="16" /> Noticias</li>
-          <li><img src="assets/images/aceptara.png" width="16" /> Admisiones</li>
-          <li><img src="assets/images/calendario.png" width="16" /> Eventos</li>
-        </ul>
-      </div>
-      <div class="column">
-        <h4>Estudiantes</h4>
-        <ul>
-          <li><img src="assets/images/calendario.png" width="16" /> Calendario Académico</li>
-          <li><img src="assets/images/directorio.png" width="16" /> Guía para Estudiantes</li>
-          <li><img src="assets/images/virtual.png" width="16" /> Aula Virtual</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="footer-bottom">
-      <div class="logo">UTPL | EconoWorld</div>
-      <div class="scroll-top" (click)="scrollToTop()">↑</div>
-      <div>Copyright 2025. EconoWorld By LiiD</div>
-    </div>
-  </footer>
 
 </div>

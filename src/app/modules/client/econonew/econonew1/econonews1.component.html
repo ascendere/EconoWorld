@@ -15,7 +15,7 @@
   </div>
 
   <!-- BUSCADOR Y FILTROS -->
-  <section class="search-section">
+  <!-- <section class="search-section">
     <div class="search-box">
       <input type="text" placeholder="Buscar..." />
       <button class="search-btn">
@@ -27,7 +27,7 @@
       <span>Nivel</span>
       <span>Tendencia</span>
     </div>
-  </section>
+  </section> -->
 
   <!-- NOTICIA PRINCIPAL -->
   <main class="main-news" *ngIf="news">
@@ -46,17 +46,9 @@
       <h1 class="news-title">{{ news.title || 'Sin título' }}</h1>
 
       <!-- RESUMEN (primeros 200 caracteres del contenido) -->
-      <p class="news-summary" *ngIf="news.content">
+      <!-- <p class="news-summary" *ngIf="news.content">
         {{ stripHtmlAndTruncate(news.content, 200) }}
-      </p>
-
-      <!-- IMAGEN -->
-      <div class="news-image">
-        <img [src]="getAutoImage(news)" [alt]="news.title || 'Noticia'" (error)="onImageError($event)" />
-      </div>
-
-      <!-- CONTENIDO COMPLETO -->
-      <div class="news-content" [innerHTML]="news.content || 'Sin contenido'"></div>
+      </p> -->
 
       <!-- KEYWORDS (si existen) -->
       <div class="keywords-section" *ngIf="news.keywords && news.keywords.length > 0">
@@ -67,6 +59,14 @@
           </span>
         </div>
       </div>
+
+      <!-- IMAGEN -->
+      <div class="news-image">
+        <img [src]="getAutoImage(news)" [alt]="news.title || 'Noticia'" (error)="onImageError($event)" />
+      </div>
+
+      <!-- CONTENIDO COMPLETO -->
+      <div class="news-content" [innerHTML]="news.content || 'Sin contenido'"></div>
 
     </div>
   </main>

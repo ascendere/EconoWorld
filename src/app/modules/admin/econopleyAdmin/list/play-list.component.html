@@ -7,7 +7,7 @@
   </div>
 
   <!-- Botón para volver al dashboard -->
-  <button class="btn-volver" (click)="regresar()">Volver al Panel</button>
+  <button class="btn-volver" (click)="regresar()">Dashboard</button>
 
   <!-- Input de búsqueda -->
   <div class="search-container">
@@ -39,7 +39,7 @@
 
       <tbody>
         <tr *ngFor="let g of filteredGames">
-          
+
           <!-- Nombre -->
           <td>{{ g.name }}</td>
 

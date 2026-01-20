@@ -8,64 +8,27 @@ import { StikersComponent } from './econotest/stickers/stikers.component';
 import { EconovideosComponent } from './econovideos/econovideos.component';
 import { EconoBookComponent } from './econobook/econobook.component';
 import { EconobookViewerComponent } from './econobook/econobook1/econobook1.component';
-
 import { AuthGuard } from 'src/app/services/guards/auth.guard';
 import { EconoNewsComponent } from './econonew/econonew.component';
 import { Econonews1Component } from './econonew/econonew1/econonews1.component';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: HomeClientComponent,
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'list-test/:id',
-    component: ListTestComponent,
-    canActivate: [AuthGuard],
-  },
-  {
-    path: ':id/questionaries/:questionaryId/questions',
-    component: EvaluationsComponent,
-    canActivate: [AuthGuard],
-  },
-  {
-    path: ':id/cromos',
-    component: StikersComponent,
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'cromos',
-    component: StikersComponent,
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'econovideos',
-    component: EconovideosComponent,
-    canActivate: [AuthGuard],
-  },
-
-  {
-    path: 'econobook',
-    component: EconoBookComponent,
-    canActivate: [AuthGuard],
-  },
-
-  {
-    path: 'econobook/:id',
-    component: EconobookViewerComponent,
-    canActivate: [AuthGuard],
-  },
-
-  {
-    path: 'econonews',
-    component: EconoNewsComponent
-  },
-  {
-    path: 'econonews/:id',
-    component: Econonews1Component
-  },
-  
+{
+  path: '',
+  canActivate: [AuthGuard],
+  children: [
+      { path: '', component: HomeClientComponent },
+      { path: 'list-test/:id', component: ListTestComponent },
+      { path: ':id/questionaries/:questionaryId/questions', component: EvaluationsComponent },
+      { path: ':id/cromos', component: StikersComponent },
+      { path: 'cromos', component: StikersComponent },
+      { path: 'econovideos', component: EconovideosComponent },
+      { path: 'econobook', component: EconoBookComponent },
+      { path: 'econobook/:id', component: EconobookViewerComponent },
+      { path: 'econonews', component: EconoNewsComponent },
+      { path: 'econonews/:id', component: Econonews1Component },
+    ]
+  }
 ];
 
 @NgModule({

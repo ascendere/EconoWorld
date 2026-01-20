@@ -111,7 +111,7 @@
         </button>
         <!-- ✨ Prevenir Enter, solo ejecutar con click -->
         <button type="button" class="btn-primary" (click)="save()" (keydown.enter)="$event.preventDefault()">
-          Publicar
+          {{ isEditMode ? 'Actualizar' : 'Publicar' }}
         </button>
       </div>
 

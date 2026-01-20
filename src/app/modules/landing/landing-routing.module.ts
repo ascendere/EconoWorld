@@ -18,6 +18,7 @@ import { EconoBotComponent } from '../client/econobot/econobot.component';
 import { EconovideosComponent } from '../client/econovideos/econovideos.component';
 import { Econovideos1Component } from '../client/econovideos/econovideos1/econovideos1.component';
 import { Econonews1Component } from '../client/econonew/econonew1/econonews1.component';
+import { AuthGuard } from 'src/app/services/guards/auth.guard';
 
 /*@Injectable({ providedIn: 'root' })
 export class NoAdminOnLandingGuard implements CanActivate {
@@ -36,18 +37,24 @@ export class NoAdminOnLandingGuard implements CanActivate {
 }*/
 
 const routes: Routes = [
-  { path: '', component: DashboardComponent /*, canActivate: [NoAdminOnLandingGuard]*/ },
-  { path: 'econotest', component: HomeClientComponent },
-  { path: 'econoplay', component: EconoPlayComponent },
-  { path: 'econopley1', component: Econopley1Component },
-  { path: 'econonews', component: EconoNewsComponent },
-  { path: 'econobook', component: EconoBookComponent },
-  { path: 'econobook1', component: EconobookViewerComponent },
-  { path: 'econodata', component: EconoDataComponent },
-  { path: 'econobot', component: EconoBotComponent },
-  { path: 'econovideos', component: EconovideosComponent },
-  { path: 'econovideos1', component: Econovideos1Component },
-  { path: 'econonews1', component: Econonews1Component }
+{ path: '', component: DashboardComponent },
+{
+  path: '',
+  canActivate: [AuthGuard],
+  children: [
+      { path: 'econotest', component: HomeClientComponent },
+      { path: 'econoplay', component: EconoPlayComponent },
+      { path: 'econopley1', component: Econopley1Component },
+      { path: 'econonews', component: EconoNewsComponent },
+      { path: 'econobook', component: EconoBookComponent },
+      { path: 'econobook1', component: EconobookViewerComponent },
+      { path: 'econodata', component: EconoDataComponent },
+      { path: 'econobot', component: EconoBotComponent },
+      { path: 'econovideos', component: EconovideosComponent },
+      { path: 'econovideos1', component: Econovideos1Component },
+      { path: 'econonews1', component: Econonews1Component }
+    ]
+  }
 ];
 
 @NgModule({

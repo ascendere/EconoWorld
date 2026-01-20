@@ -13,7 +13,7 @@ export class EcononewsAdminComponent implements OnInit {
 
   form: FormGroup;
   editingId: string | null = null;
-
+  isEditMode = false;
   // Configuración de TinyMCE
   public tinyMceConfig = {
     height: 500,
@@ -82,6 +82,7 @@ export class EcononewsAdminComponent implements OnInit {
 
     if (id) {
       this.editingId = id;
+      this.isEditMode = true;
       this.loadNews(id);
     }
   }
