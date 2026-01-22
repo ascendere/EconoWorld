@@ -5,6 +5,7 @@ import { firstValueFrom } from 'rxjs';
 import { EconoplayAdminService, Game } from 'src/app/services/admin/econoplay-admin.service';
 import { serverTimestamp, Timestamp } from '@angular/fire/firestore';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { NotificationService } from 'src/app/core/services/notification.service';
 
 @Component({
   selector: 'app-econoplay-admin',
@@ -23,7 +24,8 @@ export class EconoplayAdminComponent implements OnInit {
     private econoplayService: EconoplayAdminService,
     private route: ActivatedRoute,
     private router: Router,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private notificationService: NotificationService
   ) { }
 
   ngOnInit(): void {
@@ -56,7 +58,7 @@ export class EconoplayAdminComponent implements OnInit {
       const game = games.find((g: any) => g.id === id);
 
       if (!game) {
-        alert('Game not found');
+        this.notificationService.error('Juego no encontrado');
         this.goTable();
         return;
       }
@@ -75,7 +77,7 @@ export class EconoplayAdminComponent implements OnInit {
 
     } catch (err) {
       console.error('Error loading game:', err);
-      alert('Error loading game');
+      this.notificationService.error('Error al cargar el juego');
       this.goTable();
     }
   }
@@ -106,7 +108,7 @@ export class EconoplayAdminComponent implements OnInit {
 
   async saveGame() {
     if (this.form.invalid) {
-      alert('Please complete all required fields.');
+      this.notificationService.info('Por favor complete todos los campos requeridos.');
       this.form.markAllAsTouched();
       return;
     }
@@ -116,28 +118,28 @@ export class EconoplayAdminComponent implements OnInit {
         name: this.form.value.name,
         category: this.form.value.category,
         instructions: this.form.value.instructions,
-        embedCode: this.form.value.embedCode 
+        embedCode: this.form.value.embedCode
       };
 
       // EDITAR
       if (this.editingId) {
         gameData.updatedAt = serverTimestamp();
         await this.econoplayService.updateGame(this.editingId, gameData);
-        alert('Juego actualizado con éxito');
+        this.notificationService.success('Juego actualizado con éxito');
       }
 
       // CREAR NUEVO
       else {
         gameData.createdAt = serverTimestamp();
         await this.econoplayService.createGame(gameData as Game);
-        alert('Juego creado con éxito');
+        this.notificationService.success('Juego creado con éxito');
       }
 
       this.goTable();
 
     } catch (err) {
       console.error('Error al guardar el juego:', err);
-      alert('Error al guardar el juego.');
+      this.notificationService.error('Error al guardar el juego.');
     }
   }
 

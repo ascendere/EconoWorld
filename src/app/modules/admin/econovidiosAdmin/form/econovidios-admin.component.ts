@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { EconovideosAdminService, Video } from 'src/app/services/admin/econovideos-admin.service';
+import { NotificationService } from 'src/app/core/services/notification.service';
 
 @Component({
   selector: 'app-econovidios-admin',
@@ -24,7 +25,8 @@ export class EconovidiosAdminComponent implements OnInit {
     private fb: FormBuilder,
     private videosService: EconovideosAdminService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private notificationService: NotificationService
   ) { }
 
   ngOnInit(): void {
@@ -60,7 +62,7 @@ export class EconovidiosAdminComponent implements OnInit {
       const video = await firstValueFrom(this.videosService.getVideoById(id));
 
       if (!video) {
-        alert('Video no encontrado');
+        this.notificationService.error('Video no encontrado');
         this.router.navigate(['/admin/videos']);
         return;
       }
@@ -81,7 +83,7 @@ export class EconovidiosAdminComponent implements OnInit {
 
     } catch (error) {
       console.error(error);
-      alert('No se pudo cargar el video');
+      this.notificationService.error('No se pudo cargar el video');
       this.router.navigate(['/admin/videos']);
     }
   }
@@ -90,17 +92,17 @@ export class EconovidiosAdminComponent implements OnInit {
 
     if (this.form.invalid) {
       this.form.markAllAsTouched();
-      alert('Complete todos los campos requeridos.');
+      this.notificationService.warning('Complete todos los campos requeridos.');
       return;
     }
 
     if (this.authors.length === 0) {
-      alert('Debe agregar al menos un autor.');
+      this.notificationService.info('Debe agregar al menos un autor.');
       return;
     }
 
     if (!this.videoUrl.trim()) {
-      alert('Debe agregar el enlace del video.');
+      this.notificationService.info('Debe agregar el enlace del video.');
       return;
     }
 
@@ -117,17 +119,17 @@ export class EconovidiosAdminComponent implements OnInit {
 
       if (this.isEditMode && this.currentVideoId) {
         await this.videosService.updateVideo(this.currentVideoId, data);
-        alert('Video actualizado con éxito.');
+        this.notificationService.success('Video actualizado con éxito.');
       } else {
         await this.videosService.addVideo(data);
-        alert('Video creado exitosamente.');
+        this.notificationService.success('Video creado exitosamente.');
       }
 
       this.goTable();
 
     } catch (err) {
       console.error(err);
-      alert('Error al guardar el video.');
+      this.notificationService.error('Error al guardar el video.');
     }
   }
 

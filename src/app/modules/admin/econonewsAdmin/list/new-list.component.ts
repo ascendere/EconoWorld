@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { EcononewsAdminService, Noticia } from 'src/app/services/admin/econonews-admin.service';
+import { NotificationService } from 'src/app/core/services/notification.service';
 
 @Component({
   selector: 'app-news-list',
@@ -25,7 +26,8 @@ export class NewsListComponent implements OnInit {
 
   constructor(
     private newsService: EcononewsAdminService,
-    private router: Router
+    private router: Router,
+    private notificationService: NotificationService
   ) { }
 
   ngOnInit(): void {
@@ -82,7 +84,7 @@ export class NewsListComponent implements OnInit {
       await this.newsService.deleteNews(n.id!);       
       this.news = this.news.filter(x => x.id !== n.id); 
       this.filteredNews = this.filteredNews.filter(x => x.id !== n.id);
-      alert('Noticia eliminada');
+      this.notificationService.success('Noticia eliminada');
     } catch (error) {
       console.error(error);
       this.errorMessage = 'Error al eliminar noticia';

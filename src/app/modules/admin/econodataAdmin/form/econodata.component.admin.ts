@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule, A
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { EconodataAdminService, Data } from 'src/app/services/admin/econodata-admin.service';
+import { NotificationService } from 'src/app/core/services/notification.service';
+
 
 function atLeastOneRequired(fileControl: () => File | null): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
@@ -45,7 +47,8 @@ export class EconodataAdminComponent implements OnInit {
         private fb: FormBuilder,
         private service: EconodataAdminService,
         private router: Router,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private notificationService: NotificationService
     ) { }
 
     ngOnInit(): void {
@@ -78,7 +81,7 @@ export class EconodataAdminComponent implements OnInit {
             const item = await this.service.getById(id);
 
             if (!item) {
-                alert('Elemento no encontrado.');
+                this.notificationService.error('Elemento no encontrado.');
                 return this.goDashboard();
             }
 
@@ -95,7 +98,7 @@ export class EconodataAdminComponent implements OnInit {
 
         } catch (err) {
             console.error(err);
-            alert('No se pudo cargar la información.');
+            this.notificationService.error('No se pudo cargar la información.');
             this.goDashboard();
         }
     }
@@ -140,10 +143,10 @@ export class EconodataAdminComponent implements OnInit {
             this.dataForm.markAllAsTouched();
 
             if (this.dataForm.get('enlace')?.hasError('atLeastOneRequired')) {
-                return alert('Debe proporcionar al menos un enlace o adjuntar un archivo.');
+                return this.notificationService.info('Debe proporcionar al menos un enlace o adjuntar un archivo.');
             }
 
-            return alert('Complete los campos obligatorios.');
+            return this.notificationService.warning('Complete los campos obligatorios.');
         }
 
         const formData: Partial<Data> = {
@@ -163,10 +166,10 @@ export class EconodataAdminComponent implements OnInit {
         try {
             if (this.isEditMode && this.currentId) {
                 await this.service.updateData(this.currentId, formData, this.file);
-                alert('Elemento actualizado.');
+                this.notificationService.success('Elemento actualizado.');
             } else {
                 await this.service.addData(formData as Data, this.file!);
-                alert('Elemento creado.');
+                this.notificationService.success('Elemento creado.');
             }
 
             this.resetForm();
@@ -174,7 +177,7 @@ export class EconodataAdminComponent implements OnInit {
 
         } catch (err) {
             console.error(err);
-            alert('Error al guardar.');
+            this.notificationService.error('Error al guardar.');
         }
     }
 

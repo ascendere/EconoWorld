@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { EconoplayAdminService, Game } from 'src/app/services/admin/econoplay-admin.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { NotificationService } from 'src/app/core/services/notification.service';
 
 @Component({
   selector: 'app-econopley',
@@ -34,7 +35,8 @@ export class EconoPlayComponent implements OnInit {
   constructor(
     private router: Router,
     private econoplayService: EconoplayAdminService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private notificationService: NotificationService
   ) {}
 
   ngOnInit(): void {
@@ -96,7 +98,7 @@ export class EconoPlayComponent implements OnInit {
   // 🎮 Abrir juego en modal
   abrirJuego(game: Game): void {
     if (!game.embedCode) {
-      alert('Este juego no tiene código embebido disponible');
+      this.notificationService.error('Este juego no tiene código embebido disponible');
       return;
     }
 

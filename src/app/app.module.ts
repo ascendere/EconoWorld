@@ -18,10 +18,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthService } from './services/auth.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NotificationComponent } from './shared/components/notification/notification.component';
 
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, FooterComponent],
+  declarations: [AppComponent, HeaderComponent, FooterComponent, NotificationComponent],
   exports: [HeaderComponent, FooterComponent],
   imports: [
     BrowserModule,
@@ -33,7 +34,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    HttpClientModule,
+    HttpClientModule
 
     //EditorModule
   ],

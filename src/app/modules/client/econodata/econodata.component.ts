@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EconodataService, data } from 'src/app/services/econodata.service';
+import { NotificationService } from 'src/app/core/services/notification.service';
 
 import * as Papa from 'papaparse';
 import * as XLSX from 'xlsx';
@@ -29,7 +30,7 @@ export class EconoDataComponent implements OnInit {
   previewHeaders: string[] = [];
   previewRows: any[] = [];
 
-  constructor(private econodataService: EconodataService) { }
+  constructor(private econodataService: EconodataService, private notificationService: NotificationService) { }
 
   ngOnInit(): void {
     this.econodataService.getAll().subscribe(res => {
@@ -125,7 +126,7 @@ export class EconoDataComponent implements OnInit {
 
     } catch (error) {
       console.error('Error cargando dataset:', error);
-      alert('No se pudo cargar la vista previa del archivo');
+      this.notificationService.error('No se pudo cargar la vista previa del archivo');
     }
   }
 

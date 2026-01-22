@@ -3,6 +3,7 @@ import { EconodataAdminService, Data } from 'src/app/services/admin/econodata-ad
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { NotificationService } from 'src/app/core/services/notification.service';
 
 @Component({
   selector: 'app-econodata-dashboard',
@@ -22,7 +23,8 @@ export class DataListComponent implements OnInit {
 
   constructor(
     private service: EconodataAdminService,
-    private router: Router
+    private router: Router,
+    private notificationService: NotificationService
   ) {}
 
   ngOnInit(): void {
@@ -67,7 +69,7 @@ export class DataListComponent implements OnInit {
       this.loadData();
     } catch (error) {
       console.error(error);
-      alert('Error al eliminar.');
+      this.notificationService.error('Error al eliminar.');
     }
   }
 

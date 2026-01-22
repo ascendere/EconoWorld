@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EconovideosAdminService, Video } from 'src/app/services/admin/econovideos-admin.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { NotificationService } from 'src/app/core/services/notification.service';
 
 @Component({
   selector: 'app-econovideos',
@@ -19,7 +20,8 @@ export class EconovideosComponent implements OnInit {
 
   constructor(
     private econovideosService: EconovideosAdminService,
-    private sanitizer: DomSanitizer // 🔒 Para URLs seguras
+    private sanitizer: DomSanitizer,
+    private notificationService: NotificationService
   ) { }
 
   ngOnInit(): void {
@@ -42,7 +44,7 @@ export class EconovideosComponent implements OnInit {
     const url = this.extractUrl(video.videoUrl);
 
     if (!url) {
-      alert('Este video no tiene enlace disponible');
+      this.notificationService.error('Este video no tiene enlace disponible');
       return;
     }
 
