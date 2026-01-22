@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EconobookAdminService, Book } from 'src/app/services/admin/econobook-admin.service';
+import { NotificationService } from 'src/app/core/services/notification.service';
 
 @Component({
   selector: 'app-econobook-admin',
@@ -25,7 +26,8 @@ export class EconobookAdminComponent implements OnInit {
     private fb: FormBuilder,
     private bookService: EconobookAdminService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private notificationService: NotificationService
   ) { }
 
   ngOnInit(): void {
@@ -50,7 +52,7 @@ export class EconobookAdminComponent implements OnInit {
       const book: Book = await this.bookService.getBookById(bookId);
 
       if (!book) {
-        alert('Libro no encontrado');
+        this.notificationService.error('Libro no encontrado');
         this.goDashboard();
         return;
       }
@@ -71,7 +73,7 @@ export class EconobookAdminComponent implements OnInit {
       }
     } catch (error) {
       console.error('Error al cargar el libro:', error);
-      alert('No se pudo cargar la información del libro.');
+      this.notificationService.error('No se pudo cargar la información del libro.');
       this.goDashboard();
     }
   }
@@ -106,7 +108,7 @@ export class EconobookAdminComponent implements OnInit {
     if (!file) return;
 
     if (file.type !== "application/pdf") {
-      alert("Debe seleccionar un archivo PDF.");
+      this.notificationService.info("Debe seleccionar un archivo PDF.");
       return;
     }
 
@@ -144,18 +146,18 @@ export class EconobookAdminComponent implements OnInit {
   async save() {
     if (this.bookForm.invalid) {
       this.bookForm.markAllAsTouched();
-      alert('Complete los campos obligatorios.');
+      this.notificationService.warning('Complete los campos obligatorios.');
       return;
     }
 
     this.authors = this.authors.map(a => a.trim()).filter(a => a.length > 0);
     if (this.authors.length === 0) {
-      alert('Debe agregar al menos un autor.');
+      this.notificationService.info('Debe agregar al menos un autor.');
       return;
     }
 
     if (!this.isEditMode && !this.pdfFile) {
-      alert("Debe subir un archivo PDF.");
+      this.notificationService.info("Debe subir un archivo PDF.");
       return;
     }
 
@@ -181,10 +183,10 @@ export class EconobookAdminComponent implements OnInit {
           null,
           this.pdfFile
         );
-        alert('Libro actualizado correctamente.');
+        this.notificationService.success('Libro actualizado correctamente.');
       } else {
         await this.bookService.addBook(bookData as Book, null as any, this.pdfFile!);
-        alert('Libro creado correctamente.');
+        this.notificationService.success('Libro creado correctamente.');
       }
 
       this.resetForm();
@@ -192,7 +194,7 @@ export class EconobookAdminComponent implements OnInit {
 
     } catch (err) {
       console.error(err);
-      alert(this.isEditMode ? 'Error al actualizar el libro.' : 'Error al guardar el libro.');
+      this.notificationService.error(this.isEditMode ? 'Error al actualizar el libro.' : 'Error al guardar el libro.');
     }
   }
 

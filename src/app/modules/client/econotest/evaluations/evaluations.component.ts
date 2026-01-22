@@ -5,6 +5,7 @@ import { StickersService } from 'src/app/services/stickers.service';
 import { EvaluationsService } from 'src/app/services/evaluations.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { take } from 'rxjs/operators';
+import { NotificationService } from 'src/app/core/services/notification.service';
 
 @Component({
   selector: 'app-evaluations',
@@ -41,8 +42,9 @@ export class EvaluationsComponent implements OnInit, OnDestroy {
     private questionaryService: QuestionaryService,
     private stickersService: StickersService,
     private evaluationService: EvaluationsService,
-    private authService: AuthService
-  ) {}
+    private authService: AuthService,
+    private notificationService: NotificationService
+  ) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
@@ -88,7 +90,7 @@ export class EvaluationsComponent implements OnInit, OnDestroy {
                 .subscribe((quizState) => {
                   this.attempts = quizState?.attempts || 0;
                   this.stickersWon = quizState?.stickersWon || [];
-                  
+
                   // Verificar si se hizo reset automático
                   const lastEvaluationDate = quizState?.['lastEvaluationDate'];
                   if (lastEvaluationDate) {
@@ -96,10 +98,10 @@ export class EvaluationsComponent implements OnInit, OnDestroy {
                     const currentDate = new Date();
                     const timeDiff = currentDate.getTime() - lastDate.getTime();
                     const hoursDiff = timeDiff / (1000 * 3600);
-                    
+
                     // Si han pasado más de 24 horas, mostrar mensaje de reset
                     if (hoursDiff >= 24) {
-                      alert('🔄 ¡Bienvenido! Las preguntas se han reseteado automáticamente. ¡Puedes volver a intentar!');
+                      this.notificationService.info('🔄 ¡Bienvenido! Las preguntas se han reseteado automáticamente. ¡Puedes volver a intentar!');
                     }
                   }
                 });
@@ -227,14 +229,15 @@ export class EvaluationsComponent implements OnInit, OnDestroy {
     this.earnedStickers = newEarnedStickers.length;
     this.quizFinished = true;
 
-    alert(
-      `\u2714 Test finalizado!\n` +
-      `Correctas: ${this.correctAnswers}\n` +
-      `Incorrectas: ${this.incorrectAnswers}\n` +
-      `Tiempo total: ${this.totalTimeSpent} segundos\n` +
-      `Cromos ganados: ${this.earnedStickers}` +
-      (cromosMsg ? `\n${cromosMsg}` : '')
-    );
+    this.notificationService.error
+      (
+        `\u2714 Test finalizado!\n` +
+        `Correctas: ${this.correctAnswers}\n` +
+        `Incorrectas: ${this.incorrectAnswers}\n` +
+        `Tiempo total: ${this.totalTimeSpent} segundos\n` +
+        `Cromos ganados: ${this.earnedStickers}` +
+        (cromosMsg ? `\n${cromosMsg}` : '')
+      );
 
     setTimeout(() => {
       this.router.navigate([`/tematica/list-test/${this.idThematic}`]);

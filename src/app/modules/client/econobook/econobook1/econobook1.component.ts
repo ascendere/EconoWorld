@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { EconobookService, Book } from 'src/app/services/econobook.service';
+import { NotificationService } from 'src/app/core/services/notification.service';
 
 @Component({
   selector: 'app-econobook1',
@@ -26,7 +27,8 @@ export class EconobookViewerComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private econobookService: EconobookService
+    private econobookService: EconobookService, 
+    private notificationService: NotificationService
   ) {}
 
   ngOnInit(): void {
@@ -114,7 +116,7 @@ export class EconobookViewerComponent implements OnInit {
   // 📖 ABRIR MODAL PDF
   openBook(book: Book): void {
     if (!book?.pdfUrl) {
-      alert('Este libro no tiene un PDF disponible');
+      this.notificationService.error('Este libro no tiene un PDF disponible');
       return;
     }
     this.selectedBook = book;

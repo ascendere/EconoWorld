@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { EconoplayAdminService, Game } from 'src/app/services/admin/econoplay-admin.service';
 import { PaginationBase } from 'src/app/modules/shared/pagination-base';
 import { SharedModule } from 'src/app/modules/shared/shared.module';
+import { NotificationService } from 'src/app/core/services/notification.service';
+
 
 @Component({
   selector: 'app-econoplay-dashboard',
@@ -27,7 +29,8 @@ export class PlayListComponent extends PaginationBase implements OnInit {
 
   constructor(
     private econoplayService: EconoplayAdminService,
-    private router: Router
+    private router: Router,
+    private notificationService: NotificationService
   ) {
     super();
   }
@@ -92,7 +95,7 @@ export class PlayListComponent extends PaginationBase implements OnInit {
       this.games = this.games.filter(x => x.id !== game.id);
       this.filteredGames = this.filteredGames.filter(x => x.id !== game.id);
 
-      alert('Juego eliminado correctamente');
+      this.notificationService.success('Juego eliminado correctamente');
     } catch (error) {
       console.error(error);
       this.errorMessage = 'Error al eliminar juego';

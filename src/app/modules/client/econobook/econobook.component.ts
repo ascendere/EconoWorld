@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { EconobookService, Book, Publisher, Author } from 'src/app/services/econobook.service';
 import { PaginationBase } from '../../shared/pagination-base';
+import { NotificationService } from 'src/app/core/services/notification.service';
 
 @Component({
   selector: 'app-econobook',
@@ -30,7 +31,8 @@ export class EconoBookComponent extends PaginationBase implements OnInit {
 
   constructor(
     private router: Router,
-    private econobookService: EconobookService
+    private econobookService: EconobookService,
+    private notificationService: NotificationService
   ) {
     super();
   }
@@ -145,7 +147,7 @@ export class EconoBookComponent extends PaginationBase implements OnInit {
 
   openBook(book: Book): void {
     if (!book?.pdfUrl) {
-      alert('Este libro no tiene un PDF disponible');
+      this.notificationService.error('Este libro no tiene un PDF disponible');
       return;
     }
 

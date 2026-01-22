@@ -1,0 +1,38 @@
+<div class="notification-container">
+  <div 
+    *ngFor="let notification of notifications" 
+    [class]="'notification ' + getNotificationClass(notification.type)"
+    [@slideIn]
+  >
+    <div class="notification-content">
+      <!-- Icono -->
+      <div class="notification-icon">
+        <span class="icon">{{ getIcon(notification.type) }}</span>
+      </div>
+
+      <!-- Mensaje -->
+      <div class="notification-message">
+        <h4 *ngIf="notification.title" class="notification-title">
+          {{ notification.title }}
+        </h4>
+        <p class="notification-text">{{ notification.message }}</p>
+      </div>
+
+      <!-- Botón cerrar -->
+      <button 
+        *ngIf="notification.dismissible"
+        class="notification-close"
+        (click)="removeNotification(notification.id!)"
+        aria-label="Cerrar notificación"
+      >
+        ✕
+      </button>
+    </div>
+
+    <!-- Barra de progreso -->
+    <div 
+      class="notification-progress" 
+      [style.animation-duration.ms]="notification.duration"
+    ></div>
+  </div>
+</div>

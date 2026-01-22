@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { EconovideosAdminService, Video } from 'src/app/services/admin/econovideos-admin.service';
 import { PaginationBase } from 'src/app/modules/shared/pagination-base';
 import { SharedModule } from 'src/app/modules/shared/shared.module';
+import { NotificationService } from 'src/app/core/services/notification.service';
+
 
 @Component({
   selector: 'app-videos-list',
@@ -23,10 +25,12 @@ export class VideosListComponent extends PaginationBase implements OnInit {
   override itemsPerPage = 10;
   constructor(
     private videoService: EconovideosAdminService,
-    private router: Router
+    private router: Router,
+    private notificationService: NotificationService
+
   ) {
     super();
-  }
+   }
 
   ngOnInit(): void {
     this.loadVideos();
@@ -85,7 +89,8 @@ export class VideosListComponent extends PaginationBase implements OnInit {
       await this.videoService.deleteVideo(v.id!);
       this.videos = this.videos.filter(x => x.id !== v.id);
       this.filteredVideos = this.filteredVideos.filter(x => x.id !== v.id);
-      alert('Video eliminado');
+      this.notificationService.success
+        ('Video eliminado');
     } catch (error) {
       console.error(error);
       this.errorMessage = 'Error al eliminar video';

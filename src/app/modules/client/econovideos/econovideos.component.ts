@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { EconovideosAdminService, Video } from 'src/app/services/admin/econovideos-admin.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { PaginationBase } from '../../shared/pagination-base';
+import { NotificationService } from 'src/app/core/services/notification.service';
 
 @Component({
   selector: 'app-econovideos',
@@ -36,7 +37,8 @@ export class EconovideosComponent extends PaginationBase implements OnInit {
   override itemsPerPage = 10;
   constructor(
     private econovideosService: EconovideosAdminService,
-    private sanitizer: DomSanitizer // 🔒 Para URLs seguras
+    private sanitizer: DomSanitizer,
+    private notificationService: NotificationService
   ) {
     super();
   }
@@ -95,7 +97,7 @@ export class EconovideosComponent extends PaginationBase implements OnInit {
     const url = this.extractUrl(video.videoUrl);
 
     if (!url) {
-      alert('Este video no tiene enlace disponible');
+      this.notificationService.error('Este video no tiene enlace disponible');
       return;
     }
 

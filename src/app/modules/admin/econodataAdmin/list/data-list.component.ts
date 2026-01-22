@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PaginationBase } from 'src/app/modules/shared/pagination-base';
 import { SharedModule } from 'src/app/modules/shared/shared.module';
+import { NotificationService } from 'src/app/core/services/notification.service';
 
 @Component({
   selector: 'app-econodata-dashboard',
@@ -25,7 +26,8 @@ export class DataListComponent extends PaginationBase implements OnInit {
   override itemsPerPage = 10;
   constructor(
     private service: EconodataAdminService,
-    private router: Router
+    private router: Router,
+    private notificationService: NotificationService
   ) {
     super();
   }
@@ -77,7 +79,7 @@ export class DataListComponent extends PaginationBase implements OnInit {
       this.loadData();
     } catch (error) {
       console.error(error);
-      alert('Error al eliminar.');
+      this.notificationService.error('Error al eliminar.');
     }
   }
 

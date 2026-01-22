@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { EcononewsAdminService, Noticia } from 'src/app/services/admin/econonews-admin.service';
+import { NotificationService } from 'src/app/core/services/notification.service';
 
 @Component({
   selector: 'app-econonews-admin',
@@ -63,7 +64,8 @@ export class EcononewsAdminComponent implements OnInit {
     private fb: FormBuilder,
     private newsAdmin: EcononewsAdminService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private notificationService: NotificationService
   ) {
     this.form = this.fb.group({
       title: ['', Validators.required],
@@ -118,7 +120,7 @@ export class EcononewsAdminComponent implements OnInit {
       );
 
       if (!noticia) {
-        alert('Noticia no encontrada');
+        this.notificationService.error('Noticia no encontrada');
         this.router.navigate(['/admin/news']);
         return;
       }
@@ -136,14 +138,14 @@ export class EcononewsAdminComponent implements OnInit {
 
     } catch (error) {
       console.error('Error cargando noticia:', error);
-      alert('Error al cargar la noticia');
+      this.notificationService.error('Error al cargar la noticia');
       this.router.navigate(['/admin/news']);
     }
   }
 
   async saveNews() {
     if (this.form.invalid) {
-      alert('Complete todos los campos obligatorios.');
+      this.notificationService.warning('Complete todos los campos obligatorios.');
       this.form.markAllAsTouched();
       return;
     }
@@ -161,18 +163,18 @@ export class EcononewsAdminComponent implements OnInit {
       if (this.editingId) {
         // EDITAR
         await this.newsAdmin.updateNews(this.editingId, data);
-        alert('Noticia actualizada correctamente');
+        this.notificationService.success('Noticia actualizada correctamente');
       } else {
         // CREAR
         await this.newsAdmin.createNews(data);
-        alert('Noticia creada correctamente');
+        this.notificationService.success('Noticia creada correctamente');
       }
 
       this.router.navigate(['/admin/news']);
 
     } catch (err) {
       console.error(err);
-      alert('Error guardando la noticia');
+      this.notificationService.error('Error guardando la noticia');
     }
   }
 
