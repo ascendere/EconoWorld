@@ -1,6 +1,6 @@
 /* ======================== VARIABLES ======================== */
 :root {
-  --primary-blue: #003f72;
+  --primary-blue: #004271;
   --secondary-yellow: #eaab00;
   --light-gray: #e0ded8;
   --deep-red: #a71930;
@@ -12,7 +12,7 @@
 
 /* ======================== CONTENEDOR PRINCIPAL ======================== */
 .main-content {
-  background-color: #003f72;
+  background-color: #ffffff;
   padding: 3rem 2rem 6rem;
   width: 100%;
   min-height: 50vh;
@@ -143,7 +143,7 @@
   display: grid;
   grid-template-columns: 1.2fr 1fr;
   gap: 3rem;
-  align-items: center;
+  align-items: start;
   max-width: 1400px;
   margin: 0 auto 4rem;
   padding: 2rem 0;
@@ -193,13 +193,13 @@
     font-size: 2.2rem;
     font-weight: bold;
     line-height: 1.4;
-    color: #ffffff;
+    color: #000000;
     margin: 0;
   }
 
   .content-preview {
     font-size: 1.05rem;
-    color: #dce6f0;
+    color: #000000;
     line-height: 1.6;
   }
 }
@@ -246,15 +246,15 @@
 .news-gallery {
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-  gap: 2.5rem;
-  max-width: 1400px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  max-width: 90%;
   margin: 0 auto 4rem;
   width: 100%;
 }
 
 .news-card {
-  background-color: rgba(255, 255, 255, 0.06);
+  background-color: #E6E6E6;
   backdrop-filter: blur(10px);
   color: var(--white);
   display: flex;
@@ -302,6 +302,7 @@
   text-transform: uppercase;
   box-shadow: 3px 3px 0 var(--secondary-yellow);
   z-index: 2;
+  color: #ffffff
 }
 
 .card-content {
@@ -314,13 +315,13 @@
   .title {
     font-size: 1.2rem;
     font-weight: 500;
-    color: #ffffff;
+    color: #000000;
     line-height: 1.4;
     margin: 0;
   }
 
   .content-preview {
-    color: #dce6f0;
+    color: #222222;
     font-size: 0.95rem;
     line-height: 1.6;
     flex-grow: 1;
@@ -535,7 +536,7 @@
 
 /* CONTENEDOR COMPLETO CON FONDO AZUL */
 .banner-econonews-container {
-  background-color: #003f72;
+  background-color: #004271;
   padding: 4rem 1rem;
   text-align: center;
 }
@@ -587,7 +588,7 @@
 /* ETIQUETA amarilla */
 .banner-econonews .overlay .etiqueta {
   display: inline-block;
-  background-color: #003f72;
+  background-color: #004271;
   border: 3px solid #ffce00;
   color: white;
   font-weight: bold;
@@ -669,7 +670,7 @@
 
 .testimonios h2 {
   display: inline-block;
-  background-color: #003f72;
+  background-color: #004271;
   color: white;
   padding: 0.5rem 1.5rem;
   border-radius: 2rem;
@@ -750,7 +751,7 @@
 
 .pill {
   background-color: #ffce00;
-  color: #003f72;
+  color: #004271;
   font-weight: bold;
   padding: 0.3rem 0.8rem;
   border-radius: 2rem;
@@ -788,7 +789,7 @@
   justify-content: space-around;
   align-items: center;
   font-size: 0.9rem;
-  color: #003f72;
+  color: #004271;
   font-weight: 500;
 }
 
@@ -835,7 +836,7 @@
 // ====================== Footer ======================
 
 footer {
-  background: #003f72;
+  background: #004271;
   padding: 3rem 2rem 1rem;
   color: white;
   border-top-left-radius: 0rem;
@@ -844,7 +845,7 @@ footer {
 }
 
 .footer-contact-block {
-  background-color: #003f72;
+  background-color: #004271;
   padding: 1.5rem 2rem;
   border-radius: 1rem;
   display: flex;
@@ -1000,7 +1001,7 @@ footer {
   height: 42px;
   border-radius: 50%;
   background: #ffce00;
-  color: #003c7b;
+  color: #004271;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1071,13 +1072,6 @@ body {
   background: transparent;
 }
 
-/* Asegurar que news-gallery no tenga margin/padding extra */
-.news-gallery {
-  margin: 0;
-  width: 100%;
-  box-sizing: border-box;
-}
-
 /* Forzar que last-recent-section tenga fondo blanco */
 .last-recent-section {
   width: 100%;
@@ -1120,4 +1114,102 @@ img:not([src])::after {
   .latest-card {
     height: 180px;
   }
+}
+
+/* ======================== MODAL INFORMATIVO ======================== */
+.info-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.3s ease;
+}
+
+.info-modal-content {
+  background: white;
+  padding: 3rem 2rem;
+  border-radius: 1.5rem;
+  max-width: 450px;
+  width: 90%;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+
+  .modal-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+  }
+
+  h3 {
+    color: #004271;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+  }
+
+  p {
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+  }
+
+  .email-link {
+    color: #004271;
+    font-weight: 700;
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    transition: all 0.3s ease;
+
+    &:hover {
+      border-bottom-color: #004271;
+    }
+  }
+}
+
+.close-modal-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #999;
+  cursor: pointer;
+  transition: color 0.3s;
+
+  &:hover {
+    color: #b61e1e;
+  }
+}
+
+.btn-aceptar {
+  background: #eaab00;
+  color: #004271;
+  border: none;
+  padding: 0.8rem 2.5rem;
+  border-radius: 2rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 0 #b8890a;
+  transition: all 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    background: #ffd633;
+  }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
 }

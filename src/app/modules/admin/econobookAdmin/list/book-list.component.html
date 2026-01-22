@@ -47,7 +47,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let book of filteredBooks">
+        <tr *ngFor="let book of pagedBooks">
           <td>{{ book.title }}</td>
           <td>{{ book.authors }}</td>
           <td>
@@ -92,5 +92,12 @@
         </tr>
       </tbody>
     </table>
+
   </div>
+  <app-pagination
+  [totalItems]="filteredBooks.length"
+  [itemsPerPage]="itemsPerPage"
+  [currentPage]="currentPage"
+  (pageChange)="onPageChange($event)">
+  </app-pagination>
 </div>

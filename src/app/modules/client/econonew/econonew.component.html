@@ -7,6 +7,7 @@
       type="text"
       placeholder="Buscar noticias..."
       [(ngModel)]="searchText"
+      (input)="onSearchChange()"
       autocomplete="off"
     />
     <button class="search-btn" type="button">
@@ -50,7 +51,7 @@
 
     <!-- GALERÍA DE NOTICIAS -->
     <section class="news-gallery">
-      <article class="news-card" *ngFor="let news of filteredNews; trackBy: trackById">
+      <article class="news-card" *ngFor="let news of pagedNews; trackBy: trackById">
         <div class="image-wrapper">
           <img [src]="getAutoImage(news)" [alt]="news.title" loading="lazy" />
           <span class="tag-overlay">{{ news.category }}</span>
@@ -70,6 +71,14 @@
     </section>
 
   </div>
+
+  <app-pagination
+  [totalItems]="filteredNews.length"
+  [itemsPerPage]="itemsPerPage"
+  [currentPage]="currentPage"
+  (pageChange)="onPageChange($event)">
+  </app-pagination>
+
 
   <!-- SECCIÓN BLANCA: LO ÚLTIMO / RECIENTES -->
   <!-- <section class="last-recent-section">
@@ -116,11 +125,28 @@
         <div class="etiqueta">EconoNews</div>
         <h2>Haz que tu noticia cuente</h2>
         <p>Crea y comparte noticias económicas</p>
-        <button routerLink="/admin/econonews">Crear Noticia</button>
+        <button (click)="toggleModal(true)">Crear Noticia</button>
         <p class="disponible">Disponible para Docentes y Alumnos</p>
       </div>
       <img src="assets/images/new.png" alt="EconoNews Preview" />
     </section>
   </section>
 
+</div>
+
+<div class="info-modal-overlay" *ngIf="mostrarModalInfo" (click)="toggleModal(false)">
+  <div class="info-modal-content" (click)="$event.stopPropagation()">
+
+    <button class="close-modal-btn" (click)="toggleModal(false)">✕</button>
+
+    <div class="modal-icon">✉️</div>
+    <h3>¿Quieres publicar una noticia?</h3>
+    <p>
+      Envía un correo a
+      <a href="mailto:dkgarcia@utpl.edu.ec" class="email-link">dkgarcia@utpl.edu.ec</a>
+      para obtener más información sobre el proceso de publicación.
+    </p>
+
+    <button class="btn-aceptar" (click)="toggleModal(false)">Entendido</button>
+  </div>
 </div>

@@ -38,7 +38,7 @@
       </thead>
 
       <tbody>
-        <tr *ngFor="let g of filteredGames">
+        <tr *ngFor="let g of pagedGames">
 
           <!-- Nombre -->
           <td>{{ g.name }}</td>
@@ -66,6 +66,14 @@
       </tbody>
     </table>
   </div>
+
+  <app-pagination
+    [totalItems]="filteredGames.length"
+    [itemsPerPage]="itemsPerPage"
+    [currentPage]="currentPage"
+    (pageChange)="onPageChange($event)">
+  </app-pagination>
+
 
   <!-- Mensaje si no hay juegos -->
   <div *ngIf="!isLoading && filteredGames.length === 0" class="empty">

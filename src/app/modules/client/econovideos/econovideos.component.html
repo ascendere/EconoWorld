@@ -2,90 +2,75 @@
   <div class="hero-content">
     <div class="hero-text">
       <h1>Profesor de Economía<br>Analiza, comprende y<br>transforma el mundo</h1>
-      <!-- <div class="hero-buttons">
-        <button class="btn-primary">EconoVideos</button>
-        <button class="btn-secondary" routerLink="/econovideos1">Ver Más</button>
-      </div> -->
     </div>
-
     <div class="hero-image">
       <img src="assets/images/personavideos.png" alt="Profesor de Economía" class="professor-img" />
-
-      <!-- <div class="speech-bubble">
-        <span>7 mil</span>
-      </div> -->
-
-      <!-- <div class="profile-info">
-        <img src="assets/images/personavideos.png" alt="Perfil" class="profile-img" />
-        <span class="profile-text">A. Gomez le ha gustado</span>
-      </div> -->
     </div>
   </div>
 </section>
 
-<section class="videos-section" *ngIf="!cargando && videos.length > 0">
-  <div class="section-header">
-    <h2>Últimos Videos</h2>
+<div class="search-section">
+  <div class="search-box">
+    <input type="text" placeholder="Buscar videos..." [(ngModel)]="terminoBusqueda" (input)="buscarVideos()">
+    <div class="search-btn">
+      <img src="assets/images/lupa.png" alt="Buscar">
+    </div>
   </div>
 
-  <div class="videos-grid">
-    <div class="video-card" *ngFor="let video of videos.slice(0, 4)" (click)="abrirVideo(video)">
+  <div class="filters">
+    <span *ngFor="let cat of categorias"
+          [class.active]="categoriaActual === cat"
+          (click)="filtrarPorCategoria(cat)">
+      {{ cat }}
+    </span>
+  </div>
+</div>
 
+<section class="videos-section">
+  <div class="section-header">
+    <h2>{{ categoriaActual === 'Todos' ? 'Todos los Videos' : categoriaActual }}</h2>
+    <!-- <span class="video-count" *ngIf="!cargando">{{ videosFiltrados.length }} videos</span> -->
+  </div>
+
+  <div class="mensaje" *ngIf="cargando">
+    <div class="spinner"></div>
+    <p>Cargando videos...</p>
+  </div>
+
+  <div class="mensaje" *ngIf="!cargando && videosFiltrados.length === 0">
+    <p>No se encontraron videos con los filtros aplicados.</p>
+  </div>
+
+  <div class="videos-grid" *ngIf="!cargando && videosFiltrados.length > 0">
+    <div class="video-card" *ngFor="let video of pagedVideos" (click)="abrirVideo(video)">
       <div class="video-thumbnail">
-        <img [src]="video.thumbnailUrl || 'assets/images/econovidios.png'" alt="Miniatura del video" />
-
+        <img [src]="video.thumbnailUrl || 'assets/images/econovidios.png'" alt="Miniatura" />
         <div class="play-button">
           <img src="https://www.freepnglogos.com/uploads/youtube-logo-hd-8.png" alt="Play" />
         </div>
-
-        <!-- <span class="video-label">EconoVideos</span> -->
+        <span class="category-badge">{{ video.category }}</span>
       </div>
 
       <div class="video-info">
         <h3>{{ video.title }}</h3>
+        <div class="video-meta">
+          <span class="author">{{ video.author.join(', ') }}</span>
+          <span class="date">{{ formatearFecha(video.createAt) }}</span>
+        </div>
       </div>
     </div>
   </div>
+  <app-pagination
+    [totalItems]="videosFiltrados.length"
+    [itemsPerPage]="itemsPerPage"
+    [currentPage]="currentPage"
+    (pageChange)="onPageChange($event)">
+  </app-pagination>
 </section>
 
-<div class="mensaje" *ngIf="!cargando && videos.length === 0">
-  <p>No hay videos publicados por el momento.</p>
-</div>
-
-<div class="mensaje" *ngIf="cargando">
-  <p>Cargando videos...</p>
-</div>
-
-<!-- <section class="banner-econovideos-container">
-  <section class="banner-econovideos">
-    <img src="assets/images/econovidios.png" alt="EconoVideos Preview" />
-
-    <div class="overlay">
-      <div class="etiqueta">EconoVideos</div>
-
-      <h2>
-        Comparte tu<br>
-        Conocimiento<br>
-        Económico
-      </h2>
-
-      <p>Tu aporte puede marcar la diferencia!</p>
-
-      <button routerLink="/econovideos1">Inténtalo Ahora!</button>
-    </div>
-  </section>
-</section> -->
-
-<!-- 🎬 MODAL DE VIDEO -->
 <div class="video-modal" *ngIf="mostrarModal" (click)="cerrarModal()">
   <div class="video-modal-content" (click)="$event.stopPropagation()">
-
-    <!-- Botón cerrar -->
-    <button class="close-btn" (click)="cerrarModal()">
-      <span>✕</span>
-    </button>
-
-    <!-- Header del modal -->
+    <button class="close-btn" (click)="cerrarModal()"><span>✕</span></button>
     <div class="modal-header">
       <h2>{{ videoSeleccionado?.title }}</h2>
       <div class="video-meta">
@@ -93,23 +78,14 @@
         <span class="author">Por: {{ videoSeleccionado?.author?.join(', ') }}</span>
       </div>
     </div>
-
-    <!-- Video embebido -->
     <div class="video-container">
-      <iframe
-        *ngIf="videoEmbedUrl"
-        [src]="videoEmbedUrl"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen>
+      <iframe *ngIf="videoEmbedUrl" [src]="videoEmbedUrl" frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
       </iframe>
     </div>
-
-    <!-- Descripción -->
     <div class="modal-body" *ngIf="videoSeleccionado?.description">
       <h3>Descripción</h3>
       <p>{{ videoSeleccionado?.description }}</p>
     </div>
-
   </div>
 </div>

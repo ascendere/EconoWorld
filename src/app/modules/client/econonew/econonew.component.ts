@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { EconoNewService, News } from 'src/app/services/econonew.service';
+import { PaginationBase } from '../../shared/pagination-base';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './econonew.component.html',
   styleUrls: ['./econonew.component.scss']
 })
-export class EconoNewsComponent implements OnInit {
+export class EconoNewsComponent extends PaginationBase implements OnInit {
 
   allNews: News[] = [];
-  
+
   featuredNews!: News;
   galleryNews: News[] = [];
   latestNews: News[] = [];
@@ -18,25 +19,30 @@ export class EconoNewsComponent implements OnInit {
   searchText = '';
   loading = true;
 
-  constructor(private newsService: EconoNewService) { }
+  mostrarModalInfo = false;
+
+  constructor(private newsService: EconoNewService) {
+    super();
+  }
 
   ngOnInit(): void {
     this.newsService.getNews().subscribe(news => {
       this.loading = false;
-
-      if (!news || news.length === 0) {
-        this.allNews = [];
-        return;
-      }
+      if (!news || news.length === 0) return;
 
       this.allNews = [...news];
 
-      // Distribuir noticias correctamente
       this.featuredNews = this.allNews[0];
-      this.galleryNews = this.allNews.slice(1, 7); // Mostrar 6 en galería
-      this.latestNews = this.allNews.slice(0, 4); // 4 últimas para "Lo Último"
+
+      this.galleryNews = this.allNews.slice(1);
+
+      this.latestNews = this.allNews.slice(0, 4);
       this.recentNews = this.allNews.length > 1 ? this.allNews[1] : this.allNews[0];
     });
+  }
+
+  get pagedNews(): News[] {
+    return this.paginate(this.filteredNews);
   }
 
   get filteredNews(): News[] {
@@ -62,7 +68,7 @@ export class EconoNewsComponent implements OnInit {
 
     // 2. Imagen placeholder categorizada y profesional
     const category = news?.category?.toLowerCase() || 'general';
-    
+
     const categoryImages: { [key: string]: string } = {
       'internacional': 'https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=800&h=600&fit=crop',
       'nacional': 'https://images.unsplash.com/photo-1523995462485-3d171b5c8fa9?w=800&h=600&fit=crop',
@@ -81,12 +87,12 @@ export class EconoNewsComponent implements OnInit {
    */
   getTruncatedContent(content: string, maxLength: number = 140): string {
     if (!content) return '';
-    
+
     // Remover tags HTML
     const stripped = content.replace(/<[^>]*>/g, '');
-    
-    return stripped.length > maxLength 
-      ? stripped.substring(0, maxLength) + '...' 
+
+    return stripped.length > maxLength
+      ? stripped.substring(0, maxLength) + '...'
       : stripped;
   }
 
@@ -105,6 +111,16 @@ export class EconoNewsComponent implements OnInit {
   }
 
   scrollToTop(): void {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  toggleModal(estado: boolean): void {
+    this.mostrarModalInfo = estado;
+
+      if (estado) {
+        document.body.style.overflow = 'hidden';
+      } else {
+        document.body.style.overflow = 'auto';
+      }
+    }
 }

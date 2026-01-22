@@ -1,26 +1,45 @@
 import { Component, OnInit } from '@angular/core';
 import { EconovideosAdminService, Video } from 'src/app/services/admin/econovideos-admin.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { PaginationBase } from '../../shared/pagination-base';
 
 @Component({
   selector: 'app-econovideos',
   templateUrl: './econovideos.component.html',
   styleUrls: ['./econovideos.component.scss']
 })
-export class EconovideosComponent implements OnInit {
+export class EconovideosComponent extends PaginationBase implements OnInit {
 
   videos: Video[] = [];
+  videosFiltrados: Video[] = []
   cargando = true;
 
   // 🎯 Variables para el modal
   mostrarModal = false;
   videoSeleccionado: Video | null = null;
   videoEmbedUrl: SafeResourceUrl | null = null;
+  categoriaActual = 'Todos';
+  terminoBusqueda = '';
 
+  categorias = [
+    'Todos',
+    'Macroeconomía',
+    'Microeconomía',
+    'Finanzas',
+    'Política Económica',
+    'Comercio Exterior',
+    'Desarrollo Económico',
+    'Econometría',
+    'Economía Internacional'
+  ];
+
+  override itemsPerPage = 10;
   constructor(
     private econovideosService: EconovideosAdminService,
     private sanitizer: DomSanitizer // 🔒 Para URLs seguras
-  ) { }
+  ) {
+    super();
+  }
 
   ngOnInit(): void {
     this.econovideosService.getVideos().subscribe({
@@ -29,6 +48,7 @@ export class EconovideosComponent implements OnInit {
           ...v,
           thumbnailUrl: this.getYoutubeThumbnail(this.extractUrl(v.videoUrl))
         }));
+        this.videosFiltrados = [...this.videos];
         this.cargando = false;
       },
       error: (err) => {
@@ -36,6 +56,39 @@ export class EconovideosComponent implements OnInit {
         this.cargando = false;
       }
     });
+  }
+
+  get pagedVideos(): Video[] {
+    return this.paginate(this.videosFiltrados);
+  }
+
+  filtrarPorCategoria(categoria: string): void {
+    this.categoriaActual = categoria;
+    this.terminoBusqueda = '';
+    this.aplicarFiltros();
+  }
+
+  buscarVideos(): void {
+    this.aplicarFiltros();
+  }
+
+  private aplicarFiltros(): void {
+    this.onSearchChange();
+    let videosTemp = [...this.videos];
+
+    if (this.categoriaActual !== 'Todos') {
+      videosTemp = videosTemp.filter(v => v.category === this.categoriaActual);
+    }
+
+    if (this.terminoBusqueda.trim()) {
+      const busqueda = this.terminoBusqueda.toLowerCase();
+      videosTemp = videosTemp.filter(v =>
+        v.title?.toLowerCase().includes(busqueda) ||
+        v.description?.toLowerCase().includes(busqueda) ||
+        v.author?.some(a => a.toLowerCase().includes(busqueda))
+      );
+    }
+    this.videosFiltrados = videosTemp;
   }
 
   abrirVideo(video: Video): void {
@@ -99,6 +152,12 @@ export class EconovideosComponent implements OnInit {
   esYoutube(url?: string): boolean {
     if (!url) return false;
     return url.includes('youtube.com') || url.includes('youtu.be');
+  }
+
+  formatearFecha(fecha: any): string {
+    if (!fecha) return '';
+    const date = fecha.toDate ? fecha.toDate() : new Date(fecha);
+    return `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`;
   }
 
   scrollTop(): void {

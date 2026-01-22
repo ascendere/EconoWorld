@@ -3,18 +3,21 @@ import { Router } from '@angular/router';
 import { EconobookAdminService, Book } from 'src/app/services/admin/econobook-admin.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { PaginationBase } from 'src/app/modules/shared/pagination-base';
+import { SharedModule } from 'src/app/modules/shared/shared.module';
 
 @Component({
   selector: 'app-book-list',
-  standalone: true, 
+  standalone: true,
   imports: [
     CommonModule,
-    FormsModule  
+    FormsModule,
+    SharedModule
   ],
   templateUrl: './book-list.component.html',
   styleUrls: ['./book-list.component.scss']
 })
-export class BookListComponent implements OnInit {
+export class BookListComponent extends PaginationBase implements OnInit {
   books: Book[] = [];
   filteredBooks: Book[] = [];
   searchTerm: string = '';
@@ -24,13 +27,21 @@ export class BookListComponent implements OnInit {
   // Columnas para la tabla
   displayedColumns: string[] = ['title', 'author', 'description', 'coverUrl', 'actions'];
 
+  override itemsPerPage = 10;
+
   constructor(
     private econobookAdminService: EconobookAdminService,
     private router: Router
-  ) {}
+  ) {
+    super();
+  }
 
   ngOnInit(): void {
     this.loadBooks();
+  }
+
+  get pagedBooks(): Book[] {
+    return this.paginate(this.filteredBooks);
   }
 
   async loadBooks(): Promise<void> {
@@ -50,6 +61,7 @@ export class BookListComponent implements OnInit {
   }
 
   searchBooks(): void {
+    this.onSearchChange();
     if (!this.searchTerm.trim()) {
       this.filteredBooks = this.books;
       return;
@@ -86,13 +98,13 @@ export class BookListComponent implements OnInit {
 
     try {
       await this.econobookAdminService.deleteBook(book.id!);
-      
+
       // Mensaje de éxito (opcional: usar un servicio de notificaciones)
       console.log('Libro eliminado exitosamente');
-      
+
       // Recargar la lista
       await this.loadBooks();
-      
+
     } catch (error) {
       this.errorMessage = 'Error al eliminar el libro. Por favor, intenta nuevamente.';
       console.error('Error al eliminar:', error);

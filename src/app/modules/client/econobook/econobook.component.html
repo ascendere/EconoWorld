@@ -10,8 +10,13 @@
       <div class="search-container">
         <!-- Buscador -->
         <div class="search-box-modern">
-          <input type="text" placeholder="Buscar libros, autores, editoriales..." [(ngModel)]="searchTerm"
-            (input)="onSearch()" class="search-input" />
+          <input
+            type="text"
+            placeholder="Buscar libros..."
+            [(ngModel)]="searchTerm"
+            (input)="onSearch()"
+            class="search-input"
+          />
           <button class="search-btn-modern">
             <img src="assets/images/lupa.png" alt="Buscar" width="20" height="20" />
           </button>
@@ -56,7 +61,7 @@
     <!-- Grid de libros mejorado -->
     <div class="books-grid-improved" *ngIf="!loading && !errorMessage">
 
-      <div class="book-card-improved" *ngFor="let book of filteredBooks">
+      <div class="book-card-improved" *ngFor="let book of pagedBooks">
 
         <!-- Portada del libro -->
         <div class="book-cover-wrapper">
@@ -112,6 +117,13 @@
 
   </div>
 </section>
+
+<app-pagination
+  [totalItems]="filteredBooks.length"
+  [itemsPerPage]="itemsPerPage"
+  [currentPage]="currentPage"
+  (pageChange)="onPageChange($event)">
+</app-pagination>
 
 <!-- AUTORES DESTACADOS -->
 <section class="autores">
@@ -230,3 +242,4 @@
 
   </div>
 </div>
+

@@ -13,7 +13,11 @@ import { RouterModule } from '@angular/router';
 import { EconovideosComponent } from './econovideos/econovideos.component';
 import { EconoNewsComponent } from './econonew/econonew.component';
 import { Econonews1Component } from './econonew/econonew1/econonews1.component';
-
+import { SharedModule } from '../shared/shared.module';
+import { EconoBookComponent } from './econobook/econobook.component';
+import { EconobookViewerComponent } from './econobook/econobook1/econobook1.component';
+import { EconoDataComponent } from './econodata/econodata.component';
+import { EconoPlayComponent } from './econopley/econopley.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +27,11 @@ import { Econonews1Component } from './econonew/econonew1/econonews1.component';
     StikersComponent,
     EconovideosComponent,
     EconoNewsComponent,
-    Econonews1Component
+    Econonews1Component,
+    EconoBookComponent,
+    EconobookViewerComponent,
+    EconoDataComponent,
+    EconoPlayComponent
   ],
   imports: [
     CommonModule,
@@ -31,7 +39,7 @@ import { Econonews1Component } from './econonew/econonew1/econonews1.component';
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
-    
+    SharedModule
   ],
   providers: [ThematicsService]
 })

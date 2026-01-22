@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { EconobookService, Book, Publisher, Author } from 'src/app/services/econobook.service';
+import { PaginationBase } from '../../shared/pagination-base';
 
 @Component({
   selector: 'app-econobook',
   templateUrl: './econobook.component.html',
   styleUrls: ['./econobook.component.scss']
 })
-export class EconoBookComponent implements OnInit {
+export class EconoBookComponent extends PaginationBase implements OnInit {
 
   publishedBooks: Book[] = [];
   featuredBooks: Book[] = [];
@@ -25,15 +26,23 @@ export class EconoBookComponent implements OnInit {
   searchTerm: string = '';
   currentFilter: string = 'latest';
 
+  override itemsPerPage = 8;
+
   constructor(
     private router: Router,
     private econobookService: EconobookService
-  ) { }
+  ) {
+    super();
+  }
 
   ngOnInit(): void {
     this.loadBooks();
     this.loadFeaturedPublishers();
     this.loadFeaturedAuthors();
+  }
+
+  get pagedBooks(): Book[] {
+    return this.paginate(this.filteredBooks);
   }
 
   loadBooks(): void {
@@ -92,6 +101,7 @@ export class EconoBookComponent implements OnInit {
   }
 
   onSearch(): void {
+    this.onSearchChange();
     const term = this.searchTerm.toLowerCase().trim();
 
     if (!term) {
@@ -140,10 +150,12 @@ export class EconoBookComponent implements OnInit {
     }
 
     this.selectedBook = book;
+    document.body.style.overflow = 'hidden';
   }
 
   closeModal(): void {
     this.selectedBook = null;
+    document.body.style.overflow = 'auto';
   }
 
   verMasLibros(): void {

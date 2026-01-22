@@ -2,13 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { EconoplayAdminService, Game } from 'src/app/services/admin/econoplay-admin.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { PaginationBase
 
+ } from '../../shared/pagination-base';
 @Component({
   selector: 'app-econopley',
   templateUrl: './econopley.component.html',
   styleUrls: ['./econopley.component.scss']
 })
-export class EconoPlayComponent implements OnInit {
+export class EconoPlayComponent extends PaginationBase implements OnInit {
 
   games: Game[] = [];
   gamesFiltrados: Game[] = [];
@@ -31,14 +33,22 @@ export class EconoPlayComponent implements OnInit {
     'Economía General'
   ];
 
+  override itemsPerPage = 6;
+
   constructor(
     private router: Router,
     private econoplayService: EconoplayAdminService,
     private sanitizer: DomSanitizer
-  ) {}
+  ) {
+    super();
+  }
 
   ngOnInit(): void {
     this.cargarJuegos();
+  }
+
+  get pagedGames(): Game[] {
+    return this.paginate(this.gamesFiltrados);
   }
 
   cargarJuegos(): void {
@@ -70,27 +80,31 @@ export class EconoPlayComponent implements OnInit {
     this.aplicarFiltros();
   }
 
-  // 🔧 Aplicar filtros combinados (categoría + búsqueda)
   private aplicarFiltros(): void {
+    this.onSearchChange();
     let juegosTemp = [...this.games];
 
-    // Filtro por categoría
-    if (this.categoriaActual !== 'Todos') {
-      juegosTemp = juegosTemp.filter(
-        g => g.category === this.categoriaActual
-      );
+    if (this.categoriaActual && this.categoriaActual !== 'Todos') {
+      const catFiltro = this.categoriaActual.toLowerCase().trim();
+
+      juegosTemp = juegosTemp.filter(g => {
+        const gameCat = (g.category || '').toLowerCase().trim();
+        return gameCat === catFiltro;
+      });
     }
 
-    // Filtro por búsqueda (nombre o instrucciones)
-    if (this.terminoBusqueda.trim()) {
-      const busqueda = this.terminoBusqueda.toLowerCase();
-      juegosTemp = juegosTemp.filter(g => 
-        g.name?.toLowerCase().includes(busqueda) ||
-        g.instructions?.toLowerCase().includes(busqueda)
+    if (this.terminoBusqueda && this.terminoBusqueda.trim()) {
+      const busqueda = this.terminoBusqueda.toLowerCase().trim();
+
+      juegosTemp = juegosTemp.filter(g =>
+        (g.name?.toLowerCase().includes(busqueda)) ||
+        (g.instructions?.toLowerCase().includes(busqueda))
       );
     }
 
     this.gamesFiltrados = juegosTemp;
+
+    console.log('Filtrando por:', this.categoriaActual, '| Resultados:', this.gamesFiltrados.length);
   }
 
   // 🎮 Abrir juego en modal

@@ -4,12 +4,15 @@ import { EconodataService, data } from 'src/app/services/econodata.service';
 import * as Papa from 'papaparse';
 import * as XLSX from 'xlsx';
 
+import { PaginationBase
+
+ } from '../../shared/pagination-base';
 @Component({
   selector: 'app-econodata',
   templateUrl: './econodata.component.html',
   styleUrls: ['./econodata.component.scss']
 })
-export class EconoDataComponent implements OnInit {
+export class EconoDataComponent extends PaginationBase implements OnInit {
 
   // ================== FILTROS ==================
   searchText = '';
@@ -29,7 +32,9 @@ export class EconoDataComponent implements OnInit {
   previewHeaders: string[] = [];
   previewRows: any[] = [];
 
-  constructor(private econodataService: EconodataService) { }
+  constructor(private econodataService: EconodataService) {
+    super();
+  }
 
   ngOnInit(): void {
     this.econodataService.getAll().subscribe(res => {
@@ -45,8 +50,13 @@ export class EconoDataComponent implements OnInit {
     });
   }
 
+  get pagedData(): data[] {
+    return this.paginate(this.filtered);
+  }
+
   // ================== FILTROS ==================
   applyFilters(): void {
+    this.onSearchChange();
     this.filtered = this.data.filter(d => {
       const matchesCategory =
         !this.selectedCategory || d.category === this.selectedCategory;
@@ -64,10 +74,6 @@ export class EconoDataComponent implements OnInit {
   setCategory(category: string): void {
     this.selectedCategory =
       this.selectedCategory === category ? '' : category;
-    this.applyFilters();
-  }
-
-  onSearchChange() {
     this.applyFilters();
   }
 

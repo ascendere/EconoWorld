@@ -19,7 +19,6 @@ import { AuthService } from './services/auth.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 
-
 @NgModule({
   declarations: [AppComponent, HeaderComponent, FooterComponent],
   exports: [HeaderComponent, FooterComponent],

@@ -3,15 +3,17 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { EcononewsAdminService, Noticia } from 'src/app/services/admin/econonews-admin.service';
+import { PaginationBase } from 'src/app/modules/shared/pagination-base';
+import { SharedModule } from 'src/app/modules/shared/shared.module';
 
 @Component({
   selector: 'app-news-list',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, SharedModule],
   templateUrl: './new-list.component.html',
   styleUrls: ['./new-list.component.scss']
 })
-export class NewsListComponent implements OnInit {
+export class NewsListComponent extends PaginationBase implements OnInit {
 
 
   news: Noticia[] = [];
@@ -23,13 +25,21 @@ export class NewsListComponent implements OnInit {
   isLoading: boolean = false;
   errorMessage: string = '';
 
+  override itemsPerPage = 10;
+
   constructor(
     private newsService: EcononewsAdminService,
     private router: Router
-  ) { }
+  ) {
+    super();
+  }
 
   ngOnInit(): void {
-    this.loadNews(); 
+    this.loadNews();
+  }
+
+  get pagedNews(): Noticia[] {
+    return this.paginate(this.filteredNews);
   }
 
   loadNews(): void {
@@ -52,8 +62,9 @@ export class NewsListComponent implements OnInit {
 
 
   searchNews(): void {
+    this.onSearchChange();
     if (!this.searchTerm.trim()) {
-      this.filteredNews = this.news; 
+      this.filteredNews = this.news;
       return;
     }
 
@@ -65,7 +76,7 @@ export class NewsListComponent implements OnInit {
   }
 
   crear(): void {
-    this.router.navigate(['/admin/news/new']); 
+    this.router.navigate(['/admin/news/new']);
   }
 
   editar(n: Noticia): void {
@@ -79,8 +90,8 @@ export class NewsListComponent implements OnInit {
     this.errorMessage = '';
 
     try {
-      await this.newsService.deleteNews(n.id!);       
-      this.news = this.news.filter(x => x.id !== n.id); 
+      await this.newsService.deleteNews(n.id!);
+      this.news = this.news.filter(x => x.id !== n.id);
       this.filteredNews = this.filteredNews.filter(x => x.id !== n.id);
       alert('Noticia eliminada');
     } catch (error) {
@@ -92,6 +103,6 @@ export class NewsListComponent implements OnInit {
   }
 
   regresar(): void {
-    this.router.navigate(['/admin']); 
+    this.router.navigate(['/admin']);
   }
 }

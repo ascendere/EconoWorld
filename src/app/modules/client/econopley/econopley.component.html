@@ -1,5 +1,6 @@
 <!-- HERO SECTION -->
 <section class="hero-section">
+  <div class="hero-fade"></div>
   <div class="hero-content">
     <h1>¡Aprende Economía Jugando!</h1>
     <p>Descubre juegos interactivos que te retan, enseñan y divierten.</p>
@@ -74,7 +75,7 @@
 
   <!-- JUEGOS GRID -->
   <div class="juegos-grid" *ngIf="!cargando && gamesFiltrados.length > 0">
-    <div class="juego-card" *ngFor="let game of gamesFiltrados.slice(0, 6)">
+    <div class="juego-card" *ngFor="let game of pagedGames">
       <img
         [src]="game.imageUrl || 'assets/images/Eonli.png'"
         [alt]="game.name"
@@ -90,6 +91,13 @@
       </div>
     </div>
   </div>
+
+  <app-pagination
+  [totalItems]="gamesFiltrados.length"
+  [itemsPerPage]="itemsPerPage"
+  [currentPage]="currentPage"
+  (pageChange)="onPageChange($event)">
+  </app-pagination>
 </section>
 
 <!-- TÍTULO ECONOWORLD -->

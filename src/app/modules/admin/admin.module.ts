@@ -16,13 +16,14 @@ import { EditorModule } from '@tinymce/tinymce-angular'
 
 // Módulos internos
 import { AdminRoutingModule } from './admin-routing.module';
-import { EconotestModule } from './econotestAdmin/econotest.admin'; 
-import { EconobookAdminComponent } from './econobookAdmin/forms/econobok.component.admin'; 
+import { EconotestModule } from './econotestAdmin/econotest.admin';
+import { EconobookAdminComponent } from './econobookAdmin/forms/econobok.component.admin';
 import { VideosListComponent } from './econovidiosAdmin/list/videos-list.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { EcononewsAdminComponent } from './econonewsAdmin/forms/econonews-admin.component';
 import { EconoplayAdminComponent } from './econopleyAdmin/form/econopley-admin.component';
 import { EconovidiosAdminComponent } from './econovidiosAdmin/form/econovidios-admin.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -48,6 +49,7 @@ import { EconovidiosAdminComponent } from './econovidiosAdmin/form/econovidios-a
     MatInputModule,
     AdminRoutingModule,
     EconotestModule,
+    SharedModule
   ],
   schemas: [NO_ERRORS_SCHEMA]
 })

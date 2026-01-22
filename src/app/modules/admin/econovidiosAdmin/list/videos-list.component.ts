@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { EconovideosAdminService, Video } from 'src/app/services/admin/econovideos-admin.service';
+import { PaginationBase } from 'src/app/modules/shared/pagination-base';
+import { SharedModule } from 'src/app/modules/shared/shared.module';
 
 @Component({
   selector: 'app-videos-list',
@@ -8,7 +10,7 @@ import { EconovideosAdminService, Video } from 'src/app/services/admin/econovide
   styleUrls: ['./videos-list.component.scss']
 })
 
-export class VideosListComponent implements OnInit {
+export class VideosListComponent extends PaginationBase implements OnInit {
 
   videos: Video[] = [];
   filteredVideos: Video[] = [];
@@ -18,13 +20,20 @@ export class VideosListComponent implements OnInit {
   isLoading: boolean = false;
   errorMessage: string = '';
 
+  override itemsPerPage = 10;
   constructor(
     private videoService: EconovideosAdminService,
     private router: Router
-  ) {}
+  ) {
+    super();
+  }
 
   ngOnInit(): void {
     this.loadVideos();
+  }
+
+  get pagedVideos(): Video[] {
+    return this.paginate(this.filteredVideos);
   }
 
   loadVideos(): void {
@@ -46,6 +55,7 @@ export class VideosListComponent implements OnInit {
   }
 
   searchVideos(): void {
+    this.onSearchChange();
     if (!this.searchTerm.trim()) {
       this.filteredVideos = this.videos;
       return;

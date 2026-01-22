@@ -35,7 +35,7 @@
       </thead>
 
       <tbody>
-        <tr *ngFor="let v of filteredVideos">
+        <tr *ngFor="let v of pagedVideos">
 
           <!-- Título -->
           <td>{{ v.title }}</td>
@@ -74,6 +74,13 @@
       </tbody>
     </table>
   </div>
+
+  <app-pagination
+    [totalItems]="filteredVideos.length"
+    [itemsPerPage]="itemsPerPage"
+    [currentPage]="currentPage"
+    (pageChange)="onPageChange($event)">
+  </app-pagination>
 
   <!-- Sin datos -->
   <div *ngIf="!isLoading && filteredVideos.length === 0" class="empty">

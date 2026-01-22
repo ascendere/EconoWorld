@@ -33,7 +33,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let n of filteredNews">
+        <tr *ngFor="let n of pagedNews">
           <!-- Título -->
           <td>{{ n.title }}</td>
 
@@ -72,6 +72,13 @@
       </tbody>
     </table>
   </div>
+
+  <app-pagination
+  [totalItems]="filteredNews.length"
+  [itemsPerPage]="itemsPerPage"
+  [currentPage]="currentPage"
+  (pageChange)="onPageChange($event)">
+  </app-pagination>
 
   <!-- Mensaje si no hay noticias -->
   <div *ngIf="!isLoading && filteredNews.length === 0" class="empty">

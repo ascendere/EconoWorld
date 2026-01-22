@@ -3,15 +3,17 @@ import { EconodataAdminService, Data } from 'src/app/services/admin/econodata-ad
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { PaginationBase } from 'src/app/modules/shared/pagination-base';
+import { SharedModule } from 'src/app/modules/shared/shared.module';
 
 @Component({
   selector: 'app-econodata-dashboard',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, SharedModule],
   templateUrl: './data-list.component.html',
   styleUrls: ['./data-list.component.scss']
 })
-export class DataListComponent implements OnInit {
+export class DataListComponent extends PaginationBase implements OnInit {
 
   dataList: Data[] = [];
   filteredData: Data[] = [];
@@ -20,13 +22,20 @@ export class DataListComponent implements OnInit {
   errorMessage = '';
   isLoading = true;
 
+  override itemsPerPage = 10;
   constructor(
     private service: EconodataAdminService,
     private router: Router
-  ) {}
+  ) {
+    super();
+  }
 
   ngOnInit(): void {
     this.loadData();
+  }
+
+  get pagedData(): Data[] {
+    return this.paginate(this.filteredData);
   }
 
   async loadData() {
@@ -43,6 +52,7 @@ export class DataListComponent implements OnInit {
   }
 
   searchData() {
+    this.onSearchChange();
     const term = this.searchTerm.toLowerCase();
 
     this.filteredData = this.dataList.filter(item =>

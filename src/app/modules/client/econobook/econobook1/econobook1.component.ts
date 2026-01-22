@@ -99,7 +99,7 @@ export class EconobookViewerComponent implements OnInit {
 
       case 'trending':
         // Ordenar por título alfabéticamente como "trending"
-        this.filteredBooks = [...this.filteredBooks].sort((a, b) => 
+        this.filteredBooks = [...this.filteredBooks].sort((a, b) =>
           a.title.localeCompare(b.title)
         );
         break;

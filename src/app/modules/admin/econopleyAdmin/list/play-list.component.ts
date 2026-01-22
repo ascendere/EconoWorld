@@ -3,15 +3,17 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { EconoplayAdminService, Game } from 'src/app/services/admin/econoplay-admin.service';
+import { PaginationBase } from 'src/app/modules/shared/pagination-base';
+import { SharedModule } from 'src/app/modules/shared/shared.module';
 
 @Component({
   selector: 'app-econoplay-dashboard',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, SharedModule],
   templateUrl: './play-list.component.html',
   styleUrls: ['./play-list.component.scss']
 })
-export class PlayListComponent implements OnInit {
+export class PlayListComponent extends PaginationBase implements OnInit {
 
   games: Game[] = [];
   filteredGames: Game[] = [];
@@ -21,13 +23,21 @@ export class PlayListComponent implements OnInit {
   isLoading: boolean = false;
   errorMessage: string = '';
 
+  override itemsPerPage = 10;
+
   constructor(
     private econoplayService: EconoplayAdminService,
     private router: Router
-  ) { }
+  ) {
+    super();
+  }
 
   ngOnInit(): void {
     this.loadGames();
+  }
+
+  get pagedGames(): Game[] {
+    return this.paginate(this.filteredGames);
   }
 
   loadGames(): void {
@@ -49,6 +59,7 @@ export class PlayListComponent implements OnInit {
   }
 
   searchGames(): void {
+    this.onSearchChange();
     if (!this.searchTerm.trim()) {
       this.filteredGames = this.games;
       return;

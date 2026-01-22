@@ -45,15 +45,9 @@
   <main class="main-content" *ngIf="!loading">
     <div class="data-cards-container">
 
-      <div class="data-card" *ngFor="let d of filtered">
+      <div class="data-card" *ngFor="let d of pagedData">
 
-        <div class="card-content">
-          <h3 class="card-title">{{ d.title }}</h3>
-
-          <p class="card-description">
-            {{ d.category }}
-          </p>
-
+        <div class="card-actions">
           <button class="visit-btn" (click)="openDataModal(d)">
             👁 Ver datos
           </button>
@@ -63,20 +57,23 @@
           </button>
         </div>
 
-        <div class="card-image">
-          <img [src]="d.image || 'assets/images/figma1.jpg'" alt="Dataset" />
-
-          <div class="format-overlay" *ngIf="d.fileUrl">
-            <span class="format-label">
-              {{ getFileType(d.fileUrl) }}
-            </span>
-          </div>
+        <div class="card-info">
+          <div class="category-badge">{{ d.category }}</div>
+          <h3 class="card-title">{{ d.title }}</h3>
         </div>
 
       </div>
 
     </div>
+    <app-pagination
+    [totalItems]="filtered.length"
+    [itemsPerPage]="itemsPerPage"
+    [currentPage]="currentPage"
+    (pageChange)="onPageChange($event)">
+    </app-pagination>
   </main>
+
+
 
   <div class="pdf-modal-overlay" *ngIf="showDataModal" (click)="closeDataModal()">
   <div class="pdf-modal-container" (click)="$event.stopPropagation()">

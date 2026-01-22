@@ -15,20 +15,14 @@ import { EconoDataComponent } from '../client/econodata/econodata.component';
 import { EconoBotComponent } from '../client/econobot/econobot.component';
 import { Econovideos1Component } from '../client/econovideos/econovideos1/econovideos1.component';
 import { Econonews1Component } from '../client/econonew/econonew1/econonews1.component';
-import { SafePipe } from 'src/app/pipes/safe.pipe';
 import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     DashboardComponent,
-    EconoPlayComponent,
     Econopley1Component,
-    EconoBookComponent,
-    EconobookViewerComponent,
-    EconoDataComponent,
     EconoBotComponent,
     Econovideos1Component,
-    SafePipe
   ],
   imports: [
     CommonModule,
