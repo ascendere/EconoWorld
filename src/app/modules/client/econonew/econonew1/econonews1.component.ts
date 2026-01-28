@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EconoNewService, News } from 'src/app/services/econonew.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { BaseResource } from 'src/app/modules/shared/base';
 
 @Component({
   selector: 'app-econonews1',
   templateUrl: './econonews1.component.html',
   styleUrls: ['./econonews1.component.scss']
 })
-export class Econonews1Component implements OnInit {
+export class Econonews1Component extends BaseResource implements OnInit {
 
   news?: News;
   loading = true;
@@ -16,14 +18,19 @@ export class Econonews1Component implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private newsService: EconoNewService
-  ) { }
+    private newsService: EconoNewService,
+    private authService: AuthService,
+  ) {
+    super();
+  }
 
   ngOnInit(): void {
+    this.authService.getUser().subscribe(userData => {
+      this.userId = userData ? (userData.uid || userData.id) : null;
+    });
     // Obtener ID de la URL
     this.route.params.subscribe(params => {
       this.newsId = params['id'];
-      console.log('📰 Cargando noticia con ID:', this.newsId);
       this.loadNews();
     });
   }
@@ -31,7 +38,6 @@ export class Econonews1Component implements OnInit {
   loadNews(): void {
     this.newsService.getNewsById(this.newsId).subscribe({
       next: (news) => {
-        console.log('✅ Noticia cargada:', news);
         this.loading = false;
 
         if (!news) {
@@ -115,5 +121,27 @@ export class Econonews1Component implements OnInit {
     return text.length > maxLength
       ? text.substring(0, maxLength) + '...'
       : text;
+  }
+
+  onLike(news: News) {
+    this.toggleReaction(news, 'like', (updatedNews) => {
+      this.newsService.updateNewsReactions(updatedNews.id, {
+        likes: updatedNews.likes,
+        dislikes: updatedNews.dislikes,
+        likedBy: updatedNews.likedBy,
+        dislikedBy: updatedNews.dislikedBy
+      });
+    });
+  }
+
+  onDislike(news: News) {
+    this.toggleReaction(news, 'dislike', (updatedNews) => {
+      this.newsService.updateNewsReactions(updatedNews.id, {
+        likes: updatedNews.likes,
+        dislikes: updatedNews.dislikes,
+        likedBy: updatedNews.likedBy,
+        dislikedBy: updatedNews.dislikedBy
+      });
+    });
   }
 }

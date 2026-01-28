@@ -45,7 +45,7 @@
   <main class="main-content" *ngIf="!loading">
     <div class="data-cards-container">
 
-      <div class="data-card" *ngFor="let d of pagedData">
+      <div class="data-card" *ngFor="let d of pagedData; trackBy: trackByDataId">
 
         <div class="card-actions">
           <button class="visit-btn" (click)="openDataModal(d)">
@@ -55,6 +55,22 @@
           <button class="visit-btn secondary" (click)="openLink(d.fileUrl)">
             ⬇ Descargar {{ getFileType(d.fileUrl) }}
           </button>
+
+          <div class="data-reactions">
+            <button class="reaction-btn like"
+                    [class.active]="isLiked(d)"
+                    (click)="onLike(d)">
+              <span class="emoji">👍</span>
+              <span class="count">{{ d.likes || 0 }}</span>
+            </button>
+
+            <button class="reaction-btn dislike"
+                    [class.active]="isDisliked(d)"
+                    (click)="onDislike(d)">
+              <span class="emoji">👎</span>
+              <span class="count">{{ d.dislikes || 0 }}</span>
+            </button>
+          </div>
         </div>
 
         <div class="card-info">

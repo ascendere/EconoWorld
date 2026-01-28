@@ -61,12 +61,11 @@
     <!-- Grid de libros mejorado -->
     <div class="books-grid-improved" *ngIf="!loading && !errorMessage">
 
-      <div class="book-card-improved" *ngFor="let book of pagedBooks">
+      <div class="book-card-improved" *ngFor="let book of pagedBooks; trackBy: trackByBookId">
 
         <!-- Portada del libro -->
         <div class="book-cover-wrapper">
           <img class="book-cover-improved"
-            [src]="book.coverUrl && book.coverUrl.trim() ? book.coverUrl : 'assets/images/book-placeholder.jpg'"
             [alt]="book.title" onerror="this.src='https://via.placeholder.com/200x280/667eea/ffffff?text=PDF'" />
 
           <!-- Overlay con acciones rápidas -->
@@ -93,23 +92,30 @@
             <span>{{ book.authors.join(', ') }}</span>
           </div>
 
-          <div class="book-rating">
+          <!-- <div class="book-rating">
             <span class="stars">★★★★★</span>
-          </div>
+          </div> -->
         </div>
 
         <!-- Acciones del libro -->
-        <!-- <div class="book-actions-improved">
-          <button class="action-btn like-btn" title="Me gusta">
-            <img src="https://cdn-icons-png.flaticon.com/512/833/833472.png" width="18" alt="Like">
+        <div class="book-actions-improved">
+
+          <button class="action-btn like-btn"
+                  [class.active]="isLiked(book)"
+                  (click)="onLike(book)"
+                  title="Me gusta">
+            <span class="emoji">👍</span>
+            <span class="count">{{ book.likes || 0 }}</span>
           </button>
-          <button class="action-btn save-btn" title="Guardar">
-            <img src="https://cdn-icons-png.flaticon.com/512/992/992651.png" width="18" alt="Guardar">
+
+          <button class="action-btn dislike-btn"
+                  [class.active]="isDisliked(book)"
+                  (click)="onDislike(book)"
+                  title="No me gusta">
+            <span class="emoji">👎</span>
+            <span class="count">{{ book.dislikes || 0 }}</span>
           </button>
-          <button class="action-btn view-btn" title="Ver PDF" (click)="openBook(book)">
-            <img src="https://cdn-icons-png.flaticon.com/512/709/709612.png" width="18" alt="Ver">
-          </button>
-        </div> -->
+        </div>
 
       </div>
 

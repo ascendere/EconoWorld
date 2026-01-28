@@ -41,21 +41,70 @@
     <p>No se encontraron videos con los filtros aplicados.</p>
   </div>
 
-  <div class="videos-grid" *ngIf="!cargando && videosFiltrados.length > 0">
+  <!-- <div class="videos-grid" *ngIf="!cargando && videosFiltrados.length > 0">
     <div class="video-card" *ngFor="let video of pagedVideos" (click)="abrirVideo(video)">
       <div class="video-thumbnail">
         <img [src]="video.thumbnailUrl || 'assets/images/econovidios.png'" alt="Miniatura" />
-        <div class="play-button">
-          <img src="https://www.freepnglogos.com/uploads/youtube-logo-hd-8.png" alt="Play" />
-        </div>
         <span class="category-badge">{{ video.category }}</span>
       </div>
 
       <div class="video-info">
         <h3>{{ video.title }}</h3>
+
+          <div class="video-reactions">
+            <button class="react-btn like"
+                    [class.active]="isLiked(video)"
+                    (click)="$event.stopPropagation(); onLike(video)">
+              <span>👍</span> {{ video.likes || 0 }}
+            </button>
+
+            <button class="react-btn dislike"
+                    [class.active]="isDisliked(video)"
+                    (click)="$event.stopPropagation(); onDislike(video)">
+              <span>👎</span> {{ video.dislikes || 0 }}
+            </button>
+          </div>
+
         <div class="video-meta">
           <span class="author">{{ video.author.join(', ') }}</span>
           <span class="date">{{ formatearFecha(video.createAt) }}</span>
+        </div>
+      </div>
+    </div>
+  </div> -->
+  <div class="videos-grid" *ngIf="!cargando && videosFiltrados.length > 0">
+    <div class="video-card-modern" *ngFor="let video of pagedVideos; trackBy: trackByVideoId" (click)="abrirVideo(video)">
+
+      <div class="thumbnail-wrapper">
+        <img [src]="video.thumbnailUrl || 'assets/images/econovidios.png'" alt="Miniatura" class="main-thumb" />
+        <div class="overlay-play">
+          <div class="play-circle">▶</div>
+        </div>
+        <span class="duration-badge">{{ video.category }}</span>
+      </div>
+
+      <div class="card-body">
+        <h3 class="video-title-modern">{{ video.title }}</h3>
+
+        <div class="author-line">
+          <img src="assets/images/persona.png" class="author-avatar" alt="Autor">
+          <span class="author-name">{{ video.author.join(', ') }}</span>
+        </div>
+
+        <div class="card-footer-modern">
+          <div class="reaction-pills">
+            <button class="pill-btn like"
+                    [class.active]="isLiked(video)"
+                    (click)="$event.stopPropagation(); onLike(video)">
+              👍 <span>{{ video.likes || 0 }}</span>
+            </button>
+            <button class="pill-btn dislike"
+                    [class.active]="isDisliked(video)"
+                    (click)="$event.stopPropagation(); onDislike(video)">
+              👎 <span>{{ video.dislikes || 0 }}</span>
+            </button>
+          </div>
+          <span class="upload-date">{{ formatearFecha(video.createAt) }}</span>
         </div>
       </div>
     </div>

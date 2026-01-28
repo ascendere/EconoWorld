@@ -15,6 +15,10 @@ export interface Video {
   };
   thumbnailUrl?: string;
   createAt: Date;
+  likes?: number;
+  dislikes?: number;
+  likedBy?: string[];
+  dislikedBy?: string[];
 }
 
 @Injectable({ providedIn: 'root' })

@@ -1,19 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { EconodataService, data } from 'src/app/services/econodata.service';
 import { NotificationService } from 'src/app/core/services/notification.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { BaseResource } from '../../shared/base';
 
 import * as Papa from 'papaparse';
 import * as XLSX from 'xlsx';
 
-import { PaginationBase
-
- } from '../../shared/pagination-base';
 @Component({
   selector: 'app-econodata',
   templateUrl: './econodata.component.html',
   styleUrls: ['./econodata.component.scss']
 })
-export class EconoDataComponent extends PaginationBase implements OnInit {
+export class EconoDataComponent extends BaseResource implements OnInit {
 
   // ================== FILTROS ==================
   searchText = '';
@@ -35,12 +34,17 @@ export class EconoDataComponent extends PaginationBase implements OnInit {
 
   constructor(
     private econodataService: EconodataService,
-    private notificationService: NotificationService)
+    private notificationService: NotificationService,
+    private authService: AuthService)
     {
     super();
   }
 
   ngOnInit(): void {
+    this.authService.getUser().subscribe(userData => {
+      this.userId = userData ? (userData.uid || userData.id) : null;
+    });
+
     this.econodataService.getAll().subscribe(res => {
       this.data = res;
       this.filtered = res;
@@ -143,4 +147,31 @@ export class EconoDataComponent extends PaginationBase implements OnInit {
     this.showDataModal = false;
     this.selectedDataset = undefined;
   }
+
+  onLike(item: data) {
+    this.toggleReaction(item, 'like', (updatedItem) => {
+      this.econodataService.updateDataReactions(updatedItem.id, {
+        likes: updatedItem.likes,
+        dislikes: updatedItem.dislikes,
+        likedBy: updatedItem.likedBy,
+        dislikedBy: updatedItem.dislikedBy
+      });
+    });
+  }
+
+  onDislike(item: data) {
+    this.toggleReaction(item, 'dislike', (updatedItem) => {
+      this.econodataService.updateDataReactions(updatedItem.id, {
+        likes: updatedItem.likes,
+        dislikes: updatedItem.dislikes,
+        likedBy: updatedItem.likedBy,
+        dislikedBy: updatedItem.dislikedBy
+      });
+    });
+  }
+
+  trackByDataId(index: number, item: data): string | undefined {
+    return item.id;
+  }
 }
+

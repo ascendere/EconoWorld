@@ -1,15 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { EconovideosAdminService, Video } from 'src/app/services/admin/econovideos-admin.service';
+import { EconoVideosService } from 'src/app/services/econovideos.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { PaginationBase } from '../../shared/pagination-base';
 import { NotificationService } from 'src/app/core/services/notification.service';
+import { BaseResource } from '../../shared/base';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-econovideos',
   templateUrl: './econovideos.component.html',
   styleUrls: ['./econovideos.component.scss']
 })
-export class EconovideosComponent extends PaginationBase implements OnInit {
+export class EconovideosComponent extends BaseResource implements OnInit {
 
   videos: Video[] = [];
   videosFiltrados: Video[] = []
@@ -38,12 +41,18 @@ export class EconovideosComponent extends PaginationBase implements OnInit {
   constructor(
     private econovideosService: EconovideosAdminService,
     private sanitizer: DomSanitizer,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private authService: AuthService,
+    private econovideosNAService: EconoVideosService,
   ) {
     super();
   }
 
   ngOnInit(): void {
+    this.authService.getUser().subscribe(userData => {
+      this.userId = userData ? (userData.uid || userData.id) : null;
+    });
+
     this.econovideosService.getVideos().subscribe({
       next: (data) => {
         this.videos = data.map(v => ({
@@ -164,5 +173,31 @@ export class EconovideosComponent extends PaginationBase implements OnInit {
 
   scrollTop(): void {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  onLike(video: Video) {
+    this.toggleReaction(video, 'like', (v) => {
+      this.econovideosNAService.updateVideoReactions(v.id, {
+        likes: v.likes,
+        dislikes: v.dislikes,
+        likedBy: v.likedBy,
+        dislikedBy: v.dislikedBy
+      });
+    });
+  }
+
+  onDislike(video: Video) {
+    this.toggleReaction(video, 'dislike', (v) => {
+      this.econovideosNAService.updateVideoReactions(v.id, {
+        likes: v.likes,
+        dislikes: v.dislikes,
+        likedBy: v.likedBy,
+        dislikedBy: v.dislikedBy
+      });
+    });
+  }
+
+  trackByVideoId(index: number, item: Video): string | undefined {
+    return item.id;
   }
 }

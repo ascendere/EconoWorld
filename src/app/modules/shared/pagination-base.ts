@@ -1,7 +1,7 @@
 export abstract class PaginationBase {
   currentPage = 1;
   itemsPerPage = 4;
-  // si se quiere usar un numero diferente de items, en la pagina poner: override itemsPerPage = X;
+  // si se quiere usar un numero diferente de items, en la pagina en donde se importa poner: override itemsPerPage = X;
 
   onPageChange(page: number): void {
     this.currentPage = page;

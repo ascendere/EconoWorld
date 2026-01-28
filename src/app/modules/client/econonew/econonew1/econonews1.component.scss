@@ -467,3 +467,77 @@
     }
   }
 }
+
+/* ======================== REACCIONES NOTICIAS ======================== */
+.news-divider {
+  border: 0;
+  border-top: 1px solid #eee;
+  margin: 2rem 0;
+}
+
+.news-reactions-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1rem 0;
+
+  .reactions-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--primary-blue);
+  }
+
+  .reactions-buttons {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .reaction-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 20px;
+    border-radius: 50px;
+    border: 2px solid #eee;
+    background: white;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    font-weight: 500;
+
+    .emoji { font-size: 1.4rem; }
+    .text { font-size: 0.95rem; color: #666; }
+    .count {
+      background: #f0f0f0;
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    &.like.active {
+      border-color: #2ecc71;
+      background: #e8f5e9;
+      .text, .count { color: #27ae60; }
+    }
+
+    &.dislike.active {
+      border-color: #e74c3c;
+      background: #ffebee;
+      .text, .count { color: #c0392b; }
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .reactions-buttons {
+    flex-direction: column;
+    width: 100%;
+    .reaction-btn { width: 100%; justify-content: center; }
+  }
+}

@@ -8,11 +8,16 @@ export interface Game {
   name: string;
   category: string;
   instructions: string;
-  embedCode: string;  
+  embedCode: string;
   imageUrl?: string | null;
 
   createdAt?: Timestamp | Date | FieldValue;
   updatedAt?: Timestamp | Date | FieldValue;
+
+  likes?: number;
+  dislikes?: number;
+  likedBy?: string[];
+  dislikedBy?: string[];
 }
 
 @Injectable({ providedIn: 'root' })

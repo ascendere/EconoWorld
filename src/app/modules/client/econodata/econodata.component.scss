@@ -1267,3 +1267,49 @@ app-pagination {
     }
   }
 }
+
+/* ======================== REACCIONES ECONODATA ======================== */
+.data-reactions {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #e0e0e0;
+
+  .reaction-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    background: white;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: 600;
+    color: #444;
+
+    .emoji { font-size: 1.1rem; }
+    .count { font-size: 0.85rem; }
+
+    &:hover {
+      background: #f0f0f0;
+      transform: translateY(-2px);
+    }
+
+    &.like.active {
+      background-color: #e8f5e9;
+      border-color: #2ecc71;
+      color: #2ecc71;
+    }
+
+    &.dislike.active {
+      background-color: #ffebee;
+      border-color: #e74c3c;
+      color: #e74c3c;
+    }
+  }
+}

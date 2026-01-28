@@ -12,6 +12,10 @@ export interface Video {
   thumbnail?: string;
   publicado: boolean;
   createdAt?: any;
+  likes?: number;
+  dislikes?: number;
+  likedBy?: string[];
+  dislikedBy?: string[];
 }
 
 @Injectable({
@@ -51,4 +55,8 @@ export class EconoVideosService {
       map(videos => Array.from(new Set(videos.map(v => v.category))))
     );
   }
+
+  updateVideoReactions(videoId: string, data: any) {
+  return this.firestore.collection('videos').doc(videoId).update(data);
+}
 }

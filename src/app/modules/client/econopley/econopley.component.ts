@@ -4,14 +4,15 @@ import { EconoplayAdminService, Game } from 'src/app/services/admin/econoplay-ad
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { PaginationBase } from '../../shared/pagination-base';
 import { NotificationService } from 'src/app/core/services/notification.service';
-
+import { BaseResource } from '../../shared/base';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-econopley',
   templateUrl: './econopley.component.html',
   styleUrls: ['./econopley.component.scss']
 })
-export class EconoPlayComponent extends PaginationBase implements OnInit {
+export class EconoPlayComponent extends BaseResource implements OnInit {
 
   games: Game[] = [];
   gamesFiltrados: Game[] = [];
@@ -40,12 +41,17 @@ export class EconoPlayComponent extends PaginationBase implements OnInit {
     private router: Router,
     private econoplayService: EconoplayAdminService,
     private sanitizer: DomSanitizer,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private authService: AuthService,
   ) {
     super();
   }
 
   ngOnInit(): void {
+    this.authService.getUser().subscribe(userData => {
+      this.userId = userData ? (userData.uid || userData.id) : null;
+    });
+
     this.cargarJuegos();
   }
 
@@ -147,5 +153,31 @@ export class EconoPlayComponent extends PaginationBase implements OnInit {
 
   navegarAEconopley1(): void {
     this.router.navigate(['/econopley1']);
+  }
+
+  onLike(game: Game) {
+    this.toggleReaction(game, 'like', (updatedGame) => {
+      this.econoplayService.updateGame(updatedGame.id, {
+        likes: updatedGame.likes,
+        dislikes: updatedGame.dislikes,
+        likedBy: updatedGame.likedBy,
+        dislikedBy: updatedGame.dislikedBy
+      });
+    });
+  }
+
+  onDislike(game: Game) {
+    this.toggleReaction(game, 'dislike', (updatedGame) => {
+      this.econoplayService.updateGame(updatedGame.id, {
+        likes: updatedGame.likes,
+        dislikes: updatedGame.dislikes,
+        likedBy: updatedGame.likedBy,
+        dislikedBy: updatedGame.dislikedBy
+      });
+    });
+  }
+
+  trackByGameId(index: number, item: Game): string | undefined {
+    return item.id;
   }
 }

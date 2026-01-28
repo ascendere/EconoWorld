@@ -3,19 +3,21 @@ import { Router } from '@angular/router';
 import { EconobookService, Book, Publisher, Author } from 'src/app/services/econobook.service';
 import { PaginationBase } from '../../shared/pagination-base';
 import { NotificationService } from 'src/app/core/services/notification.service';
+import { BaseResource } from '../../shared/base';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-econobook',
   templateUrl: './econobook.component.html',
   styleUrls: ['./econobook.component.scss']
 })
-export class EconoBookComponent extends PaginationBase implements OnInit {
+export class EconoBookComponent extends BaseResource implements OnInit {
 
   publishedBooks: Book[] = [];
   featuredBooks: Book[] = [];
   filteredBooks: Book[] = [];
 
-  // 🆕 PROPIEDADES PARA EDITORIALES Y AUTORES
+  // PROPIEDADES PARA EDITORIALES Y AUTORES
   featuredPublishers: Publisher[] = [];
   featuredAuthors: Author[] = [];
 
@@ -32,12 +34,21 @@ export class EconoBookComponent extends PaginationBase implements OnInit {
   constructor(
     private router: Router,
     private econobookService: EconobookService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private authService: AuthService
   ) {
     super();
   }
 
   ngOnInit(): void {
+    this.authService.getUser().subscribe(userData => {
+      if (userData) {
+        this.userId = userData.uid || userData.id;
+      } else {
+        this.userId = null;
+      }
+    });
+
     this.loadBooks();
     this.loadFeaturedPublishers();
     this.loadFeaturedAuthors();
@@ -55,7 +66,6 @@ export class EconoBookComponent extends PaginationBase implements OnInit {
       next: (books: Book[]) => {
         this.publishedBooks = books;
         this.loading = false;
-        console.log('Published books:', books);
       },
       error: (error) => {
         console.error('Error loading published books', error);
@@ -68,7 +78,6 @@ export class EconoBookComponent extends PaginationBase implements OnInit {
       next: (books: Book[]) => {
         this.featuredBooks = books;
         this.filteredBooks = books;
-        console.log('Featured books:', books);
       },
       error: (error) => {
         console.error('Error loading featured books', error);
@@ -94,7 +103,6 @@ export class EconoBookComponent extends PaginationBase implements OnInit {
     this.econobookService.getFeaturedAuthors().subscribe({
       next: (authors: Author[]) => {
         this.featuredAuthors = authors;
-        console.log('Featured authors:', authors);
       },
       error: (error) => {
         console.error('Error loading featured authors', error);
@@ -166,5 +174,31 @@ export class EconoBookComponent extends PaginationBase implements OnInit {
 
   scrollTop(): void {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  onLike(book: Book) {
+    this.toggleReaction(book, 'like', (b) => {
+      this.econobookService.updateBookReactions(b.id, {
+        likes: b.likes,
+        dislikes: b.dislikes,
+        likedBy: b.likedBy,
+        dislikedBy: b.dislikedBy
+      });
+    });
+  }
+
+  onDislike(book: Book) {
+    this.toggleReaction(book, 'dislike', (b) => {
+      this.econobookService.updateBookReactions(b.id, {
+        likes: b.likes,
+        dislikes: b.dislikes,
+        likedBy: b.likedBy,
+        dislikedBy: b.dislikedBy
+      });
+    });
+  }
+
+  trackByBookId(index: number, book: Book): string | undefined {
+    return book.id; // O book.id si usas ese campo
   }
 }

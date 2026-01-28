@@ -1396,3 +1396,53 @@ footer {
 :host-context(body.modal-open) {
   overflow: hidden;
 }
+
+/* ======================== REACCIONES JUEGOS ======================== */
+.game-reactions {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin: 1rem 0;
+  padding: 8px 0;
+  border-top: 1px solid #f0f0f0;
+  border-bottom: 1px solid #f0f0f0;
+
+  .reaction-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #f8f9fa;
+    border: 1px solid #eee;
+    padding: 5px 12px;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: #666;
+
+    .emoji { font-size: 1.1rem; }
+    .count { font-size: 0.85rem; font-weight: 600; }
+
+    &:hover {
+      background: #fff;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    }
+
+    &.like.active {
+      background: #e8f5e9;
+      border-color: #2ecc71;
+      color: #27ae60;
+    }
+
+    &.dislike.active {
+      background: #ffebee;
+      border-color: #e74c3c;
+      color: #c0392b;
+    }
+  }
+}
+
+.juego-card {
+    position: relative;
+    z-index: 1;
+}

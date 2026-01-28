@@ -1279,7 +1279,9 @@ footer {
   display: flex;
   flex-direction: column;
   position: relative;
+  z-index: 1;
   animation: fadeInUp 0.6s ease backwards;
+  will-change: transform, opacity;
 }
 
 .book-card-improved:nth-child(1) {
@@ -1327,7 +1329,8 @@ footer {
   height: 200%;
   background: radial-gradient(circle, rgba(64, 169, 255, 0.1) 0%, transparent 70%);
   animation: pulse-bg 8s ease-in-out infinite;
-  z-index: 0;
+  z-index: -1;
+  pointer-events: none;
 }
 
 .book-card-improved:hover::before {
@@ -1473,30 +1476,6 @@ footer {
 }
 
 /* ===================== ACCIONES DEL LIBRO ===================== */
-.book-actions-improved {
-  display: flex;
-  justify-content: space-around;
-  padding: 1rem;
-  border-top: 1px solid #f5f5f5;
-  background-color: #fafafa;
-}
-
-.action-btn {
-  background-color: transparent;
-  border: none;
-  padding: 0.5rem;
-  cursor: pointer;
-  transition: all 0.3s;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.action-btn:hover {
-  background-color: #e8e8e8;
-  transform: scale(1.1);
-}
 
 /* ===================== RESPONSIVE ===================== */
 @media (max-width: 768px) {
@@ -1681,5 +1660,59 @@ footer {
   .btn-intentalo {
     font-size: 0.95rem;
     padding: 0.6rem 1.5rem;
+  }
+}
+
+.book-actions-improved {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0.8rem;
+  background: #ffffff;
+  border-top: 1px solid #f0f0f0;
+  position: relative;
+  z-index: 10;
+
+  .action-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: 1.5px solid #eee;
+    background: white;
+    cursor: pointer;
+    padding: 6px 14px;
+    border-radius: 20px;
+    transition: all 0.2s ease;
+    color: #666;
+    font-weight: 600;
+
+    .emoji { font-size: 1.2rem; }
+    .count { font-size: 0.9rem; }
+
+    &:hover {
+      background: #f8f9fa;
+      transform: translateY(-2px);
+    }
+
+    // --- ESTADOS ACTIVOS ---
+
+    &.like-btn.active {
+      background: #e8f5e9;
+      border-color: #2ecc71;
+      color: #27ae60;
+      box-shadow: 0 4px 10px rgba(46, 204, 113, 0.2);
+    }
+
+    &.dislike-btn.active {
+      background: #ffebee;
+      border-color: #e74c3c;
+      color: #c0392b;
+      box-shadow: 0 4px 10px rgba(231, 76, 60, 0.2);
+    }
+  }
+
+  .view-btn {
+    border-color: var(--primary-blue);
+    &:hover { background: #e3f2fd; }
   }
 }

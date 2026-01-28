@@ -11,6 +11,10 @@ export interface data {
   fileUrl?: string; // PDF
   image?: string;
   createdAt?: any;
+  likes?: number;
+  dislikes?: number;
+  likedBy?: string[];
+  dislikedBy?: string[];
 }
 
 @Injectable({
@@ -55,5 +59,9 @@ export class EconodataService {
         ref.where('category', '==', category)
       )
       .valueChanges({ idField: 'id' });
+  }
+
+  updateDataReactions(dataId: string, data: any) {
+    return this.firestore.collection('data').doc(dataId).update(data);
   }
 }

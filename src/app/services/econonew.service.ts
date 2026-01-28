@@ -14,6 +14,10 @@ export interface News {
   };
   createdAt?: any;
   updatedAt?: any;
+  likes?: number;
+  dislikes?: number;
+  likedBy?: string[];
+  dislikedBy?: string[];
 }
 
 @Injectable({ providedIn: 'root' })
@@ -35,9 +39,13 @@ export class EconoNewService {
   }
 
   getNewsById(id: string): Observable<News | undefined> {
-    return this.firestore
-      .collection(this.collectionName)
-      .doc<News>(id)
-      .valueChanges() as Observable<News | undefined>;
+  return this.firestore
+    .collection(this.collectionName)
+    .doc<News>(id)
+    .valueChanges({ idField: 'id' }) as Observable<News | undefined>;
+}
+
+  updateNewsReactions(newsId: string, data: any) {
+    return this.firestore.collection('news').doc(newsId).update(data);
   }
 }

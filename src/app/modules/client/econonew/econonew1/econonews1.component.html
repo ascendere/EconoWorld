@@ -68,6 +68,31 @@
       <!-- CONTENIDO COMPLETO -->
       <div class="news-content" [innerHTML]="news.content || 'Sin contenido'"></div>
 
+      <hr class="news-divider">
+
+      <div class="news-reactions-container">
+        <p class="reactions-title">¿Qué te pareció esta noticia?</p>
+        <div class="reactions-buttons">
+
+          <button class="reaction-btn like"
+                  [class.active]="isLiked(news)"
+                  (click)="onLike(news)">
+            <span class="emoji">👍</span>
+            <span class="text">Útil</span>
+            <span class="count">{{ news.likes || 0 }}</span>
+          </button>
+
+          <button class="reaction-btn dislike"
+                  [class.active]="isDisliked(news)"
+                  (click)="onDislike(news)">
+            <span class="emoji">👎</span>
+            <span class="text">No me convence</span>
+            <span class="count">{{ news.dislikes || 0 }}</span>
+          </button>
+
+        </div>
+      </div>
+
     </div>
   </main>
 

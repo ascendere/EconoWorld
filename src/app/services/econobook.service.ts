@@ -14,6 +14,10 @@ export interface Book {
   year?: number;
   createdAt?: any;
   updatedAt?: string;
+  likes?: number;
+  dislikes?: number;
+  likedBy?: string[];
+  dislikedBy?: string[];
 }
 
 // 🆕 INTERFAZ PARA EDITORIALES
@@ -136,5 +140,9 @@ export class EconobookService {
         return authors.sort((a, b) => b.bookCount - a.bookCount).slice(0, 4);
       })
     );
+  }
+
+  updateBookReactions(bookId: string, data: any) {
+    return this.firestore.collection('books').doc(bookId).update(data);
   }
 }

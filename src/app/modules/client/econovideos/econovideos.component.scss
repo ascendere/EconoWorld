@@ -250,15 +250,15 @@
         }
     }
 
-    .videos-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 2rem;
-        justify-content: center;
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0;
-    }
+    // .videos-grid {
+    //     display: grid;
+    //     grid-template-columns: repeat(4, 1fr);
+    //     gap: 2rem;
+    //     justify-content: center;
+    //     max-width: 1200px;
+    //     margin: 0 auto;
+    //     padding: 0;
+    // }
 
     .video-card {
         background: #fff;
@@ -1513,4 +1513,285 @@ app-pagination {
   font-size: 0.85rem;
   border-radius: 8px;
   padding: 4px 12px;
+}
+
+.video-reactions {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #f0f0f0;
+
+  .react-btn {
+    background: #f8f9fa;
+    border: 1px solid #ddd;
+    padding: 4px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #444;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    span { font-size: 1rem; }
+
+    &:hover {
+      background: #fff;
+      transform: translateY(-2px);
+    }
+
+    /* Estados Activos */
+    &.like.active {
+      background-color: #e8f5e9;
+      border-color: #2ecc71;
+      color: #2ecc71;
+    }
+
+    &.dislike.active {
+      background-color: #ffebee;
+      border-color: #e74c3c;
+      color: #e74c3c;
+    }
+  }
+}
+
+//holanuevo
+
+/* ======================== NUEVO DISEÑO DE CARDS ======================== */
+.videos-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    justify-content: center;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0rem;
+}
+
+.video-card-modern {
+    background: #ffffff;
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(0, 0, 0, 0.03);
+
+    &:hover {
+        transform: translateY(-12px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+
+        .main-thumb { transform: scale(1.1); }
+        .overlay-play { opacity: 1; }
+    }
+}
+
+/* --- MINIATURA --- */
+.thumbnail-wrapper {
+    position: relative;
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+    background: #000;
+
+    .main-thumb {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.6s ease;
+    }
+
+    .overlay-play {
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 63, 114, 0.4);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+
+        .play-circle {
+            width: 50px;
+            height: 50px;
+            background: #ffce00;
+            color: #003f72;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            padding-left: 4px;
+            box-shadow: 0 0 20px rgba(255, 206, 0, 0.6);
+        }
+    }
+
+    .duration-badge {
+        position: absolute;
+        bottom: 12px;
+        right: 12px;
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 4px 10px;
+        border-radius: 6px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        backdrop-filter: blur(4px);
+    }
+}
+
+/* --- CUERPO --- */
+.card-body {
+    padding: 1.5rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+
+    .video-title-modern {
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: #1a202c;
+        margin: 0 0 0.8rem 0;
+        line-height: 1.4;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+}
+
+.author-line {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 1.2rem;
+
+    .author-avatar {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: #f0f0f0;
+    }
+
+    .author-name {
+        font-size: 0.85rem;
+        color: #718096;
+        font-weight: 500;
+    }
+}
+
+/* --- FOOTER (REACCIONES Y FECHA) --- */
+.card-footer-modern {
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1rem;
+    border-top: 1px solid #f0f2f5;
+
+    .reaction-pills {
+        display: flex;
+        background: #f7fafc;
+        padding: 4px;
+        border-radius: 30px;
+        gap: 2px;
+    }
+
+    .pill-btn {
+        border: none;
+        background: transparent;
+        padding: 6px 12px;
+        border-radius: 20px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: #4a5568;
+        transition: all 0.2s;
+
+        &:hover { background: #edf2f7; }
+
+        &.like.active {
+            background: #e8f5e9;
+            color: #2f855a;
+        }
+        &.dislike.active {
+            background: #fff5f5;
+            color: #c53030;
+        }
+    }
+
+    .upload-date {
+        font-size: 0.8rem;
+        color: #a0aec0;
+        font-weight: 600;
+    }
+}
+
+/* ======================== MENSAJES DE CARGA Y VACÍO ======================== */
+.mensaje {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 5rem 2rem;
+    margin: 2rem auto;
+    max-width: 600px;
+    background: rgba(255, 255, 255, 0.05); /* Efecto Glassmorphism */
+    backdrop-filter: blur(10px);
+    border-radius: 30px;
+    border: 1px dashed rgba(255, 255, 255, 0.2);
+    color: white;
+    animation: fadeIn 0.5s ease-out;
+
+    p {
+        font-size: 1.25rem;
+        font-weight: 500;
+        margin: 0;
+        color: rgba(255, 255, 255, 0.9);
+    }
+
+    /* Estilos específicos para el Spinner dentro del mensaje */
+    .spinner {
+        width: 60px;
+        height: 60px;
+        border: 5px solid rgba(255, 255, 255, 0.1);
+        border-top: 5px solid var(--secondary-yellow, #ffce00);
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 0 20px rgba(255, 206, 0, 0.2);
+    }
+
+    /* Toque extra para cuando no hay resultados */
+    &::before {
+        content: "🔍"; /* Icono por defecto */
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        display: block;
+    }
+}
+
+/* Si es el mensaje de CARGANDO, cambiamos el icono por defecto */
+.mensaje:has(.spinner)::before {
+    content: ""; /* Quitamos la lupa si hay un spinner */
+    display: none;
+}
+
+/* Animación de entrada */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
 }

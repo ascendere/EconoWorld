@@ -75,7 +75,7 @@
 
   <!-- JUEGOS GRID -->
   <div class="juegos-grid" *ngIf="!cargando && gamesFiltrados.length > 0">
-    <div class="juego-card" *ngFor="let game of pagedGames">
+    <div class="juego-card" *ngFor="let game of pagedGames; trackBy: trackByGameId">
       <img
         [src]="game.imageUrl || 'assets/images/Eonli.png'"
         [alt]="game.name"
@@ -85,6 +85,23 @@
       <p class="description">
         {{ game.instructions.length > 60 ? (game.instructions | slice:0:60) + '...' : game.instructions }}
       </p>
+
+      <div class="game-reactions">
+        <button class="reaction-btn like"
+                [class.active]="isLiked(game)"
+                (click)="$event.stopPropagation(); onLike(game)">
+          <span class="emoji">👍</span>
+          <span class="count">{{ game.likes || 0 }}</span>
+        </button>
+
+        <button class="reaction-btn dislike"
+                [class.active]="isDisliked(game)"
+                (click)="$event.stopPropagation(); onDislike(game)">
+          <span class="emoji">👎</span>
+          <span class="count">{{ game.dislikes || 0 }}</span>
+        </button>
+      </div>
+
       <div class="botones">
         <button class="jugar" (click)="abrirJuego(game)">Jugar</button>
         <!-- <button class="detalles" (click)="abrirJuego(game)">Detalles</button> -->
